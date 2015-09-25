@@ -1,0 +1,280 @@
+%
+% Main document
+% ===========================================================================
+% This is part of the document "Project documentation template".
+% Authors: brd3, kaa1
+%
+%---------------------------------------------------------------------------
+\documentclass[
+    a4paper,                % paper format
+    10pt,                   % fontsize
+    %twoside,               % double-sided
+    openright,              % begin new chapter on right side
+    notitlepage,            % use no standard title page
+    parskip=half,           % set paragraph skip to half of a line
+]{scrreprt}                 % KOMA-script report
+%---------------------------------------------------------------------------
+\raggedbottom{}
+%\KOMAoptions{cleardoublepage=plain}         % Add header and footer on blank pages
+
+
+% Load Standard Packages:
+%---------------------------------------------------------------------------
+\usepackage{scrpage2}
+\usepackage[standard-baselineskips]{cmbright}
+\usepackage[ngerman]{babel}                                             % german hyphenation
+\usepackage[utf8]{inputenc}                                             % UTF-8 input encoding
+\usepackage[T1]{fontenc}                                                % hyphenation of words with ä,ö and ü
+\usepackage{textcomp}                                                   % additional symbols
+\usepackage{etoolbox}                                                   % color manipulation of header and footer
+\usepackage{graphicx}                                                   % integration of images
+\usepackage{float}                                                      % floating objects
+\usepackage[font={footnotesize,it}]{caption}                                                    % for captions of figures and tables
+\usepackage{booktabs}                                                   % package for nicer tables
+\usepackage{tocvsec2}                                                   % provides means of controlling the sectional numbering
+\usepackage[square,sort,comma,authoryear]{natbib}                           % provides various citation styles
+\usepackage{wrapfig}                                                    % provides floating of text around images
+\usepackage{nameref}                                                    % provides printing names of references
+\usepackage{colortbl}                                                   % Colored tables
+\usepackage{scrhack}                                                    % Remove float errors and warnings
+\usepackage{pgfgantt}                                                   % Provides GANTT charts
+\usepackage{array}
+%---------------------------------------------------------------------------
+
+% Load Math Packages
+%---------------------------------------------------------------------------
+\usepackage{amsmath}                                                    % various features to facilitate writing math formulas
+\usepackage{amsthm}                                                     % enhanced version of latex's newtheorem
+\usepackage{amsfonts}                                                   % set of miscellaneous TeX fonts that augment the standard CM
+\usepackage{amssymb}                                                    % mathematical special characters
+\usepackage{exscale}                                                    % mathematical size corresponds to textsize
+%---------------------------------------------------------------------------
+
+% Package to facilitate placement of boxes at absolute positions
+%---------------------------------------------------------------------------
+\usepackage[absolute]{textpos}
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{1mm}
+%---------------------------------------------------------------------------   
+% PDF als Anhang                 
+\usepackage{pdfpages}
+% Definition of Colors
+%---------------------------------------------------------------------------
+\RequirePackage{color}                          % Color (not xcolor!)
+\definecolor{linkblue}{rgb}{0,0,0.8}            % Standard
+\definecolor{darkblue}{rgb}{0,0.08,0.45}        % Dark blue
+\definecolor{bfhgrey}{rgb}{0.41,0.49,0.57}      % BFH grey
+%\definecolor{linkcolor}{rgb}{0,0,0.8}              % Blue for the web- and cd-version!
+\definecolor{linkcolor}{rgb}{0,0,0}                 % Black for the print-version!
+
+%---------------------------------------------------------------------------
+
+% Load listings package
+% which provides source code formatting
+%---------------------------------------------------------------------------
+\usepackage{listings}                                                   % provides source code formatting
+% Define XML colors
+\lstdefinelanguage{XML}
+{
+  basicstyle=\ttfamily\footnotesize,
+  morestring=[b]'',
+  moredelim=[s][\bfseries\color{maroon}]{<}{\ },
+  moredelim=[s][\bfseries\color{maroon}]{</}{>},
+  moredelim=[l][\bfseries\color{maroon}]{/>},
+  moredelim=[l][\bfseries\color{maroon}]{>},
+  morecomment=[s]{<?}{?>},
+  morecomment=[s]{<!--}{-->},
+  commentstyle=\color{codecommentcolor},
+  stringstyle=\color{darkblue},
+  identifierstyle=\color{red}
+}
+% Change captions of listings
+\renewcommand{\lstlistingname}{Auflistung}
+\renewcommand{\lstlistlistingname}{Auflistungsverzeichnis}
+%---------------------------------------------------------------------------
+
+% Hyperref Package (Create links in a pdf)
+%---------------------------------------------------------------------------
+\usepackage[
+    pdftex,ngerman,bookmarks,plainpages=false,pdfpagelabels,
+    backref = {false},                                      % No index backreference
+    colorlinks = {true},                  % Color links in a PDF
+    hypertexnames = {true},               % no failures "same page(i)"
+    bookmarksopen = {true},               % opens the bar on the left side
+    bookmarksopenlevel = {0},             % depth of opened bookmarks
+    pdftitle = {Template für Bachelor Thesis},      % PDF-property
+    pdfauthor = {brd3},                           % PDF-property
+    pdfsubject = {LaTeX Template},        % PDF-property
+    linkcolor = {linkcolor},              % Color of Links
+    citecolor = {linkcolor},              % Color of Cite-Links
+    urlcolor = {linkcolor},               % Color of URLs
+]{hyperref}
+%---------------------------------------------------------------------------
+% Set up page dimension
+%---------------------------------------------------------------------------
+\usepackage{geometry}
+\geometry{a4paper,
+    left=28mm,
+    right=15mm,
+    top=30mm,
+    headheight=20mm,
+    headsep=10mm,
+    textheight=242mm,
+    footskip=15mm
+}
+%---------------------------------------------------------------------------
+
+% Makeindex Package
+%---------------------------------------------------------------------------
+\usepackage{makeidx}                                % To produce index
+\makeindex                                      % Index-Initialisation
+%---------------------------------------------------------------------------
+
+% Glossary Package
+%---------------------------------------------------------------------------
+% the glossaries package uses makeindex
+% if you use TeXnicCenter do the following steps:
+%  - Goto "Ausgabeprofile definieren" (ctrl + F7)
+%  - Select the profile "LaTeX => PDF"
+%  - Add in register "Nachbearbeitung" a new "Postprozessoren" point named Glossar
+%  - Select makeindex.exe in the field "Anwendung" ( ..\MiKTeX x.x\miktex\bin\makeindex.exe )
+%  - Add this [ -s "%tm.ist" -t "%tm.glg" -o "%tm.gls" "%tm.glo" ] in the field "Argumente"
+%
+% for futher informations go to http://ewus.de/tipp-1029.html
+%---------------------------------------------------------------------------
+\usepackage[nonumberlist]{glossaries}
+%\usepackage[xindy,nonumberlist]{glossaries}
+\input{inc/glossary}
+\makeglossaries{}
+%---------------------------------------------------------------------------
+
+% Intro:
+%---------------------------------------------------------------------------
+%\begin{document}                                % Start Document
+\settocdepth{section}                                                       % Set depth of toc
+\pagenumbering{roman}                                                       
+%---------------------------------------------------------------------------
+
+\input{inc/doc_title}                  % Titel der Arbeit aus Datei titel.tex lesen
+\input{inc/version}                % Versionsnummer und -datum aus Datei version.tex lesen
+
+% Set up header and footer
+%---------------------------------------------------------------------------
+
+\deftripstyle{newlayout}
+  [0pt] % no header line
+  [0pt] % no footer line
+  {}
+  {}
+  {}
+  {\color{bfhgrey} \footnotesize \titel, Version \versionnumber, \versiondate}
+  {}
+  {\color{bfhgrey} \thepage}
+
+\pagestyle{newlayout}
+% use "pagestyle" also on chapter starting pages 
+\renewcommand{\chapterpagestyle}{newlayout}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.  #1}{}}
+\renewcommand*{\headfont}{\normalfont}
+\renewcommand*{\footfont}{\normalfont}
+%---------------------------------------------------------------------------
+
+% We need this as mr. gantt chart (teh package..) thinks text should be gray..
+\color{black}
+
+\begin{document}
+
+% Title Page and Abstract
+%---------------------------------------------------------------------------
+\include{inc/title}          % activate for Titelseite mit Bild
+\cleardoublepage{}
+\phantomsection{}
+\include{inc/versions}
+\phantomsection{}
+\cleardoubleemptypage{}
+\setcounter{page}{1}
+\cleardoublepage{}
+\phantomsection{}
+\cleardoubleemptypage{}
+%---------------------------------------------------------------------------
+
+% Make sure Umlauts are getting displayed correctly.
+\lstset{literate=%
+    {Ö}{\textcolor{black}{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\textcolor{black}{\"a}}}1
+    {ö}{{\textcolor{black}{\"o}}}1
+    {~}{{\textasciitilde}}1
+    {?}{{\textcolor{black}{?}}}1
+}
+
+% Table of contents
+%---------------------------------------------------------------------------
+\tableofcontents
+\cleardoublepage{}
+%---------------------------------------------------------------------------
+
+% Main part:
+%---------------------------------------------------------------------------
+\pagenumbering{arabic}
+\include{inc/10_introduction}
+%---------------------------------------------------------------------------
+
+% Glossary
+%---------------------------------------------------------------------------
+\cleardoublepage{}
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Glossar}
+\renewcommand{\glossaryname}{Glossar}
+\glsaddall{}
+\printglossaries{}
+%---------------------------------------------------------------------------
+
+% Bibliography
+%---------------------------------------------------------------------------
+%\cleardoublepage
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\bibliographystyle{unsrtnat}
+\bibliography{inc/bibliography}{}
+\nocite{*} % TODO: Remove this when cites are in here
+%---------------------------------------------------------------------------
+
+% Listings
+%---------------------------------------------------------------------------
+%\cleardoublepage
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+%\cleardoublepage
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+\listoftables
+%\cleardoublepage
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Auflistungsverzeichnis}
+\lstlistoflistings{}
+%---------------------------------------------------------------------------
+
+% Index
+%---------------------------------------------------------------------------
+%\cleardoublepage
+%\phantomsection{}
+%\addcontentsline{toc}{chapter}{Stichwortverzeichnis}
+%\renewcommand{\indexname}{Stichwortverzeichnis}
+%\printindex
+%---------------------------------------------------------------------------
+
+% Attachment:
+%---------------------------------------------------------------------------
+%\appendix
+\settocdepth{section}
+\include{inc/attachment}
+
+%---------------------------------------------------------------------------
+
+%---------------------------------------------------------------------------
+\end{document}
