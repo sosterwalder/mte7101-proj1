@@ -1,4 +1,7 @@
-%
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% chktex-file 27 - disable warning about missing include files
+
 % Main document
 % ===========================================================================
 % This is part of the document "Project documentation template".
@@ -55,9 +58,13 @@
 \usepackage[absolute]{textpos}
 \setlength{\TPHorizModule}{1mm}
 \setlength{\TPVertModule}{1mm}
-%---------------------------------------------------------------------------   
-% PDF als Anhang                 
+%---------------------------------------------------------------------------
+
+% PDF as attachment
+%---------------------------------------------------------------------------
 \usepackage{pdfpages}
+%---------------------------------------------------------------------------
+
 % Definition of Colors
 %---------------------------------------------------------------------------
 \RequirePackage{color}                          % Color (not xcolor!)
@@ -66,6 +73,7 @@
 \definecolor{bfhgrey}{rgb}{0.41,0.49,0.57}      % BFH grey
 %\definecolor{linkcolor}{rgb}{0,0,0.8}              % Blue for the web- and cd-version!
 \definecolor{linkcolor}{rgb}{0,0,0}                 % Black for the print-version!
+\colorlet{Black}{black}
 
 %---------------------------------------------------------------------------
 
@@ -102,9 +110,9 @@
     hypertexnames = {true},               % no failures "same page(i)"
     bookmarksopen = {true},               % opens the bar on the left side
     bookmarksopenlevel = {0},             % depth of opened bookmarks
-    pdftitle = {Template für Bachelor Thesis},      % PDF-property
-    pdfauthor = {brd3},                           % PDF-property
-    pdfsubject = {LaTeX Template},        % PDF-property
+    pdftitle = {Volume ray casting --- basics \& principles},      % PDF-property
+    pdfauthor = {Sven Osterwalder},                           % PDF-property
+    pdfsubject = {Volume ray casting},        % PDF-property
     linkcolor = {linkcolor},              % Color of Links
     citecolor = {linkcolor},              % Color of Cite-Links
     urlcolor = {linkcolor},               % Color of URLs
@@ -144,8 +152,26 @@
 %---------------------------------------------------------------------------
 \usepackage[nonumberlist]{glossaries}
 %\usepackage[xindy,nonumberlist]{glossaries}
-\input{inc/glossary}
+\input{inc/static/glossary}
 \makeglossaries{}
+%---------------------------------------------------------------------------
+
+% Fancyrb package
+%---------------------------------------------------------------------------
+\usepackage{fancyvrb}
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}
+{fontsize=\footnotesize,
+    %
+    frame=lines,  % top and bottom rule only
+    framesep=2em, % separation between frame and text rulecolor=\color{Gray},
+    %
+    label=\fbox{\color{Black}},
+    labelposition=topline,
+    %
+    commandchars=\|\(\), % escape character and argument delimiters for
+    % commands within the verbatim
+    % commentchar=*        % comment character
+}
 %---------------------------------------------------------------------------
 
 % Intro:
@@ -155,8 +181,8 @@
 \pagenumbering{roman}                                                       
 %---------------------------------------------------------------------------
 
-\input{inc/doc_title}                  % Titel der Arbeit aus Datei titel.tex lesen
-\input{inc/version}                % Versionsnummer und -datum aus Datei version.tex lesen
+\input{inc/static/doc_title}                  % Titel der Arbeit aus Datei titel.tex lesen
+\input{inc/static/current_version}                % Versionsnummer und -datum aus Datei version.tex lesen
 
 % Set up header and footer
 %---------------------------------------------------------------------------
@@ -186,15 +212,17 @@
 
 % Title Page and Abstract
 %---------------------------------------------------------------------------
-\include{inc/title}          % activate for Titelseite mit Bild
+\include{inc/static/title}          % activate for Titelseite mit Bild
 \cleardoublepage{}
 \phantomsection{}
-\include{inc/versions}
+\include{inc/static/versions}
 \phantomsection{}
 \cleardoubleemptypage{}
 \setcounter{page}{1}
 \cleardoublepage{}
 \phantomsection{}
+\addcontentsline{toc}{chapter}{Management Summary}
+\include{inc/static/management_summary}
 \cleardoubleemptypage{}
 %---------------------------------------------------------------------------
 
@@ -221,6 +249,11 @@
 %---------------------------------------------------------------------------
 \pagenumbering{arabic}
 \include{inc/10_introduction}
+\include{inc/20_administrative}
+\include{inc/30_scope}
+\include{inc/40_procedure}
+\include{inc/50_theoretical_background}
+\include{inc/60_conclusion}
 %---------------------------------------------------------------------------
 
 % Glossary
@@ -239,7 +272,7 @@
 \phantomsection{}
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
 \bibliographystyle{unsrtnat}
-\bibliography{inc/bibliography}{}
+\bibliography{inc/static/bibliography}{}
 \nocite{*} % TODO: Remove this when cites are in here
 %---------------------------------------------------------------------------
 
@@ -272,7 +305,7 @@
 %---------------------------------------------------------------------------
 %\appendix
 \settocdepth{section}
-\include{inc/attachment}
+\include{inc/static/attachment}
 
 %---------------------------------------------------------------------------
 
