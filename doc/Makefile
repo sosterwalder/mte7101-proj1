@@ -1,6 +1,9 @@
+# -*- coding: UTF-8 -*-
+# vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=make
+
 .PHONY: all build clean dist-clean
 JOB   := mte7101
-BUILD := template
+BUILD := mte7101
 CLEAN_EXT := nls,ilg,aux,log,idx,out,glo,toc,lot,tex~,backup,bbl,blg,1,2,3,4,5,6,7,8,9,10,dvi,emp*mp,ooplss*mp,nlo,tdo,dvi,lof,lol,glg,gls,ist
 
 all: clean build
