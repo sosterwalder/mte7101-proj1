@@ -8,6 +8,7 @@
 % Authors: brd3, kaa1
 %
 %---------------------------------------------------------------------------
+
 \documentclass[
     a4paper,                % paper format
     10pt,                   % fontsize
@@ -63,6 +64,11 @@
 % PDF as attachment
 %---------------------------------------------------------------------------
 \usepackage{pdfpages}
+%---------------------------------------------------------------------------
+
+% TODO notes
+%---------------------------------------------------------------------------
+\usepackage{todonotes}
 %---------------------------------------------------------------------------
 
 % Definition of Colors
@@ -218,6 +224,9 @@
 \include{inc/static/versions}
 \phantomsection{}
 \cleardoubleemptypage{}
+\listoftodos{}
+\phantomsection{}
+\cleardoubleemptypage{}
 \setcounter{page}{1}
 \cleardoublepage{}
 \phantomsection{}
@@ -273,7 +282,6 @@
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
 \bibliographystyle{unsrtnat}
 \bibliography{inc/static/bibliography}{}
-\nocite{*} % TODO: Remove this when cites are in here
 %---------------------------------------------------------------------------
 
 % Listings
@@ -306,8 +314,6 @@
 %\appendix
 \settocdepth{section}
 \include{inc/static/attachment}
-
 %---------------------------------------------------------------------------
 
-%---------------------------------------------------------------------------
 \end{document}
