@@ -14,6 +14,7 @@ build:
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
 	makeglossaries $(JOB) 1> /dev/null
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
+	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
 
 watch:
 	while true; do inotifywait -r -e modify --exclude=".swp" . && make; done
