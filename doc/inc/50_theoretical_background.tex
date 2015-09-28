@@ -5,7 +5,51 @@
 \chapter{Theoretischer Hintergrund}
 \label{chap:theoretical_background}
 
-\todo[inline]{Provide introductio}
+\section{Beleuchtungsmodelle}
+\label{sec:illumination_models}
+
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt auf~\cite{whitted_improved_1980}[S. 343].
+
+Beleuchtungsmodelle beschreiben, wieviel Licht von einem sichtbaren Punkt einer Oberfläche zum Betrachter emitiert wird. In der Regel wird das Licht als Funktion in Abhängigkeit folgender Faktoren beschrieben:
+\begin{itemize}
+    \item Richtung der Lichtquelle
+    \item Lichstärke
+    \item Position des Betrachters
+    \item Orientierung der Oberfläche
+    \item Oberflächenbeschaffenheit
+\end{itemize}
+
+Es wird dabei zwischen lokalen und globalen Belechtungsmodellen unterschieden.
+
+\subsection{Lokale Beleuchtungsmodelle}
+\label{subsec:local_illumination_models}
+
+Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben lokalen Oberflächen. Diese Modelle sind in deren Umfang allerdings limitiert, da sie normalerweise nur Lichtquellen sowie die Orientierung einer Oberfläche einbeziehen. Sie ignorieren dabei aber die globale Umgebung, in welcher sich eine Oberfläche befindet.
+Dies ist dadurch bedingt, dass die traditionell verwendeten Algorithmen zur Berechnung der Sichtbarkeit von Oberflächen, über keine globalen Daten verfügen.
+
+Als Beispiel für ein lokales Beleuchtungsmodell dient das Phong-Beleuchtungsmodell, welches von Bui-Tong Phong entwickelt wurde:
+
+$ I = I_a + k_d \displaystyle\sum_{j=1}^{ls} (\overline{N} \cdot \overline{L_j}) + k_s \displaystyle\sum_{j=1}^{ls} (\overline{N} \cdot \overline{L_j^`} ) $
+% + k_s \displaystyle\sum_{j=1}^{js} (\overline{N} \cdot \overline{L}_j^2 )^n $
+
+wobei gilt:
+
+\begin{itemize}
+    \item $I =$ die reflektierte (Licht-) Intensität
+    \item $I_a =$ Reflektion bedingt durch die Beleuchtung des Raumes
+    \item $k_d =$ Konstante für die diffuse Komponente des reflektierten Lichtes
+    \item $\overline{N} =$ Einheitsnormale der Oberfläche
+    \item $\overline{L_j} =$ Vektor in Richtung der $j$-ten Lichtquelle
+    \item $k_s =$ Koeffizient der spiegelenden Komponente
+    \item $\overline{L_j^`} =$ Vektor in der Hälfte zwischen dem Betrachter und der $j$-ten Lichtquelle
+    \item $n =$ Exponent, welcher von der Reflektion der Oberfläche abhängt
+    \item $ls = $ Anzahl Lichtquellen
+\end{itemize}
+
+\subsection{Globale Beleuchtungsmodelle}
+\label{subsec:global_illumination_models}
+
+\todo[inline]{Describe global illumination models}
 
 \section{Ray Tracing}
 \label{sec:ray_tracing}
