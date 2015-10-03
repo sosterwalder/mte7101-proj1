@@ -33,10 +33,11 @@
 \usepackage{etoolbox}                                                   % color manipulation of header and footer
 \usepackage{graphicx}                                                   % integration of images
 \usepackage{float}                                                      % floating objects
-\usepackage[font={footnotesize,it}]{caption}                                                    % for captions of figures and tables
-\usepackage{booktabs}                                                   % package for nicer tables
+\usepackage[font={footnotesize,it}]{caption}                            % for captions of figures and tables
+\usepackage{booktabs}                                                  % package for nicer tables
+% \usepackage{tabu}                                                       % package for tables
 \usepackage{tocvsec2}                                                   % provides means of controlling the sectional numbering
-\usepackage[square,sort,comma,authoryear]{natbib}                           % provides various citation styles
+\usepackage[square,sort,comma,authoryear]{natbib}                       % provides various citation styles
 \usepackage{wrapfig}                                                    % provides floating of text around images
 \usepackage{nameref}                                                    % provides printing names of references
 \usepackage{colortbl}                                                   % Colored tables
@@ -47,7 +48,7 @@
 
 % Load Math Packages
 %---------------------------------------------------------------------------
-\usepackage{amsmath}                                                    % various features to facilitate writing math formulas
+\usepackage[fleqn]{amsmath}                                             % various features to facilitate writing math formulas
 \usepackage{amsthm}                                                     % enhanced version of latex's newtheorem
 \usepackage{amsfonts}                                                   % set of miscellaneous TeX fonts that augment the standard CM
 \usepackage{amssymb}                                                    % mathematical special characters
@@ -64,11 +65,6 @@
 % PDF as attachment
 %---------------------------------------------------------------------------
 \usepackage{pdfpages}
-%---------------------------------------------------------------------------
-
-% TODO notes
-%---------------------------------------------------------------------------
-\usepackage{todonotes}
 %---------------------------------------------------------------------------
 
 % Definition of Colors
@@ -124,18 +120,18 @@
     urlcolor = {linkcolor},               % Color of URLs
 ]{hyperref}
 %---------------------------------------------------------------------------
-% Set up page dimension
+
+% Geometry package: Set up page dimension
 %---------------------------------------------------------------------------
-\usepackage{geometry}
-\geometry{a4paper,
-    left=28mm,
-    right=15mm,
-    top=30mm,
+\usepackage[a4paper,
+    left=25mm,
+    right=25mm,
+    top=27mm,
     headheight=20mm,
     headsep=10mm,
     textheight=242mm,
     footskip=15mm
-}
+]{geometry}
 %---------------------------------------------------------------------------
 
 % Makeindex Package
@@ -178,6 +174,11 @@
     % commands within the verbatim
     % commentchar=*        % comment character
 }
+%---------------------------------------------------------------------------
+
+% TODO notes package
+%---------------------------------------------------------------------------
+\usepackage[textwidth=65mm]{todonotes}
 %---------------------------------------------------------------------------
 
 % Intro:
