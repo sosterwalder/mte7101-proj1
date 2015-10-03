@@ -68,21 +68,27 @@ Beide Arten von Algorithmen haben jedoch Vor- und Nachteile. So sind blickwinkel
 
 Die unter~\ref{subsec:global_illumination_models} genannten Verfahren versuchen auszudrücken, wie sich Licht von einem Punkt im Raum zu einem anderen bewegt. Dabei beschreiben sie die Intensität des Lichtes, ausgehend vom ersten Punkt zum zweiten Punkt. Zusätzlich wird die Intensität des Lichtes, ausgehend von allen anderen Punkten, welche den ersten Punkt erreichen, und zum zweiten Punkt emitiert werden, beschrieben.
 
-Jim Kajiya stellte 1986 die so genannte Renderinggleichung auf, welche genau dieses Verhalten beschreibt:
+James (Jim) Kajiya stellte 1986 die so genannte Renderinggleichung auf, welche genau dieses Verhalten beschreibt:
 \begin{equation}
-    I(x, x') = g(x, x')[\epsilon(x, x') + \int\limits_s\rho(x, x', x'')I(x', x'')dx'']
+    I(x, x') = g(x, x')[\epsilon(x, x') + \int\limits_{s}\rho(x, x', x'')I(x', x'')dx'']
 \end{equation}
 wobei gilt:
 
-\captionof{table}{Your caption here}
+\captionof{table}{Beschreibung der Komponenten der Renderinggleichung nach~\cite{kajiya_rendering_1986}[S. 143]}
 \begin{tabular}{ l l }
-    $ x', x' und x''  $: & Punkte in der Umgebung                                                                                               \\
-    $ I(x, x')        $: & (Licht-) Intensität zwischen Punkt $x'$ und $x$                                                                      \\
-    $ g(x, x')        $: & \parbox[t]{14cm}{Ein auf die Geometrie bezogener Term:                                                               \\
-                                \hspace*{12mm} $0$:     \hspace*{6mm} $x$ und $x'$ verdecken sich                                               \\
-                                \hspace*{12mm} $1/r^2$: \hspace*{1mm} $x$ und $x'$ sehen sich, wobei $r$ die Distanz zwischen $x$ und $x'$ ist} \\
-    $ \epsilon(x, x') $: & (Licht-) Intensität zwischen Punkt $x'$ und $x$                                                                      \\
+    $ x', x' und x''   $: & Punkte in der Umgebung                                                                                                  \\
+    $ I(x, x')         $: & Lichtintensität von Punkt $x'$ nach Punkt $x$                                                                           \\
+    $ g(x, x')         $: & \parbox[t]{14cm}{Ein auf die Geometrie bezogener Term:                                                                  \\
+                                 \hspace*{12mm} $0$:     \hspace*{6mm} $x$ und $x'$ verdecken sich                                                  \\
+                                 \hspace*{12mm} $1/r^2$: \hspace*{1mm} $x$ und $x'$ sehen sich, wobei $r$ die Distanz zwischen $x$ und $x'$ ist}    \\
+    $ \epsilon(x, x')  $: & Intensität des Lichtes, welches von $x'$ nach $x$ emitiert wird                                                         \\
+    $ \rho(x, x', x'') $: & Intensität des Lichtes, welches von $x''$ durch die Oberfläche bei $x'$ nach $x$ gestreut wird                          \\
+    $ \int\limits_{S}  $: & \parbox[t]{14cm}{Integral über die Vereinigung aller Flächen, daher $ S = \bigcup{S_{i}} $                              \\
+                            Dies bedeutet, dass die Punkte $x$, $x'$ und $x''$ über alle Flächen aller Objekte der Szene ``streifen''.              \\
+                            Wobei es sich bei $S_{0}$ um eine zusätzliche Fläche handelt, welche als Hintergrund verwendet wird.                    \\
+                            $S_{0}$ ist dabei eine Hemisphäre, welche die gesamte Szene umspannt.}                                                  \\
 \end{tabular}
+
 
 \section{Ray Tracing}
 \label{sec:ray_tracing}
