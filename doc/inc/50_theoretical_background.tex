@@ -8,7 +8,7 @@
 \section{Beleuchtungsmodelle}
 \label{sec:illumination_models}
 
-Sofern nicht anders vermerkt, basiert der folgende Abschnitt auf~\cite{whitted_improved_1980}[S. 343].
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt auf~\cite{whitted_improved_1980}[S. 343] sowie auf~\cite{hughes_computer_2013}.
 
 Beleuchtungsmodelle beschreiben, wieviel Licht von einem sichtbaren Punkt einer Oberfläche zum Betrachter emitiert wird. In der Regel wird das Licht als Funktion in Abhängigkeit folgender Faktoren beschrieben:
 \begin{itemize}
@@ -17,6 +17,7 @@ Beleuchtungsmodelle beschreiben, wieviel Licht von einem sichtbaren Punkt einer 
     \item Position des Betrachters
     \item Orientierung der Oberfläche
     \item Oberflächenbeschaffenheit
+    \item Globale Umgebung
 \end{itemize}
 
 Es wird dabei zwischen lokalen und globalen Belechtungsmodellen unterschieden.
@@ -24,31 +25,64 @@ Es wird dabei zwischen lokalen und globalen Belechtungsmodellen unterschieden.
 \subsection{Lokale Beleuchtungsmodelle}
 \label{subsec:local_illumination_models}
 
-Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben lokalen Oberflächen. Diese Modelle sind in deren Umfang allerdings limitiert, da sie normalerweise nur Lichtquellen sowie die Orientierung einer Oberfläche einbeziehen. Sie ignorieren dabei aber die globale Umgebung, in welcher sich eine Oberfläche befindet.
+Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben lokalen, Oberflächen. Diese Modelle sind in deren Umfang allerdings limitiert, da sie normalerweise nur Lichtquellen sowie die Orientierung einer Oberfläche einbeziehen. Sie ignorieren dabei aber die globale Umgebung, in welcher sich eine Oberfläche befindet.
 Dies ist dadurch bedingt, dass die traditionell verwendeten Algorithmen zur Berechnung der Sichtbarkeit von Oberflächen, über keine globalen Daten verfügen.
 
-Als Beispiel für ein lokales Beleuchtungsmodell dient das Phong-Beleuchtungsmodell, welches von Bui-Tong Phong entwickelt wurde:
-
-$ I = I_a + k_d \displaystyle\sum_{j=1}^{ls} (\overrightarrow{N} \cdot \overrightarrow{L_j}) + k_s \displaystyle\sum_{j=1}^{ls} (\overrightarrow{N} \cdot \overrightarrow{L_j^`} ) $
-
+Als Beispiel für ein lokales Beleuchtungsmodell dient das Phong-Beleuchtungsmodell, welches von Bui-Tong Phong entwickelt wurde.
+Es beschreibt die reflektierte (Licht-) Intensität als Zusammensetzung aus der ambienten, der diffusen und der ideal spiegelnden Reflexion einer Oberfläche:
+\begin{equation}
+    I = I_{ambient} + I_{diffuse} + I_{specular}
+\end{equation}
+oder mathematisch ausgedrückt:
+\begin{equation}
+    I = I_a + k_d \displaystyle\sum_{j=1}^{ls} (\overrightarrow{N} \cdot \overrightarrow{L_j}) + k_s \displaystyle\sum_{j=1}^{ls} (\overrightarrow{N} \cdot \overrightarrow{L_j^`} )
+\end{equation}
 wobei gilt:
-
 \begin{itemize}
-    \item $I =$ die reflektierte (Licht-) Intensität
-    \item $I_a =$ Reflektion bedingt durch die Beleuchtung des Raumes
-    \item $k_d =$ Konstante für die diffuse Komponente des reflektierten Lichtes
-    \item $\overrightarrow{N} =$ Einheitsnormale der Oberfläche
-    \item $\overrightarrow{L_j} =$ Vektor in Richtung der $j$-ten Lichtquelle
-    \item $k_s =$ Koeffizient der spiegelenden Komponente
-    \item $\overrightarrow{L_j^`} =$ Vektor in der Hälfte zwischen dem Betrachter und der $j$-ten Lichtquelle
-    \item $n =$ Exponent, welcher von der Reflektion der Oberfläche abhängt
-    \item $ls = $ Anzahl Lichtquellen
+    \item $I$:                      Die reflektierte (Licht-) Intensität
+    \item $I_a$:                    Reflektion bedingt durch die Beleuchtung des Raumes
+    \item $k_d$:                    Konstante für die diffuse Komponente des reflektierten Lichtes
+    \item $\overrightarrow{N}$:     Einheitsnormale der Oberfläche
+    \item $\overrightarrow{L_j}$:   Vektor in Richtung der $j$-ten Lichtquelle
+    \item $k_s$:                    Koeffizient der spiegelenden Komponente
+    \item $\overrightarrow{L_j^`}$: Vektor in der Hälfte zwischen dem Betrachter und der $j$-ten Lichtquelle
+    \item $n$:                      Exponent, welcher von der Reflektion der Oberfläche abhängt
+    \item $ls$:                     Anzahl Lichtquellen
 \end{itemize}
 
 \subsection{Globale Beleuchtungsmodelle}
 \label{subsec:global_illumination_models}
 
-\todo[inline]{Describe global illumination models}
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt auf~\cite{foley_computer_1996}[S. 775ff]
+
+Globale Beleuchtungsmodelle beschreiben die reflektierte (Licht-) Intensität eines Punktes aufgrund direkter Lichteinstrahlung durch Lichtquellen sowie durch alles Licht, welches diesen Punkt nach Reflektion von bzw. Durchdringen der eigenen oder anderer Oberflächen erreicht.
+
+Bei globalen Beleuchtungsmodellen unterscheidet man zwischen blickwinkelabhängigen Algorithmen, wie etwa Ray Tracing, und zwischen blickwinkelunabhängigen Algorithmen, wie etwa Photon Mapping.
+
+Blickwinkelabhängige Algorithmen verwenden eine Diskretisierung~\todo{view plane} der sichtbaren Fläche um zu entscheiden, an welchen Punkten, in Blickrichtung des Betrachters, die Beleuchtungsberechnung durchgeführt werden soll. Blickwinkelunabhängige Algorithmen hingegen diskretisieren und verarbeiten die Umgebung um genügend Informationen für die Beleuchtungsberechnung zu haben. Dies erlaubt ihnen die Beleuchtungsberechnung an einem beliebigen Punkt aus einer beliebigen Blickrichtung.
+
+Beide Arten von Algorithmen haben jedoch Vor- und Nachteile. So sind blickwinkelabhängige Algorithmen gut geeignet um Spiegelungen, basierend auf der Blickrichtung des Betrachtes, zu berechnen, eignen sich aber weniger um gleichbleibende diffuse Anteile über weiter Flächen eines Bildes zu berechnen. Bei blickwinkelabhängigen Algorithmen verhält es sich genau umgekehrt.
+
+\subsubsection{Renderinggleichung}
+\label{ssubsec:rendering_equation}
+
+Die unter~\ref{subsec:global_illumination_models} genannten Verfahren versuchen auszudrücken, wie sich Licht von einem Punkt im Raum zu einem anderen bewegt. Dabei beschreiben sie die Intensität des Lichtes, ausgehend vom ersten Punkt zum zweiten Punkt. Zusätzlich wird die Intensität des Lichtes, ausgehend von allen anderen Punkten, welche den ersten Punkt erreichen, und zum zweiten Punkt emitiert werden, beschrieben.
+
+Jim Kajiya stellte 1986 die so genannte Renderinggleichung auf, welche genau dieses Verhalten beschreibt:
+\begin{equation}
+    I(x, x') = g(x, x')[\epsilon(x, x') + \int\limits_s\rho(x, x', x'')I(x', x'')dx'']
+\end{equation}
+wobei gilt:
+
+\captionof{table}{Your caption here}
+\begin{tabular}{ l l }
+    $ x', x' und x''  $: & Punkte in der Umgebung                                                                                               \\
+    $ I(x, x')        $: & (Licht-) Intensität zwischen Punkt $x'$ und $x$                                                                      \\
+    $ g(x, x')        $: & \parbox[t]{14cm}{Ein auf die Geometrie bezogener Term:                                                               \\
+                                \hspace*{12mm} $0$:     \hspace*{6mm} $x$ und $x'$ verdecken sich                                               \\
+                                \hspace*{12mm} $1/r^2$: \hspace*{1mm} $x$ und $x'$ sehen sich, wobei $r$ die Distanz zwischen $x$ und $x'$ ist} \\
+    $ \epsilon(x, x') $: & (Licht-) Intensität zwischen Punkt $x'$ und $x$                                                                      \\
+\end{tabular}
 
 \section{Ray Tracing}
 \label{sec:ray_tracing}
