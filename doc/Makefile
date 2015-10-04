@@ -9,6 +9,7 @@ CLEAN_EXT := nls,ilg,aux,log,idx,out,glo,toc,lot,tex~,backup,bbl,blg,1,2,3,4,5,6
 all: clean build
 
 build:
+	# -shell-escape allows LaTeX calls to the outside world
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
 	bibtex $(JOB) 1> /dev/null
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
