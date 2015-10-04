@@ -40,7 +40,7 @@ Die Phasen der Erarbeitung der theoretischen Grundlagen sowie die Erstellung der
     ]{1}{16}
         \gantttitle{2015}{14}
         \gantttitle{2016}{2} \\
-        \gantttitlelist{1,...,16}{1} \\ % chktex 11
+        \gantttitlelist{1,...,16}{1} \\ % chktex 11: Disable "you should use \ldots to achieve.."
         \ganttbar{Projektstart}{1}{1} \\
         \ganttlinkedbar{Anforderungen}{2}{3} \ganttnewline{}
         \ganttbar{Erarbeitung theoretische Grundlagen}{2}{12} \\
@@ -79,6 +79,7 @@ Die vorliegende Arbeit entspricht der Dokumentation. Sie wurde während der gesa
         dieser Dokumentation eingesetzt. Diese Dokumentation wurde mittels \LaTeX{} geschrieben.
     \item[Make] Build-Automations-Werkzeug, wurde zur Erstellung dieses Dokumentes eingesetzt.
     \item[zotero] Ein freies, quelloffenes Literaturverwaltungsprogramm zum Sammeln, Verwalten und Zitieren unterschiedlicher Online- und Offline-Quellen~\cite{wikipedia_foundation_zotero_2015}.
+    \item[VIM] Vi IMproved. Ein freier, quelloffener Texteditor zur Textbearbeitung.
 \end{description}
 
 \noindent\emph{Arbeitsorganisation}
@@ -91,4 +92,9 @@ Die vorliegende Arbeit entspricht der Dokumentation. Sie wurde während der gesa
 
 \subsection{Standards und Richtlinien}
 \label{subsec:standards_guidelines}
-\todo[inline]{Describe standards \& guidelines if needed}
+
+\subsubsection{Pseudecode}
+\label{ssubsec:standards_guidelines:psuedocode}
+
+Da der Autor dieser Arbeit bedingt durch seine täglich Arbeit mit der Programmiersprache Python relativ bewandert ist, wird daher diese als Sprache zur Beschreibung von Pseudcode verwendet.
+Dabei wird aber kein Augenmerk auf die formale Korrektheit, geschweige denn der Lauffähigkeit des Pseudocodes gelegt.
