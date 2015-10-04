@@ -18,7 +18,7 @@ build:
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
 
 watch:
-	while true; do inotifywait -r -e modify --exclude=".swp" . && make; done
+	while true; do inotifywait -r -e modify --exclude=".swp" . && make build; done
 
 clean:
 	@rm -f *{$(CLEAN_EXT)}
