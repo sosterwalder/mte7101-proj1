@@ -1,0 +1,51 @@
+No.:              02
+Date:             04.10.2015 14:00 - 14:35
+Place:            Skype
+Involved persons: Claude Fuhrer    (CF)
+                  Sven Osterwalder (SO)
+
+* External documents
+  - Do external documents, e.g. papers, held in the project repository infringe copy rights? (CF)
+    * Both are not entirely sure about the copy rights, so it is decided to share the documents only
+      between both persons via Dropbox (CF and SO)
+
+* Theoretical background
+  - Phong equation
+    * Why is the half way vector used (as described in Whitted's paper)
+      instead of the more common usage of the angle (cosine) in direction of the light? (CF)
+        - It is ok to use Whitted's originally proposed formula, as the results
+          are the same for both formulas (CF)
+        - Although the specular factor for the specular component is missing and has to be
+          added (CF)
+
+  - Structuring / procdeure
+    * Is the document structuring and are the plans for further development in good order? (SO)
+      - The structuring of the document as well as the plans for further development are
+        in a good order and the work may continue in the currently ongoing direction (CF)
+
+* Literature
+  - Is it somehow possible to get the second edition of "Computer graphics: principles and practice"? (SO)
+    * Mr. Fuhrer posseses the mentioned book and proposes furthermore the lecture of a book dedicated to
+      ray tracing which he also posesses. He will deposit both of the books on Monday, 5th of October 2015,
+      in a room within the "Rolex" building of the Berne University of applied sciences in Biel (CF)
+
+* Citations
+  - Is the current way of citing in good order or do citations need to be more precise? (SO)
+    * The way of citing is precise enough, the schemata is the following: (CF)
+      - Source, [Chapter], Page(s)
+
+* Document template
+  - Remove currently used font "cmbright" as invoked to the usage of the LaTeX template of the Berne
+    Univeristy of applied sciences (CF)
+  - The lines shall be shortened so that they do not exceed 80 caracters per line (CF)
+  - The margins, especially the left and the right margins, shall be enlarged as they are currently
+    very narrow (CF)
+
+TODO for next meeting:
+  * Present the current state of the work
+  * Discuss the current state of the work
+  * Define further steps/proceeding
+
+Next meeting:
+ Date:  11.10.2015 14:00
+ Place: Skype or in real life, if necessary
