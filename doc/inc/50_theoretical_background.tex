@@ -12,8 +12,7 @@ Sofern nicht anders vermerkt, basiert der folgende Abschnitt auf~\cite{whitted_i
 
 Beleuchtungsmodelle beschreiben, wieviel Licht von einem sichtbaren Punkt einer Oberfläche zum Betrachter emitiert wird. In der Regel wird das Licht als Funktion in Abhängigkeit folgender Faktoren beschrieben:
 \begin{itemize}
-    \item Richtung der Lichtquelle
-    \item Lichstärke
+    \item Richtung der Lichtquelle \item Lichstärke
     \item Position des Betrachters
     \item Orientierung der Oberfläche
     \item Oberflächenbeschaffenheit
@@ -89,24 +88,89 @@ wobei gilt:
                             $S_{0}$ ist dabei eine Hemisphäre, welche die gesamte Szene umspannt.}                                                  \\
 \end{tabular}
 
+\section{Ray Casting}
+\label{sec:ray_casting}
+
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt auf~\cite{hughes_computer_2013}[Kapitel 15, S. 387ff].\\
+\\
+Um ein Bild möglichst realistisch darzustellen muss berechnet werden, wieviel Licht zu jedem Pixel der sichtbaren Bildfläche (also dem Betrachter) transportiert wird. Da Photonen die Energie des Lichtes transportieren, muss man also das physikalische Verhalten dieser simulieren. Es ist allerdings nicht möglich \textit{alle} Photonen zu simulieren, da der Aufwand schlicht zu gross wäre. Daher macht es Sinn nur einige Photonen (exemplarisch) zu betrachten und dann eine Abschätzung des gesamten Lichtes vorzunehmen.\\
+\\
+Bei \textbf{Ray Casting} handlt es sich grundsätzlich um eine Strategie zur Simulation, wieviel Licht anhand eines (Licht-) Strahles zu der sichtbaren Bildfläche (also dem Betrachter) transportiert wird.
+
+\begin{figure}[H]
+    \centering \rotatebox{0}{\scalebox{0.3}[0.3]{\includegraphics{img/ray_tracing_01.png}}}
+    \caption{Punkt $P$ auf einer Oberfläche eines Dreieckes, welcher für die Kamera bzw.\ den Betrachter sichtbar ist.
+        Der Betrachter nimmt dabei das Licht, welches aus verschiedenen Richtungen $\omega_{i}$ kommt, über den Punkt $P$ in Richtung $\omega_{0}$ wahr.\label{fig:ray_casting:basics}\protect\footnotemark}
+\end{figure}
+\footnotetext{Darstellung von~\cite{hughes_computer_2013}[Kapitel 15, Seite 389, Abbildung 15.1]}
+
+Wie in Abbildung~\ref{fig:ray_casting:basics} ersichtlich, gelangt Licht aus vielen Richtungen durch den Punkt $P$ zu dem Betrachter. Dies beinhaltet auch die Möglichkeit, dass
+Licht nicht nur von einer Lichtquelle aus, sondern von vielen Lichtquellen aus via $P$ zum Betrachter gelangt. Weiter ist es möglich, dass Licht zuvor an anderen Punkten gestreut
+und/oder gespiegelt und erst dann via $P$ zum Betrachter gelangte.\\
+\\
+Dies führt zu den folgenden Schlussfolgerungen:
+\begin{itemize}
+    \item Es müssen alle möglichen Richtungen, aus denen Licht kommen könnte, an Punkt $P$ untersucht werden.
+    \item Da, bedingt durch technische Limitierungen, nur diskretes Abtasten möglich ist, müssen die Richtungen auf eine endliche Anzahl beschränkt werden, was zu Abtastfehlern führen kann.
+\end{itemize}
+Um die Abtastfehler zu minieren, können die Richtungen des Abtasten anhand der Lichtquellen priorisiert werden.
+
+\newpage{}
+
+Ein möglicher Algorithmus, wie solch ein Verfahren umgesetzt werden kann, findet sich in~\ref{fig:ray_casting:high_level}.
+
+\begin{python}[caption={Eine abstrakte Umsetzung des Ray Castings.\protect\footnotemark},label={fig:ray_casting:high_level}]
+def ray_cast():
+    # "pixels" is a list of all pixels of the image plane
+    for pixel in pixels:
+        # Save all intersections for given pixel
+        intersections = []
+
+        # Returns the ray passing through the given
+        # pixel from the eye
+        ray           = ray_at_pixel(pixel)
+
+        # "scene_triangles" is a list of all triangles
+        # coming from meshes contained in the scene to render
+        for triangle in scene_triangles:
+            p   = intersect(ray, triangle)
+            sum = 0
+
+            for light in incoming_lights_at_p:
+                sum = sum + l.value
+            end
+
+            if is_smallest_intersection(p, intersections):
+                pixel = sum
+            intersections.append(p)
+\end{python}
+\footnotetext{Algorithmus in Pseudocode gemäss~\cite{hughes_computer_2013}[Kapitel 15, Seite 391, Auflistung 15.2]}
+
+\newpage{}
 
 \section{Ray Tracing}
 \label{sec:ray_tracing}
 
-Bei Ray Tracing handelt es sich um ein globales Beleuchtungsmodell, welches 1980 von Turner Whitted vorgestellt wurde.
-\todo[inline]{Describe ray tracing}
+\todo[inline]{Since illumination returned to the viewer is deter-
+mined by a tree of ``rays,'' a ray tracing algorithm is
+ideally suited to this model. In an obvious approach to
+ray tracing, light rays emanating from a source are traced
+through their paths until they strike the viewer. Since
+only a few will reach the viewer, this approach is waste-
+ful. In a second approach suggested by Appel [1] and
+used successfully by MAGI [14], rays are traced in the
+opposite direction---from the viewer to the objects in the
+scene, as illustrated in Figure 4.
+Unlike previous ray tracing algorithms, the visibility
+calculations do not end when the nearest intersection of
+a ray with objects in the scene is found. Instead, each
+visible intersection of a ray with a surface produces more
+rays in the /\~ direction, the /5 direction, and in the
+direction of each light source. The intersection process is
+repeated for each ray until none of the new rays intersects
+any object.}
 
-\subsection{Ray Casting}
-\label{subsec:ray_casting}
+\section{Darstellung impliziter Oberflächen}
+\label{sec:implicit_surfaces}
 
-\todo[inline]{Describe ray casting}
-
-\section{Volume Ray Casting}
-\label{sec:volume_ray_casting}
-
-\todo[inline]{Describe volume ray casting}
-
-\subsection{Raymarching}
-\label{subsec:raymarching}
-
-\todo[inline]{Describe raymarching}
+\todo[inline]{Describe implicit surfaces}
