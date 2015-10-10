@@ -1,0 +1,298 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% chktex-file 27 - disable warning about missing include files
+
+\section{Oberflächen}
+\label{sec:surfaces}
+
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+auf~\cite{division_introduction_1996}[S. 1 ff].\\
+\\
+Um in Computergrafiken überhaupt etwas darstellen zu können, muss erst einmal
+definiert werden, was dargestellt werden soll. Häufig orientiert sich die
+Computergrafik dabei an der realen Welt.  In der realen Welt haben Oberlächen
+von Objekten häufig keine starken Übergänge (Kanten) sondern sind eher von
+glatter Natur~\cite{foley_computer_1996}[S. 471].\\
+\\
+Die Darstellung von Kurven und Oberflächen führt zu zwei Fällen: Modellierung
+von bestehenden Objekten und Modellierung von Grund auf.\\
+\\
+Zur Modellierung von Oberflächen werden hauptsächlich zwei Techniken verwendet:
+Parametrische Modellierung und implizite Modellierung.\\
+\\
+Bei der parametrsichen Darstellung wird eine Oberfläche überlicherweise als
+eine Menge von Punkten definiert, so zum Beispiel:
+
+\begin{gather}\label{eq:surface_parametric}
+    \bm{p}(s, t) = (x(s, t), y(s, t), z(s, t))
+\end{gather}
+
+Bei der impliziten Darstellung wird eine Oberfläche überlicherweise als Kontur
+einer Funktion mit Wert 0 definiert, so zum Beispiel:
+
+\begin{gather}\label{eq:surface_implicit}
+    f(\bm{p}) = f(x, y, z) = 0
+\end{gather}
+
+Die parametrische Darstellung bringt Vorteile wie die Unabhängigkeit von einem
+Koordinatensystem oder eine effiziente Berechnung von Punkten auf einer
+Oberfläche. Die implizite Darstellung erlaubt hingegen eine grössere
+Einflussnahme aus mathematischer Sicht und ist daher sehr nützlich für
+Operationen wie Biegung, Vermischung, Schnitte (Intersektion) oder Bool'sche
+Operationen.
+
+\todo[inline]{Meh. Not sure if intro is good enough.}
+
+\subsection{Implizite Oberflächen}
+\label{subsec:implicit_surfaces}
+
+Wie in Gleichung~\ref{eq:surface_parametric} beschrieben, ist eine implizite
+Oberfläche gemäss~\cite{hart_ray_1993}[S. 1] als Funktion $ f(\bm{x}) =
+\mathbb{R}^{3} \to \mathbb{R} $ definiert.  Es wird also jedem Punkt einer
+Menge $ \bm{p} \in \mathbb{R}^{3} $ ein skalarer Wert $ s \in \mathbb{R} $
+zugewiesen. Dabei besteht die Oberfläche aus der Punktemenge $ \bm{x} \equiv
+(x, y, z) \in \mathbb{R}^{3} $.\\
+\\
+Angenommen $ \bm{A} $ ist ein geschlossener Festkörper, welcher durch die
+Funktion $f$ beschrieben wird, dann kann gemäss~\cite{hart_ray_1993} Folgendes
+angenommen werden:
+
+\begin{gather} \label{eq:surface_implicit_condition}
+    x \in \overset{\circ}{\bm{A}} \Leftrightarrow f(\bm{x}) < 0 \\
+    x \in \partial \bm{A}         \Leftrightarrow f(\bm{x}) = 0 \\
+    x \in \mathbb{R}^{3} - \bm{A} \Leftrightarrow f(\bm{x}) > 0
+\end{gather}
+
+Dies bedeutet, dass die implizite Funktion $ f(\bm{x}) $
+\begin{itemize}
+    \item negativ ist, wenn sich ein Punkt $\bm{x}$ innerhalb von $\bm{A}$
+        befindet
+    \item 0 ist, wenn sich ein Punkt $\bm{x}$ auf der Oberfläche von $\bm{A}$
+        befindet
+    \item Positiv ist, wenn sich ein Punkt $\bm{x}$ ausserhalb von $\bm{A}$
+        befindet
+\end{itemize}
+
+Dies gilt, da es sich bei $ \bm{x} $ um eine Punktemenge mit topologischer
+Struktur handelt.\\
+\\
+Gemäss~\cite{division_introduction_1996} finden hauptsächlich drei Methoden
+Anwendung zur Beschreibung impliziter Oberflächen: algebraische Oberflächen,
+Blobby-Objekte sowie die funktionale Repräsentation.~\cite{hart_sphere_1994}
+gibt jedoch an, dass die gebräuchlichste Form von impliziten Oberflächen die
+algebraischen Oberflächen sind. Diese werden implizit durch polynomiale
+Funktionen definiert.\\
+
+\subsubsection{Algebraische und geometrische implizite Oberflächen}
+\label{ssubsec:implicit_surfaces_algebraic_geometric}
+
+Ein Beispiel für eine algebraische Oberfläche ist die Beschreibung der
+Einheitskugel anhand einer impliziten algebraischen Gleichung zweiten Grades:
+
+\begin{gather} \label{eq:surface_immplicit_algebraic}
+    x^{2} + y^{2} + z^{2} - 1 = 0
+\end{gather}
+
+Wobei es sich bei dem letzten Parameter um den Radius $r$ handelt, welcher ---
+bedingt durch die Einheitskugel --- den Wert 1 hat.
+
+Wie~\cite{division_introduction_1996} schreibt, handelt es sich bei impliziten
+Oberflächen, welche durch eine polynomiale Funktion zweiten Grades beschrieben
+werden, um quadrische implizite Oberflächen.
+
+\cite{hart_sphere_1994} gibt weiter an, dass --- unter Nuztung einer Metrik ---
+die Einheitskugel durch die implizite Gleichung
+
+\begin{gather} \label{eq:surface_immplicit_geometric}
+    \|\bm{x}\| - 1 = 0
+\end{gather}
+
+beschrieben werden kann, was unter Anwendung der allgemeinen
+Form~\ref{eq:surface_implicit} einer impliziten
+Gleichung~\ref{eq:surface_implicit} zu folgender Gleichung führt:
+
+\begin{gather}
+    f(\bm{x}) = \|\bm{x}\| - 1
+\end{gather}
+
+Dabei ist $\|\bm{x}\|$ als euklidische Metrik definiert und entspricht $\sqrt{x^{2} + y^{2} + z^{2}}$.\\
+\\
+Die Gleichung~\ref{eq:surface_immplicit_algebraic} gibt die algebraische
+Distanz zurück, Gleichung~\ref{eq:surface_immplicit_geometric} gibt die
+geometrische Distanz zurück.\\
+
+\subsubsection{Distanzfunktionen}
+\label{ssubsec:distance_functions}
+
+Gemäss~\cite{hart_sphere_1994} wird die geometrische Darstellung von
+quadrischen Oberflächen bevorzugt, da deren Parameter unabhängig von
+Koordinaten sind, sie robuster und intuitiver sind. Es handelt sich dabei um
+eine \textbf{Distanzfunktion}.\\
+\\
+Wie anfangs erwähnt, definiert~\cite{hart_sphere_1994} die allgemeine Form zur
+Beschreibung bzw. Darstellung von impliziter Oberflächen als Zuweisung von
+Punkten zu einem skalaren Wert: $ f : \mathbb{R}^{n} \to \mathbb{R} $.\\
+\\
+Unter Anwendung der unter~\ref{eq:surface_implicit_condition} definierten
+Bedingungen kann geschlossen werden, dass eine Menge von Punkten $A$ existiert,
+welche Teil von $\mathbb{R}^{n}$, also $A \subset \mathbb{R}^{n}$ ist. Dies heisst, dass alle Punkte in $A$ die folgende Bedingung erfüllen:
+
+\begin{gather}
+    A = \{ x : f(x) \leq 0 \}
+\end{gather}
+
+\cite{hart_sphere_1994} liefert zwei Definition, welche der Beschreibung von Distanzfunktionen dienen:
+
+\theoremstyle{definition}
+\begin{definition}{\label{theo:point_to_set_distance}
+    \textit{Point-to-set distance}}\\
+    Die Distanz eines Punktes zu einer Menge von Punkten definiert die Distanz
+    eines Punktes $ \bm{x} \in \mathbb{R}^{3} $ zu einer Menge von Punkten $A
+    \subset \mathbb{R}^{3}$ als Distanz von $\bm{x}$ zum nähesten Punkt in $A$:
+
+    \begin{gather}
+        d(\bm{x}, \bm{A}) = \min_{\substack{\bm{y} \in \bm{A}}}(\|\bm{x} - \bm{y}\|)
+    \end{gather}
+\end{definition}
+
+\theoremstyle{definition}
+\begin{definition}{\label{theo:signed_distnace_bound}
+    \textit{Signed distance bound}}\\ 
+    Eine Funktion $ f : \mathbb{R}^{3} \to \mathbb{R} $ ist eine Obergrenze
+    ihrer impliziten Oberfläche $ f^{-1}(0)$, wenn gilt:
+
+    \begin{gather}\label{eq:signed_distnace_bound}
+        |f(\bm{x})| \leq d(\bm{x}, f^{-1}(0))
+    \end{gather}
+\end{definition}
+
+Wenn die Gleichung~\ref{eq:signed_distnace_bound} für eine Funktion $f$ gilt,
+dann ist $f$ eine \textit{vorzeichenabhängige Distanzfunktion (signed distance
+    function)}.
+
+\subsubsection{Distanzfelder (distance fields)}
+\label{ssubsec:distance_fields}
+
+\todo[inline]{Introduce distance fields.}
+
+\section{Darstellung von impliziten Oberflächen}
+\label{sec:rendering_implicit_surfaces}
+
+Wie~\cite{hart_sphere_1994}[S. 1] angibt, existieren verschiedene Möglichkeiten
+zur Darstellung (zum Rendering) von impliziten Oberflächen. So wandeln
+indirekte Methoden implizite Oberflächen in Polygonmodelle um, was die Nuztung
+bestehender Techniken und Hardware zur Darstellung von polygonalen Modellen
+erlaubt. Obwohl die Umwandlung der impliziten Oberflächen mit gängigen Systemen
+zur Darstellung problemlos dargestellt werden kann, ist die Umwandlung jedoch nicht
+in jedem Fall gegeben und kann zu nicht zusammenhängenden Flächen oder einer
+Verminderung des Detailgrades führen.\\
+\\
+Eine andere Methode zur Darstellung von impliziten Oberflächen ist das
+unter~\ref{sec:ray_tracing} vorgestellte Ray Tracing Verfahren.
+
+Ein (Licht-) Strahl wird dabei parametrisch als
+
+\begin{gather}\label{eq:ray_param}
+    r(t) = r_{0} + t * r_{d}
+\end{gather}
+
+beschrieben. Der Strahl startet dabei bei Punkt $r_{0}$ in Richtung des
+Einheitsvektors $r_{d}$, wobei $t$ die zurückgelegte Distanz des Strahles ist.
+$r(t)$ räpresentiert also den Punkt in Raum, welchen der Strahl nach dem
+Zurücklegen der Distanz $t$ --- ausgehend von seinem Ursprung $r_{0}$ ---
+erreicht.\\
+\\
+Um nun die Schnittpunkte eines Strahles mit einer impliziten Oberfläche zu finden, wird die Gleichung des Lichtstrahles $r$ (\ref{eq:ray_param}) in die Funktion einer impliziten Oberfläche $f$ (\ref{eq:surface_implicit}) eingesetzt. Wobei $r : \mathbb{R} \to \mathbb{R}^{3}$ und $f : \mathbb{R}^{3} \to \mathbb{R}$. Dies ergibt die zusammengesetzte Funktion $F = f \circ r$ wobei $F : \mathbb{R} \to \mathbb{R}$.\\
+\\
+Die Lösungen dieser Gleichung sind alle Distanzen $t$, welche ein gegebener Strahl zurücklegt und welche die folgende Bedingung erfüllen:
+
+\begin{gather}\label{eq:ray_param_cond}
+    F(t) = f \circ r = f(r(t)) = 0
+\end{gather}
+
+Um die Gleichung~\ref{eq:ray_param_cond} zu lösen, können numerische Verfahren
+zur Nullstellensuche angewendet werden, wobei die Verfahren vom Typ der
+Funktion $F(t)$ abhängig sind. Bei polynomialen Funktionen bis zum vierten Grad
+existieren analytische Lösungen, für eine beliebige Funktion muss jedoch ein
+generisches, robustes Verfahren zur Nullstellensuche verwendet werden. Dies
+bedingt jedoch meist, dass mehr Informationen über die Funktion zur Verfügung
+stehen, was beispielsweise durch Ableiten dieser gelöst werden kann.\\
+\\
+Die erwähnten Verfahren zur Nullstellensuche haben jedoch häufig den Nachteil,
+dass sie mehrere Schnittpunkte eines Strahles mit einer impliziten Oberfläche
+liefern. Um diese Problematik zu umgehen, wird nur der kleinste Wert von $t$
+berücksichtigt. Die Ray Marching und Sphere Tracing Algorithmen gehen hier
+sogar noch einen Schritt weiter, in dem sie nur die erste Nullstelle der
+Gleichung~\ref{eq:ray_param_cond} betrachten.
+
+\subsection{Ray Marching}
+\label{subsec:ray_marching}
+
+~\cite{perlin_hypertexture_1989} schlagen eine Abtastung des Strahles mit fixen
+Abständen $\Delta \mu$ vor:
+
+\begin{gather}
+    x = x_{\mu_{0}} + k * \Delta x_{\mu}
+\end{gather}
+
+wobei $k = 0,1,2,\dots$ und $\mu_{0} + k \Delta \mu \leq \mu_{1}$.\\
+\\
+Auf die parametrische Darstellung eines (Licht-) Strahles,
+Gleichung~\ref{eq:ray_param_cond}, angwendet:
+
+\begin{gather}
+    r(k) = r_{0} + \Delta t * k * r_{d}
+\end{gather}
+
+wobei $\Delta t$ die Grösse der Abstände und $k = 0,1,2,\dots$ die Nummer der
+Schritte darstellt. Wie~\cite{hart_ray_1989} schreiben, bildet das Abtasten des
+(Licht-) Strahles mit fixen Abständen die Basis für gewisse Verfahren des
+volumetrischen Renderings.\\
+\\
+Ein möglicher Algorithmus, wie solch ein Verfahren umgesetzt werden kann,
+findet sich in~\ref{fig:ray_marching}.\\
+\\
+\begin{python}[caption={Eine abstrakte Umsetzung des Ray
+        Marchings\protect\footnotemark}.,label={fig:ray_marching},captionpos=b]
+def ray_march():
+    step         = 0
+    intersection = 0
+    max_steps    = 10
+
+    while step < max_steps:
+        intersection = test_intersection(k)
+
+        if intersection <= 0:
+            # An intersection has happened
+            #   intersection <  0: ray is inside surface
+            #   intersection == 0: ray is excatly on surface
+            return ray_travel_distance(step)
+
+        step = step + 1
+
+    # When w reach this step, after max_steps, no intersection
+    # has happened, so distance is 0
+    return 0
+\end{python}
+\footnotetext{Algorithmus in Pseudocode
+    gemäss~\cite{perlin_hypertexture_1989}[S. 259, Abschnitt 3.1]}
+
+Dabei ist jedoch zu beachten, dass der Abstand zur Abtastung eines Strahles
+$\Delta t$ so gering als möglich sein sollte um eine Punktemeng bzw.\ ein
+Objekt --- definiert durch implizite Oberflächen --- $A$ möglichst gut
+abschätzen zu können. Ist der gewählte Abstand zu gross gewählt, so findet ggf.
+eine Abtastung weit im Inneren des Objektes statt und somit geht Präzision
+verloren.  Es ist auch möglich dass der erste eigentliche Punkt gar nicht
+abgetastet wird und erst der zweite abgetastete Punkt das Objekt ``erkennt''.
+Die Grafik~\todo{insert reference to image here} veranschaulicht diese
+Problematiken.\\
+\\
+\cite{hart_sphere_1994} weist darauf hin, dass Ray Marching durch den möglichst
+geringen Abstand zwischen den Abtastungen entsprechend langsam und paralleles
+Abtasten praktisch unumgänglich ist. In der von~\cite{hart_sphere_1994}
+vorgestellten Technik des Sphere Tracings ist der Abstand zwischen den
+Abtastungen nicht konstant sondern variiert in Abhängigkeit der Geometrie.
+
+\subsection{Sphere Tracing}
+\label{subsec:sphere_tracing}
+
