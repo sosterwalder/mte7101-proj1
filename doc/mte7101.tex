@@ -71,7 +71,13 @@
 \usepackage{pdfpages}
 %---------------------------------------------------------------------------
 
-% Definition of Colors
+% Definition of fonts
+%---------------------------------------------------------------------------
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{9} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{9}  % for normal
+%---------------------------------------------------------------------------
+
+% Definition of colors
 %---------------------------------------------------------------------------
 \RequirePackage{color}                          % Color (not xcolor!)
 \definecolor{linkblue}{rgb}{0,0,0.8}            % Standard
@@ -257,19 +263,20 @@
     {?}{{\textcolor{black}{?}}}1
 }
 % Define a list style for Python programming language
-\newcommand\pythonstyle{\lstset{language=Python,
-        basicstyle=\ttm,
-        keywordstyle=\ttb\color{blue},
-        emph={ray_cast},
-        emphstyle=\ttb\color{red},
-        style,
-        frame=tb,
-        commentstyle=\color{green},
-        showstringspaces=false,
-        identifierstyle=\color{black},
-        procnamekeys={def,class},
-        otherkeywords={self}}}
-% Define an environment for Python programming language
+\newcommand\pythonstyle{\lstset{
+    language=Python,
+    basicstyle=\ttm,
+    keywordstyle=\ttb\color{blue},
+    emph={ray_cast},
+    emphstyle=\ttb\color{red},
+    frame=tb,
+    commentstyle=\color{green},
+    showstringspaces=false,
+    stringstyle=\color{green},
+    identifierstyle=\color{black},
+    % procnamekeys={def,class},
+    otherkeywords={self}
+}}
 \lstnewenvironment{python}[1][]
 {
 \pythonstyle{}
