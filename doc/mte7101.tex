@@ -47,8 +47,13 @@
 
 % Load Math Packages
 %---------------------------------------------------------------------------
-\usepackage[fleqn]{amsmath}                                             % various features to facilitate writing math formulas
-\usepackage{amsthm}                                                     % enhanced version of latex's newtheorem
+\usepackage{mathtools}                                                  % Provide equation and gather environments
+
+\usepackage{amsthm}                                                     % Provide the possibility to define definitions
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\usepackage{bm}                                                         % bold font in math mode
 \usepackage{amsfonts}                                                   % set of miscellaneous TeX fonts that augment the standard CM
 \usepackage{amssymb}                                                    % mathematical special characters
 \usepackage{exscale}                                                    % mathematical size corresponds to textsize
