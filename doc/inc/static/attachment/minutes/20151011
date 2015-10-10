@@ -5,9 +5,14 @@ Involved persons: Claude Fuhrer    (CF)
                   Sven Osterwalder (SO)
 
 * Theoretical background
-  - Ray casting
+  * Ray casting
     * Is the description of ray casting developed enough? (SO)
     * Is the pseudo code of ray casting developed enough? (SO)
+  * Ray tracing
+    * Is an explanation of transmission and refraction needed? (SO)
+    * Is the material sufficient? (SO)
+  * Implicit surfaces
+    * Does one need to explain euclidean distance? (SO)
 
 TODO for next meeting:
   * Present the current state of the work
