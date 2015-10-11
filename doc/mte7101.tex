@@ -263,11 +263,9 @@
     {?}{{\textcolor{black}{?}}}1
 }
 % Define a list style for Python programming language
-\newcommand\pythonstyle{\lstset{
-    language=Python,
+\lstset{language=Python,
     basicstyle=\ttm,
     keywordstyle=\ttb\color{blue},
-    emph={ray_cast},
     emphstyle=\ttb\color{red},
     frame=tb,
     commentstyle=\color{green},
@@ -276,13 +274,7 @@
     identifierstyle=\color{black},
     % procnamekeys={def,class},
     otherkeywords={self}
-}}
-\lstnewenvironment{python}[1][]
-{
-\pythonstyle{}
-\lstset{#1}
 }
-{}
 
 % Table of contents
 %---------------------------------------------------------------------------
