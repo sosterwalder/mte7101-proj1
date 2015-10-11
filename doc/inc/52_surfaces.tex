@@ -111,7 +111,7 @@ beschrieben werden kann, was unter Anwendung der allgemeinen
 Form~\ref{eq:surface_implicit} einer impliziten
 Gleichung~\ref{eq:surface_implicit} zu folgender Gleichung führt:
 
-\begin{gather}
+\begin{gather}\label{eq:surface_implicit_sphere}
     f(\bm{x}) = \|\bm{x}\| - 1
 \end{gather}
 
@@ -252,8 +252,8 @@ volumetrischen Renderings.\\
 Ein möglicher Algorithmus, wie solch ein Verfahren umgesetzt werden kann,
 findet sich in~\ref{fig:ray_marching}.\\
 \\
-\begin{python}[caption={Eine abstrakte Umsetzung des Ray
-        Marchings\protect\footnotemark}.,label={fig:ray_marching},captionpos=b]
+\begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des Ray
+        Marchings\protect\footnotemark.},label={fig:ray_marching},captionpos=b,emph={ray_march}]
 def ray_march():
     step         = 0
     intersection = 0
@@ -270,10 +270,10 @@ def ray_march():
 
         step = step + 1
 
-    # When w reach this step, after max_steps, no intersection
+    # When we reach this step, after max_steps, no intersection
     # has happened, so distance is 0
     return 0
-\end{python}
+\end{lstlisting}
 \footnotetext{Algorithmus in Pseudocode
     gemäss~\cite{perlin_hypertexture_1989}[S. 259, Abschnitt 3.1]}
 
@@ -287,6 +287,8 @@ abgetastet wird und erst der zweite abgetastete Punkt das Objekt ``erkennt''.
 Die Grafik~\todo{insert reference to image here} veranschaulicht diese
 Problematiken.\\
 \\
+\todo[inline]{Provide illustration for ray marching}\\
+\\
 \cite{hart_sphere_1994} weist darauf hin, dass Ray Marching durch den möglichst
 geringen Abstand zwischen den Abtastungen entsprechend langsam und paralleles
 Abtasten praktisch unumgänglich ist. In der von~\cite{hart_sphere_1994}
@@ -296,3 +298,117 @@ Abtastungen nicht konstant sondern variiert in Abhängigkeit der Geometrie.
 \subsection{Sphere Tracing}
 \label{subsec:sphere_tracing}
 
+Das von~\cite{hart_sphere_1994} vorgestellte Sphere Tracing Verfahren ist ein
+Ray Tracing (\ref{sec:ray_tracing}) Verfahren für implizite Oberflächen. Es
+handelt sich nach wie vor um Ray Marching (\ref{subsec:ray_marching}), die
+Distanz der Schritte zum Abtastens  eines (Licht-) Strahles wird jedoch
+aufgrund einer Distanzfunktion (\ref{ssubsec:distance_functions}) bestimmt.\\
+\\
+\cite{hart_sphere_1994} verweist auf den Term \textit{``unbounding volumes''},
+welcher in~\cite{hart_ray_1989} eingeführt wurde. ``Unbounding volumes'' (zu
+Deutsch etwa ``negativer Hüllkörper'') wird genutzt um Sphere Tracing zu
+beschreiben und darzustellen. Der Term steht im Gegensatz zu dem gängigen
+Konzept des Hüllkörpers (``bounding volumes'') --- ein Volumen, welches einen
+Körper umschliesst. Ein ``negativer Hüllkörper'' (``unbounding volume'')
+umschliesst also eine Fläche im Raum, welche den Körper \textit{nicht}
+beinhaltet.\\
+\\
+Man möchte für einen abzutastenden Punkt im Raum ein Volumen finden, wessen
+Zentrum im abzutastenden Punkt liegt. Ist der Abstand des Punktes zum nähesten
+Punkt der Oberfläche eines Objektes bekannt, kann dieser Abstand als Radius
+einer Kugel angenommen werden. Diese Kugel dient als negativer Hüllkörper
+(``unbounding Volume'') und ist \textit{garantiert nicht} Teil des Objektes und
+schneidet dieses auch nicht ($\overline{\overset{\circ}{\bm{A}}}$) --- nur der
+äusserste Punkt des Abstandes (also des Radius der Kugel) liegt genau auf der
+Oberfläche des Objektes ($\partial \bm{A}$). Der Radius solch einer Kugel wird
+durch Evaluation der Distanzfunktion eines abzutastenden Punktes im Raum
+bestimmt.\\
+\\
+Gemäss~\cite{hart_sphere_1994} kommt daher auch der Name Sphere Tracing: Die
+Schnittpunkte eines (Licht-) Strahles werden durch eine Folge von negativen
+Hüllkörper (``unbounding volumes'') --- bzw.\ in diesem Fall Kugeln
+(``unbounding spheres'') --- beschrieben.\\
+\\
+Da~\cite{hart_ray_1989} die Darstellung von Fraktale im dreidimensionalen Raum
+beschreibt, wird dort von einer Abschätzung der Distanz gesprochen. Dies ist
+dadurch bedingt, dass die Distanz für Fraktale nicht effizient berechnet werden
+kann. Betrachtet man jedoch die Darstellung von  ``regulären'' Objekten, wie zum
+Beispiel eine Kugel, kann der zur Oberfläche am nähesten gelegene Punkt von
+einem beliebigen Punkt derselben Domäne exakt berechnet werden. Dies ist durch
+die implizite Gleichung~\ref{eq:surface_implicit_sphere} gegeben.\\
+\\
+Gemäss~\cite{hart_ray_1989} verläuft die Strahlenverfolgung bei dem Sphere
+Tracing Verfahren wie folgt. Ein Strahl wird vom Betrachter (Auge bzw.
+Lochkamera) durch die Bildebene zu einem Objekt geschossen. Dabei wird beim
+initialen Augangspunkt der Radius eines negativen Hüllkörpers in Form einer
+Kugel --- so wie oben beschrieben --- berechnet. Dies ist die Distanz, welcher
+der Strahl in einem ersten Schritt effektiv zurücklegen wird. Bei jedem
+Schnittpunkt der Kugel mit dem Strahl wird dasselbe Verfahren wiederholt. Dies
+geschieht so lange, bis schliesslich der Strahl durch einen Schnittpunkt mit
+einem Radius auf die Oberfläche des Objektes trifft. Ein weiteres
+Abbruchkriterium ist eine definierte maximale Distanz eines Strahles. Ist diese
+erreicht und der Strahl erreicht die Oberfläche des Objektes nicht --- weil der
+Strahl das Objekt nicht schneidet oder das Objekt zu weit weg ist ---, wird
+abgebrochen. Somit ist auch ersichtlich, dass Sphere Tracing nicht die
+unter~\ref{subsec:ray_marching} genannten Problematiken aufweist.\\
+\\
+\todo[inline]{Provide illustration for sphere tracing}
+\\
+Ausgehend von der parametrischen Beschreibung eines (Licht-) Strahles
+(Gleichung~\ref{eq:ray_param}), beschreibt~\cite{hart_sphere_1994} die Richtung
+$r_{d}$ eines Strahles als Einheitsvektor:
+
+\begin{gather}
+    r_{d} = \frac{p_{x, y} - r_{0}}{|p_{x, y} - r_{0}|}
+\end{gather}
+
+wobei $r_{0}$ der Ursprung eines Strahles und $p_{x, y}$ ein Punkt der Bildebene ist.\\
+\\
+Um nun den Schnittpunkt eines Strahles $r_{d}$ mit der Oberfläche eines
+Objektes zu finden, muss die Gleichung $F(t)$ (\ref{eq:ray_param_cond}) gelöst
+werden. Dabei ist --- wie oben definiert --- die Funktion $f(x)$ nun eine
+Distanzfunktion wie die geometrische Distanzfunktion zur Beschreibung einer
+Kugel (Gleichung~\ref{eq:surface_immplicit_geometric}).\\
+\\
+Evaulaiert man nun die Gleichung $F(t)$ unter Anwendung der eben beschriebenen
+Strahlenverfolgung, findet man so die erste positive Nullstelle der Gleichung
+$F(t)$. Diese Nullstelle ist die Grenze der Folge von negativen Hüllkörpern
+(``unbounding spheres''), welche durch die rekrusive Gleichung
+
+\begin{gather}
+    t_{i+1} = t_{i} + F(t_{i})
+\end{gather}
+
+definiert ist. Der Ursprungspunkt ist dabei als $t_{0}$ definiert. Diese Folge
+konvergiert genau dann --- und nur dann --, wenn der Strahl auf die implizite
+Oberfläche eines Objkektes trifft. Diese Folge bildet den Kern des Algorithmus
+zur Darstellung von geometrisch definierten, impliziten Oberflächen.
+
+\begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des Sphere
+        Tracings\protect\footnotemark.},label={fig:sphere_tracing},captionpos=b,emph={sphere_trace}]
+def sphere_trace():
+    ray_distance          = 0
+    estimated_distance    = 0
+    max_distance          = 9001
+    convergence_precision = 0.000001
+
+    while ray_distance < max_distance:
+        # sd_sphere is a signed distance function defining the implicit surface
+        # cast_ray defines the ray equation given the current travelled /
+        # marched distance of the ray
+        estimated_distance = sd_sphere(cast_ray(ray_distance))
+
+        if estimated_distance < convergence_precision:
+            # the estimated distance is already smaller than the desired
+            # precision of the convergence, so return the distance the ray has
+            # travelled as we have an intersection
+            return ray_distance
+
+        ray_distance = ray_distance + estimated_distance
+
+    # When we reach this point, there was no intersection between the ray and a
+    # implicit surface, so simply return 0
+    return 0
+\end{lstlisting}
+\footnotetext{Algorithmus in Pseudocode
+    gemäss~\cite{hart_sphere_1994}[S. 531, Fig. 1]}
