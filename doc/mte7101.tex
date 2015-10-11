@@ -266,15 +266,16 @@
 % Define a list style for Python programming language
 \lstset{language=Python,
     basicstyle=\ttm,
-    keywordstyle=\ttb\color{blue},
+    columns=fullflexible,
+    commentstyle=\color{green},
     emphstyle=\ttb\color{red},
     frame=tb,
-    commentstyle=\color{green},
+    identifierstyle=\color{black},
+    keywordstyle=\ttb\color{blue},
+    otherkeywords={self},
+    % procnamekeys={def,class},
     showstringspaces=false,
     stringstyle=\color{green},
-    identifierstyle=\color{black},
-    % procnamekeys={def,class},
-    otherkeywords={self}
 }
 
 % Table of contents
