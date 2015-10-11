@@ -158,8 +158,9 @@ welche Teil von $\mathbb{R}^{n}$, also $A \subset \mathbb{R}^{n}$ ist. Dies heis
 \theoremstyle{definition}
 \begin{definition}{\label{theo:signed_distnace_bound}
     \textit{Signed distance bound}}\\ 
-    Eine Funktion $ f : \mathbb{R}^{3} \to \mathbb{R} $ ist eine Obergrenze
-    ihrer impliziten Oberfläche $ f^{-1}(0)$, wenn gilt:
+    Eine Funktion $ f : \mathbb{R}^{3} \to \mathbb{R} $ ist eine
+    vorzeichenabhängige Obergrenze ihrer impliziten Oberfläche $ f^{-1}(0)$,
+    wenn gilt:
 
     \begin{gather}\label{eq:signed_distnace_bound}
         |f(\bm{x})| \leq d(\bm{x}, f^{-1}(0))
@@ -193,11 +194,12 @@ unter~\ref{sec:ray_tracing} vorgestellte Ray Tracing Verfahren.
 Ein (Licht-) Strahl wird dabei parametrisch als
 
 \begin{gather}\label{eq:ray_param}
-    r(t) = r_{0} + t * r_{d}
+    r(t) = r_{0} + t \cdot r_{d}
 \end{gather}
 
 beschrieben. Der Strahl startet dabei bei Punkt $r_{0}$ in Richtung des
 Einheitsvektors $r_{d}$, wobei $t$ die zurückgelegte Distanz des Strahles ist.
+Der Punkt im Raum ($r(t)$) 
 $r(t)$ räpresentiert also den Punkt in Raum, welchen der Strahl nach dem
 Zurücklegen der Distanz $t$ --- ausgehend von seinem Ursprung $r_{0}$ ---
 erreicht.\\
@@ -222,8 +224,8 @@ Die erwähnten Verfahren zur Nullstellensuche haben jedoch häufig den Nachteil,
 dass sie mehrere Schnittpunkte eines Strahles mit einer impliziten Oberfläche
 liefern. Um diese Problematik zu umgehen, wird nur der kleinste Wert von $t$
 berücksichtigt. Die Ray Marching und Sphere Tracing Algorithmen gehen hier
-sogar noch einen Schritt weiter, in dem sie nur die erste Nullstelle der
-Gleichung~\ref{eq:ray_param_cond} betrachten.
+sogar noch einen Schritt weiter, in dem sie nur die kleinste positive
+Nullstelle der Gleichung~\ref{eq:ray_param_cond} betrachten.
 
 \subsection{Ray Marching}
 \label{subsec:ray_marching}
@@ -232,7 +234,7 @@ Gleichung~\ref{eq:ray_param_cond} betrachten.
 Abständen $\Delta \mu$ vor:
 
 \begin{gather}
-    x = x_{\mu_{0}} + k * \Delta x_{\mu}
+    x = x_{\mu_{0}} + k \cdot \Delta x_{\mu}
 \end{gather}
 
 wobei $k = 0,1,2,\dots$ und $\mu_{0} + k \Delta \mu \leq \mu_{1}$.\\
@@ -241,7 +243,7 @@ Auf die parametrische Darstellung eines (Licht-) Strahles,
 Gleichung~\ref{eq:ray_param_cond}, angwendet:
 
 \begin{gather}
-    r(k) = r_{0} + \Delta t * k * r_{d}
+    r(k) = r_{0} + \Delta t \cdot k \cdot r_{d}
 \end{gather}
 
 wobei $\Delta t$ die Grösse der Abstände und $k = 0,1,2,\dots$ die Nummer der
@@ -250,8 +252,8 @@ Schritte darstellt. Wie~\cite{hart_ray_1989} schreiben, bildet das Abtasten des
 volumetrischen Renderings.\\
 \\
 Ein möglicher Algorithmus, wie solch ein Verfahren umgesetzt werden kann,
-findet sich in~\ref{fig:ray_marching}.\\
-\\
+findet sich in~\ref{fig:ray_marching}.
+
 \begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des Ray
         Marchings\protect\footnotemark.},label={fig:ray_marching},captionpos=b,emph={ray_march}]
 def ray_march():
@@ -287,8 +289,8 @@ abgetastet wird und erst der zweite abgetastete Punkt das Objekt ``erkennt''.
 Die Grafik~\todo{insert reference to image here} veranschaulicht diese
 Problematiken.\\
 \\
-\todo[inline]{Provide illustration for ray marching}\\
-\\
+\todo[inline]{Provide illustration for ray marching}
+
 \cite{hart_sphere_1994} weist darauf hin, dass Ray Marching durch den möglichst
 geringen Abstand zwischen den Abtastungen entsprechend langsam und paralleles
 Abtasten praktisch unumgänglich ist. In der von~\cite{hart_sphere_1994}
@@ -318,10 +320,10 @@ Zentrum im abzutastenden Punkt liegt. Ist der Abstand des Punktes zum nähesten
 Punkt der Oberfläche eines Objektes bekannt, kann dieser Abstand als Radius
 einer Kugel angenommen werden. Diese Kugel dient als negativer Hüllkörper
 (``unbounding Volume'') und ist \textit{garantiert nicht} Teil des Objektes und
-schneidet dieses auch nicht ($\overline{\overset{\circ}{\bm{A}}}$) --- nur der
-äusserste Punkt des Abstandes (also des Radius der Kugel) liegt genau auf der
-Oberfläche des Objektes ($\partial \bm{A}$). Der Radius solch einer Kugel wird
-durch Evaluation der Distanzfunktion eines abzutastenden Punktes im Raum
+schneidet dieses auch nicht (ist also nicht $\overset{\circ}{\bm{A}}$) --- nur
+der äusserste Punkt des Abstandes (also des Radius der Kugel) liegt genau auf
+der Oberfläche des Objektes ($\partial \bm{A}$). Der Radius solch einer Kugel
+wird durch Evaluation der Distanzfunktion eines abzutastenden Punktes im Raum
 bestimmt.\\
 \\
 Gemäss~\cite{hart_sphere_1994} kommt daher auch der Name Sphere Tracing: Die
@@ -353,7 +355,7 @@ abgebrochen. Somit ist auch ersichtlich, dass Sphere Tracing nicht die
 unter~\ref{subsec:ray_marching} genannten Problematiken aufweist.\\
 \\
 \todo[inline]{Provide illustration for sphere tracing}
-\\
+
 Ausgehend von der parametrischen Beschreibung eines (Licht-) Strahles
 (Gleichung~\ref{eq:ray_param}), beschreibt~\cite{hart_sphere_1994} die Richtung
 $r_{d}$ eines Strahles als Einheitsvektor:
@@ -370,10 +372,10 @@ werden. Dabei ist --- wie oben definiert --- die Funktion $f(x)$ nun eine
 Distanzfunktion wie die geometrische Distanzfunktion zur Beschreibung einer
 Kugel (Gleichung~\ref{eq:surface_immplicit_geometric}).\\
 \\
-Evaulaiert man nun die Gleichung $F(t)$ unter Anwendung der eben beschriebenen
+Evaluiert man nun die Gleichung $F(t)$ unter Anwendung der eben beschriebenen
 Strahlenverfolgung, findet man so die erste positive Nullstelle der Gleichung
 $F(t)$. Diese Nullstelle ist die Grenze der Folge von negativen Hüllkörpern
-(``unbounding spheres''), welche durch die rekrusive Gleichung
+(``unbounding spheres''), welche durch die rekursive Gleichung
 
 \begin{gather}
     t_{i+1} = t_{i} + F(t_{i})
@@ -410,5 +412,5 @@ def sphere_trace():
     # implicit surface, so simply return 0
     return 0
 \end{lstlisting}
-\footnotetext{Algorithmus in Pseudocode
-    gemäss~\cite{hart_sphere_1994}[S. 531, Fig. 1]}
+\footnotetext{Algorithmus in Pseudocode gemäss~\cite{hart_sphere_1994}[S. 531,
+    Fig. 1]}
