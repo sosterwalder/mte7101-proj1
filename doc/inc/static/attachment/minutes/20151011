@@ -17,58 +17,76 @@ Theoretical background
     * Phong model, equation 5.2 (CF)
       * The notation of L_{j} and L_{j}^{'} is nearly not distinguishable due
         to the vector arrows. Use another notation to distinguish them.
+        (DONE)
       * k_d and k_s dependen on the wave length resp. the color, this should
         be expressed as well
+        (DONE)
       * The vectors L_{j} and L_{j}^{'} are normalized unit vectors
+        (DONE)
       * The exponent 'n', as used in the legend, is missing in the equation
+        (DONE)
       * An image of the situation could be added for better understanding
+        (TODO, added)
 
 * Global illumantion models
   * Rendering equation, 5.3 (CF)
     * Add the correct reference, either to Kajiya or another source
+      (TODO, added)
     * Spell the letter 's', used for the integral as well as for the
       explanations, always the same case, either upper or lower
+      (DONE)
     * Use \varepsilon instead of \epsilon as this increases the readablity
+      (DONE)
     * Do not use tables for the explanation to an equation as LaTeX may break
       the layout then
+      (DONE)
 
 * Ray casting
   * Is the description of ray casting developed enough? (SO)
     * No, the description should be further expanded, also formulas should be
       considered and added, as well as examples (CF)
+      (TODO, added)
   * Is the pseudo code of ray casting developed enough? (SO)
     * Yes, the pseudo code is developed enough, although the unnecessary
       spaces of the lstlisting environment could be removed using the columns
       parameter with the fullflexible value (CF)
+      (DONE)
 
 * Ray tracing
   * Is an explanation of transmission and refraction needed? (SO)
     * Yes, an explanation of those terms would be good (CF)
+    (TODO, added)
   * The reference when referring Whitted's publication is missing(CF)
     * Add reference (SO)
+    (TODO, added)
   * Is the material sufficient? (SO)
     * Yes, the material is sufficient, but an illustration would probably be
       good (CF)
+      (TODO, added)
 
 * Implicit surfaces
   * Does one need to explain euclidean distance? (SO)
     * No, the term does not need to be explained as it is rather a standard
       term, but the notation may rather be (x^2 + y^2 + z^2)^{1/2} as this
       allows the usage of any basis, e.g. ln
-  * Equation (5.4) (CF)
+      (TODO, added)
+  * Equation (5.11) (CF)
     * Give an example by means of a sphere (CF)
+    (TODO, added)
   * Functions for implicit surfaces (5.4.1) (CF)
-    * Use an explanation of the signs as well when explaining the results
-      (CF)
+    * Use an explanation of the signs as well when explaining the results (CF)
+      (TODO, added)
   * Equation (5.15) (CF)
     * In the paragraph below the equation a sentence begins directly with a
       mathematical function. This is generally not a very good idea, so that
       sentence should be changed
+      (DONE)
 
 Citations
 ~~~~~~~~~~~
 
 * Change the style of citations, which one can be decided later on (CF)
+  (TODO)
 
 Typography
 ~~~~~~~~~~
@@ -77,6 +95,7 @@ Typography
   * The notation of the word 'diffuse' is not nicely readable, as there is a
     gap between the to f letters which sould not be there. \text might solve
     this problem
+    (DONE)
 
 Further steps/proceedings (CF, SO)
 ----------------------------------
@@ -95,6 +114,7 @@ TODO for the next meeting
 * Present the current state of the work (SO)
 * Discuss the current state of the work (CF, SO)
 * Define further steps/proceeding (CF, SO)
+* Define citation style (CF)
 
 Scheduling of the next meeting
 ==============================

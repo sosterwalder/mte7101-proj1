@@ -21,6 +21,8 @@ Es wird dabei zwischen lokalen und globalen Belechtungsmodellen unterschieden.
 \subsection{Lokale Beleuchtungsmodelle}
 \label{subsec:local_illumination_models}
 
+\todo[inline]{Develop further, add gouraud.}
+
 Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben lokalen, Oberflächen. Diese Modelle sind in deren Umfang allerdings limitiert, da sie normalerweise nur Lichtquellen sowie die Orientierung einer Oberfläche einbeziehen. Sie ignorieren dabei aber die globale Umgebung, in welcher sich eine Oberfläche befindet.
 Dies ist dadurch bedingt, dass die traditionell verwendeten Algorithmen zur Berechnung der Sichtbarkeit von Oberflächen, über keine globalen Daten verfügen.
 
@@ -116,6 +118,8 @@ zum zweiten Punkt. Zusätzlich wird die Intensität des Lichtes, ausgehend von
 allen anderen Punkten, welche den ersten Punkt erreichen, und zum zweiten Punkt
 emitiert werden, beschrieben.
 
+\todo[inline]{Add citation}
+
 James (Jim) Kajiya stellte 1986 die so genannte Renderinggleichung auf, welche
 genau dieses Verhalten beschreibt~\cite{kajiya_rendering_1986}
 und~\cite{foley_computer_1996}:
@@ -147,6 +151,8 @@ wobei gilt:
 
 \section{Ray Casting}
 \label{sec:ray_casting}
+
+\todo[inline]{Expand this section. Add formulas as well as examples.}
 
 Sofern nicht anders vermerkt, basiert der folgende Abschnitt
 auf~\cite{hughes_computer_2013}[Kapitel 15, S. 387ff].\\
@@ -242,3 +248,9 @@ werden. Dieser Prozess wird so lange wiederholt, bis keiner der neu generierten
 345].\\
 Es handelt sich dabei also um ein rekursives Verfahren und wird daher
 teilweise auch rekurisves Ray Tracing genannt.
+
+
+\todo[inline]{Fix reference to whitted's paper}
+\todo[inline]{Explain transmission and refraction}
+\todo[inline]{Add an (sphere) example, explain basic terminology (illum.\ and
+    shadow rays, aliasing and so on)}

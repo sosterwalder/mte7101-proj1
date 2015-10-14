@@ -64,6 +64,7 @@ angenommen werden:
 \end{gather}
 
 Dies bedeutet, dass die implizite Funktion $ f(\bm{x}) $
+\todo[inline]{Use an explanation of the signs as well when explaining the results}
 \begin{itemize}
     \item negativ ist, wenn sich ein Punkt $\bm{x}$ innerhalb von $\bm{A}$
         befindet
@@ -102,6 +103,7 @@ werden, um quadrische implizite Oberflächen.
 
 \cite{hart_sphere_1994} gibt weiter an, dass --- unter Nuztung einer Metrik ---
 die Einheitskugel durch die implizite Gleichung
+\todo[inline]{Provide example by means of a sphere}
 
 \begin{gather} \label{eq:surface_immplicit_geometric}
     \|\bm{x}\| - 1 = 0
@@ -114,6 +116,8 @@ Gleichung~\ref{eq:surface_implicit} zu folgender Gleichung führt:
 \begin{gather}\label{eq:surface_implicit_sphere}
     f(\bm{x}) = \|\bm{x}\| - 1
 \end{gather}
+
+\todo[inline]{Change notation}  %(x^2 + y^2 + z^2)^{1/2}% as this allows the usage of any basis, e.g.\ ln
 
 Dabei ist $\|\bm{x}\|$ als euklidische Metrik definiert und entspricht $\sqrt{x^{2} + y^{2} + z^{2}}$.\\
 \\
@@ -199,10 +203,8 @@ Ein (Licht-) Strahl wird dabei parametrisch als
 
 beschrieben. Der Strahl startet dabei bei Punkt $r_{0}$ in Richtung des
 Einheitsvektors $r_{d}$, wobei $t$ die zurückgelegte Distanz des Strahles ist.
-Der Punkt im Raum ($r(t)$) 
-$r(t)$ räpresentiert also den Punkt in Raum, welchen der Strahl nach dem
-Zurücklegen der Distanz $t$ --- ausgehend von seinem Ursprung $r_{0}$ ---
-erreicht.\\
+Dabei ist $r(t)$ der Punkt im Raum, welchen der Strahl nach dem Zurücklegen der
+Distanz $t$ --- ausgehend von seinem Ursprung $r_{0}$ --- erreicht.\\
 \\
 Um nun die Schnittpunkte eines Strahles mit einer impliziten Oberfläche zu finden, wird die Gleichung des Lichtstrahles $r$ (\ref{eq:ray_param}) in die Funktion einer impliziten Oberfläche $f$ (\ref{eq:surface_implicit}) eingesetzt. Wobei $r : \mathbb{R} \to \mathbb{R}^{3}$ und $f : \mathbb{R}^{3} \to \mathbb{R}$. Dies ergibt die zusammengesetzte Funktion $F = f \circ r$ wobei $F : \mathbb{R} \to \mathbb{R}$.\\
 \\
