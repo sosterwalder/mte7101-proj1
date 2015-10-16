@@ -57,21 +57,23 @@ Angenommen $ \bm{A} $ ist ein geschlossener Festkörper, welcher durch die
 Funktion $f$ beschrieben wird, dann kann gemäss~\cite{hart_ray_1993} Folgendes
 angenommen werden:
 
-\begin{gather} \label{eq:surface_implicit_condition}
-    x \in \overset{\circ}{\bm{A}} \Leftrightarrow f(\bm{x}) < 0 \\
-    x \in \partial \bm{A}         \Leftrightarrow f(\bm{x}) = 0 \\
-    x \in \mathbb{R}^{3} - \bm{A} \Leftrightarrow f(\bm{x}) > 0
-\end{gather}
+\begin{align} \label{eq:surface_implicit_condition}
+    x \in \overset{\circ}{\bm{A}} \Leftrightarrow f(\bm{x}) &< 0 \\
+    x \in \partial \bm{A}         \Leftrightarrow f(\bm{x}) &= 0 \\
+    x \in \mathbb{R}^{3} - \bm{A} \Leftrightarrow f(\bm{x}) &> 0
+\end{align}
 
-Dies bedeutet, dass die implizite Funktion $ f(\bm{x}) $
-\todo[inline]{Use an explanation of the signs as well when explaining the results}
+Dies bedeutet, dass sich ein Punkt $\bm{x}$:
 \begin{itemize}
-    \item negativ ist, wenn sich ein Punkt $\bm{x}$ innerhalb von $\bm{A}$
-        befindet
-    \item 0 ist, wenn sich ein Punkt $\bm{x}$ auf der Oberfläche von $\bm{A}$
-        befindet
-    \item Positiv ist, wenn sich ein Punkt $\bm{x}$ ausserhalb von $\bm{A}$
-        befindet
+    \item $\overset{\circ}{\bm{A}}$, genau dann \textit{innerhalb} des Körpers
+        $\bm{A}$ befindet, wenn die implizite Funktion $f(\bm{x})$ \textit{negativ}
+        ist
+    \item $\partial{\bm{A}}$, genau dann \textit{auf der Oberfläche} des
+        Körpers $\bm{A}$ befindet, wenn die implizite Funktion $f(\bm{x})$
+        \textit{0} ist
+    \item $\mathbb{R}^{3} - \bm{A}$, \textit{nicht in oder auf} dem Körper
+        $\bm{A}$ befindet, wenn die implizite Funktion $f(\bm{x})$ \textit{positiv}
+        ist
 \end{itemize}
 
 Dies gilt, da es sich bei $ \bm{x} $ um eine Punktemenge mit topologischer
