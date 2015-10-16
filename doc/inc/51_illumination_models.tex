@@ -28,7 +28,12 @@ Dies ist dadurch bedingt, dass die traditionell verwendeten Algorithmen zur Bere
 
 Als Beispiel für ein lokales Beleuchtungsmodell dient das Phong-Beleuchtungsmodell, welches von Bui-Tong Phong entwickelt wurde.
 
-\todo[inline]{Add image the phong lighting model here}
+\begin{figure}[H]\label{fig:phong_illustration}
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/phong_illustration.png}
+    \caption{Illustration des Phong-Beleuchtungsmodelles\protect\footnotemark}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Geogebra, angelehnt an~\cite{foley_computer_1996}[Kapitel 16, Seite 731, Abbildung 16.12]}
 
 Es beschreibt die reflektierte (Licht-) Intensität als Zusammensetzung aus der ambienten, der diffusen und der ideal spiegelnden Reflexion einer Oberfläche:
 \begin{gather}
@@ -65,6 +70,7 @@ wobei gilt:
     \item $k_{e}$:                  Exponent, welcher von der Rauheit bzw.
                                     Reflektion der Oberfläche abhängt
 \end{itemize}
+
 
 Meist wird der emissive Term bewusst weggelassen, da dieser meist eher für
 Spezialeffekte statt für die Beleuchtung ``normaler'' Objekte benutzt wird.
