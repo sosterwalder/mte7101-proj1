@@ -240,21 +240,20 @@ Offered by Service Bureau'' erfolgreich umgesetzt.
 
 Bei dem heute als Ray Tracing bekannten Verfahren, handelt es sich um eine
 verbesserte Version des unter~\ref{sec:ray_casting} genannten Ray Casting
-Verfahrens. Dieses wurde im Juni 1980 durch Turner Whitted in der Publikation
-``An Improved Illumination Model for Shaded Display'' verbessert.\\
-\\
-So schlägt Turner vor, dass die Berechnung der Sichtbarkeit (von Objekten)
-nicht bei dem nähesten gefundenen Schnittpunkt abgebrochen wird, sondern dass
-jedes Auftreffen eines (Licht-) Strahles mehr (Licht-) Strahlen durch
-Transmission bzw. Reflektion sowie in Richtung jeder Lichtquelle gesendet
-werden. Dieser Prozess wird so lange wiederholt, bis keiner der neu generierten
-(Licht-) Strahlen mehr auf ein Objekt trifft~\cite{whitted_improved_1980}[S.
-345].\\
+Verfahrens. Dieses wurde im Juni 1980 durch~\cite{whitted_improved_1980}[S.
+345] verbessert.
+
+So schlägt~\cite{whitted_improved_1980} vor, dass die Berechnung der
+Sichtbarkeit (von Objekten) nicht bei dem nähesten gefundenen Schnittpunkt
+abgebrochen wird, sondern dass jedes Auftreffen eines (Licht-) Strahles mehr
+(Licht-) Strahlen durch Transmission bzw. Reflektion sowie in Richtung jeder
+Lichtquelle gesendet werden. Dieser Prozess wird so lange wiederholt, bis
+keiner der neu generierten (Licht-) Strahlen mehr auf ein Objekt
+trifft~\cite{whitted_improved_1980}[S.  345].\\
 Es handelt sich dabei also um ein rekursives Verfahren und wird daher
 teilweise auch rekurisves Ray Tracing genannt.
 
 
-\todo[inline]{Fix reference to whitted's paper}
 \todo[inline]{Explain transmission and refraction}
 \todo[inline]{Add an (sphere) example, explain basic terminology (illum.\ and
     shadow rays, aliasing and so on)}
