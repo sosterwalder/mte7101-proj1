@@ -153,10 +153,11 @@ wobei gilt:
                                       welche die gesamte Szene umspannt.
 \end{itemize}
 
-\section{Ray Casting}
-\label{sec:ray_casting}
+\section{Ray Casting und Ray Tracing}
+\label{sec:ray_casting_tracing}
 
 \todo[inline]{Expand this section. Add formulas as well as examples.}
+\todo[inline]{Punkte mehr ausführen; Integration zeigen mit Diskretition; auch Berechnungen}
 
 Sofern nicht anders vermerkt, basiert der folgende Abschnitt
 auf~\cite{hughes_computer_2013}[Kapitel 15, S. 387ff].\\
@@ -168,7 +169,10 @@ man also das physikalische Verhalten dieser simulieren. Es ist allerdings nicht
 möglich \textit{alle} Photonen zu simulieren, da der Aufwand schlicht zu gross
 wäre. Daher macht es Sinn nur einige Photonen (exemplarisch) zu betrachten und
 dann eine Abschätzung des gesamten Lichtes vorzunehmen.\\
-\\
+
+\subsection{Ray Casting}
+\label{subsec:ray_casting}
+
 Bei \textbf{Ray Casting} handlt es sich grundsätzlich um eine Strategie zur
 Simulation, wieviel Licht anhand eines (Licht-) Strahles zu der sichtbaren
 Bildfläche (also dem Betrachter) transportiert wird.
@@ -193,7 +197,6 @@ Dies führt zu den folgenden Schlussfolgerungen:
         werden, was zu Abtastfehlern führen kann.
 \end{itemize}
 Um die Abtastfehler zu minieren, können die Richtungen des Abtasten anhand der Lichtquellen priorisiert werden.
-\todo[inline]{Punkte mehr ausführen; Integration zeigen mit Diskretition; auch Berechnungen}
 
 \newpage{}
 
@@ -228,18 +231,15 @@ def ray_cast():
 \end{lstlisting}
 \footnotetext{Algorithmus in Pseudocode gemäss~\cite{hughes_computer_2013}[Kapitel 15, Seite 391, Auflistung 15.2]}
 
-Das Verfahren wurde erstmals 1968 in der Publikation ``Some techniques for
-shading machine renderings of solids'' von A. Appel vorgeschlagen und auch 1968
-von der Matthematical Applications Group Inc.\ in ``3-D Simulated Graphics
-Offered by Service Bureau'' erfolgreich umgesetzt.
+Das Verfahren wurde erstmals 1968 in~\cite{appel_techniques_1968} vorgeschlagen
+und auch 1968 von der Matthematical Applications Group Inc.\
+in~\cite{arlington_mathematical_applications_group_inc_afips_1968} erfolgreich umgesetzt.
 
-\newpage{}
-
-\section{Ray Tracing}
-\label{sec:ray_tracing}
+\subsection{Ray Tracing}
+\label{subsec:ray_tracing}
 
 Bei dem heute als Ray Tracing bekannten Verfahren, handelt es sich um eine
-verbesserte Version des unter~\ref{sec:ray_casting} genannten Ray Casting
+verbesserte Version des unter~\ref{subsec:ray_casting} genannten Ray Casting
 Verfahrens. Dieses wurde im Juni 1980 durch~\cite{whitted_improved_1980}[S.
 345] verbessert.
 
@@ -253,7 +253,13 @@ trifft~\cite{whitted_improved_1980}[S.  345].\\
 Es handelt sich dabei also um ein rekursives Verfahren und wird daher
 teilweise auch rekurisves Ray Tracing genannt.
 
-
+\begin{figure}[H]\label{fig:ray_tracing_illustration}
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/ray_tracing_illustration.png}
+    \caption{Illustration des Ray Tracing Verfahrens\protect\footnotemark}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Geogebra, angelehnt an~\cite{glassner_introduction_1989}[Kapitel 2, Seite 16, Abbildung 11; Piktogramm Auge erstellt von ``Icomoon'' auf www.flaticon.com; Piktogramm Glühbirne erstellt von ``Simpleicon'' auf www.flaticon.com;]}
+\todo[inline]{Explain illustration~\ref{fig:ray_tracing_illustration}}
 \todo[inline]{Explain transmission and refraction}
 \todo[inline]{Add an (sphere) example, explain basic terminology (illum.\ and
     shadow rays, aliasing and so on)}
