@@ -10,6 +10,65 @@
 \label{sec:rendering_implicit_surfaces_lighting}
 \todo[inline]{Explain lighting model}
 
+Um implizite Oberflächen darstellen zu können, ist es notwendig ein
+Beleuchtungsmodell zu wählen. Ansonsten wäre das dargestellte Bild nur schwarz.
+Der Einfachheit halber wird im Rahmen dieser Projektarbeit das in
+Kapitel~\ref{subsec:local_illumination_models} vorgestellte
+Phong-Beleuchtungsmodell verwendet.
+
+Daher wird die resultierende Farbe eines Punktes im Raum $I(\bm{x})$ aus
+ambienten, diffusen und reflektierenden Anteilen berechnet:
+
+\begin{gather}
+    I(\bm{x}) = \text{Amount}_{\text{ambient}} + \text{Amount}_{\text{diffuse}} + \text{Amount}_{\text{specular}}
+\end{gather}
+
+Wie bereits zuvor in Kapitel~\ref{subsec:local_illumination_models} erwähnt,
+wird der emissive Term bewusst weggelassen, da keine emissiven Materialen
+dargestellt werden sollen. Als Lichtquelle wird eine einzelne direktionale
+Lichtquelle gewählt.
+
+Der \textit{ambiente Anteil} $\text{Amount}_{\text{ambient}}$ ergibt sich dann wie
+folgt:
+
+\begin{gather}
+    \text{Amount}_{\text{ambient}} = k_{\text{ambient}}(\bm{x}) \cdot
+                              I_{\text{ambient}}
+\end{gather}
+
+wobei $k_{\text{ambient}}(\bm{x})$ den ambienten Faktor des
+Punktes $\bm{x}$ und $I_{\text{ambient}}$ die Farbe des eingehenden ambienten
+Lichtes ist.
+
+Der \textit{diffuse Anteil} $\text{Amount}_{\text{diffuse}}$ ergibt sich wie folgt:
+
+\begin{gather}
+    \text{Amount}_{\text{diffuse}} = k_{\text{diffuse}}(\bm{x}) \cdot
+                              I_{\text{diffuse}} \cdot \max(\bm{n} \cdot
+                              \bm{l}, 0)
+\end{gather}
+
+wobei $\bm{x}$ ein Punkt $(x, y, z)$ auf einer impliziten Oberfläche $A$,
+$k_{\text{diffuse}}(\bm{x})$ den diffusen Faktor am Punkt $\bm{x}$ und
+$I_{\text{diffuse}}$ die Farbe des eingehenden diffusen Lichtes ist. Das
+Punktprodukt zwischen der Einheitsnormalen $\bm{n}$ des Punktes $\bm{x}$ und
+dem Einheitsvektor $l$ stellt die Richtung der Lichtquelle ausgehend von dem
+Punkt $\bm{x}$ dar.
+
+Der \textit{reflektierende Anteil} $\text{Amount}_{\text{specular}}$ ergibt sich
+wie folgt:
+
+\begin{gather}
+    \text{Amount}_{\text{specular}} = c_{\text{facing}} \cdot k_{s}(\bm{x}) \cdot I_{\text{specular}} \cdot \max{(\bm{n} \cdot \bm{h}, 0)}^{k_{e}}
+\end{gather}
+
+wobei $k_{\text{specular}}(\bm{x})$ den reflektierenden Faktor des Punktes
+$\bm{x}$ und $I_{\text{specular}}$ die Farbe des eingehenden reflektierenden
+Lichtes ist. Bei $\bm{h}$ handelt es sich um einen Einheitsvektor, welcher in
+der Hälfte zwischen der Blickrichtung des Betrachters bzw.\ der Kamera
+($\vv{V}$) und $\bm{l}$ der Richtung der Lichtquelle ausgehend von dem Punkt
+$\bm{x}$ ist.
+
 \subsection{Rendering}
 \label{sec:rendering_implicit_surfaces_Rendering}
 \todo[inline]{Explain rendering}
