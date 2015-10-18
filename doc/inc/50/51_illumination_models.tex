@@ -36,16 +36,21 @@ Als Beispiel für ein lokales Beleuchtungsmodell dient das Phong-Beleuchtungsmod
 \footnotetext{Eigene Darstellung mittels Geogebra, angelehnt an~\cite{foley_computer_1996}[Kapitel 16, Seite 731, Abbildung 16.12]}
 
 Es beschreibt die reflektierte (Licht-) Intensität als Zusammensetzung aus der ambienten, der diffusen und der ideal spiegelnden Reflexion einer Oberfläche:
+
 \begin{gather}
     I = I_{\text{ambient}} + I_{\text{diffuse}} + I_{\text{specular}} + I_{\text{emissive}}
 \end{gather}
+
 oder mathematisch ausgedrückt:
+
 \begin{gather}
     I(\vv{V}) = k_{a} \cdot L_{a} +
                 k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\vv{S_{i}} \cdot \vv{N}) +
                 k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\vv{R_{i}} \cdot \vv{V})}^{k_{e}}
 \end{gather}
+
 wobei gilt:
+
 \begin{itemize}
     \item $I(\vv{V})$:              Die reflektierte (Licht-) Intensität in Richtung des Vektors $\vv{V}$
     \item $n$:                      Anzahl Lichtquellen
