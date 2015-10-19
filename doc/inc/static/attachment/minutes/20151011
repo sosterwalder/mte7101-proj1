@@ -13,7 +13,7 @@ Presentation and discussion of the current state of the work
 Theoretical background
 ~~~~~~~~~~~~~~~~~~~~~~
 
-* Local illumantion models
+* Local illumination models
     * Phong model, equation 5.2 (CF)
       * The notation of L_{j} and L_{j}^{'} is nearly not distinguishable due
         to the vector arrows. Use another notation to distinguish them.
@@ -28,7 +28,7 @@ Theoretical background
       * An image of the situation could be added for better understanding
         (TODO, added)
 
-* Global illumantion models
+* Global illumination models
   * Rendering equation, 5.3 (CF)
     * Add the correct reference, either to Kajiya or another source
       (TODO, added)
