@@ -8,7 +8,7 @@ CLEAN_EXT := nls,ilg,aux,log,idx,out,glo,toc,lot,tex~,backup,bbl,blg,1,2,3,4,5,6
 
 all: clean build
 
-build:
+build: clean
 	# -shell-escape allows LaTeX calls to the outside world
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
 	bibtex $(JOB) 1> /dev/null
@@ -17,8 +17,15 @@ build:
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
 	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
 
+build-fast:
+	# -shell-escape allows LaTeX calls to the outside world
+	pdflatex -jobname $(JOB) -shell-escape -interaction=nonstopmode $(BUILD) 1> /dev/null
+
 watch:
 	while true; do inotifywait -r -e modify --exclude="(.*.lol|.*.lot|.*.lof|.*.toc|.*.tdo|.*.ist|.*.out|.*.pdf|.*.aux|.*.glo|.*.idx|.*.bbl|.*.swp|.*.blg|.*.fdb_latexmk|.*.fls|.*.log)" . && make build; done
+
+watch-fast:
+	while true; do inotifywait -r -e modify --exclude="(.*.lol|.*.lot|.*.lof|.*.toc|.*.tdo|.*.ist|.*.out|.*.pdf|.*.aux|.*.glo|.*.idx|.*.bbl|.*.swp|.*.blg|.*.fdb_latexmk|.*.fls|.*.log)" . && make build-fast; done
 
 clean:
 	@rm -f *{$(CLEAN_EXT)}
