@@ -20,7 +20,7 @@ Daher wird die resultierende Farbe eines Punktes im Raum $I(\bm{x})$ aus
 ambienten, diffusen und reflektierenden Anteilen berechnet:
 
 \begin{gather}
-    I(\bm{x}) = \text{Amount}_{\text{ambient}} + \text{Amount}_{\text{diffuse}} + \text{Amount}_{\text{specular}}
+    I(\bm{x}) = I_{\text{ambient}} + I_{\text{diffuse}} + I_{\text{specular}}
 \end{gather}
 
 Wie bereits zuvor in Kapitel~\ref{subsec:local_illumination_models} erwähnt,
@@ -28,46 +28,96 @@ wird der emissive Term bewusst weggelassen, da keine emissiven Materialen
 dargestellt werden sollen. Als Lichtquelle wird eine einzelne direktionale
 Lichtquelle gewählt.
 
-Der \textit{ambiente Anteil} $\text{Amount}_{\text{ambient}}$ ergibt sich dann wie
+Der \textit{ambiente Anteil} $I_{\text{ambient}}$ ergibt sich dann wie
 folgt:
 
 \begin{gather}
-    \text{Amount}_{\text{ambient}} = k_{\text{ambient}}(\bm{x}) \cdot
-                              I_{\text{ambient}}
+    \text{I}_{\text{ambient}} = k_{\text{ambient}}(\bm{x}) \cdot L_{\text{ambient}}
 \end{gather}
 
 wobei $k_{\text{ambient}}(\bm{x})$ den ambienten Faktor des
-Punktes $\bm{x}$ und $I_{\text{ambient}}$ die Farbe des eingehenden ambienten
+Punktes $\bm{x}$ und $L_{\text{ambient}}$ die Farbe des eingehenden ambienten
 Lichtes ist.
 
-Der \textit{diffuse Anteil} $\text{Amount}_{\text{diffuse}}$ ergibt sich wie folgt:
+Der \textit{diffuse Anteil} $I_{\text{diffuse}}$ ergibt sich wie folgt:
 
 \begin{gather}
-    \text{Amount}_{\text{diffuse}} = k_{\text{diffuse}}(\bm{x}) \cdot
-                              I_{\text{diffuse}} \cdot \max(\bm{n} \cdot
-                              \bm{l}, 0)
+    I_{\text{diffuse}} = k_{\text{diffuse}}(\bm{x}) \cdot L_{\text{diffuse}} \cdot \max(\bm{n} \cdot \bm{l}, 0)
 \end{gather}
 
 wobei $\bm{x}$ ein Punkt $(x, y, z)$ auf einer impliziten Oberfläche $A$,
 $k_{\text{diffuse}}(\bm{x})$ den diffusen Faktor am Punkt $\bm{x}$ und
-$I_{\text{diffuse}}$ die Farbe des eingehenden diffusen Lichtes ist. Das
-Punktprodukt zwischen der Einheitsnormalen $\bm{n}$ des Punktes $\bm{x}$ und
-dem Einheitsvektor $l$ stellt die Richtung der Lichtquelle ausgehend von dem
-Punkt $\bm{x}$ dar.
+$L_{\text{diffuse}}$ die Farbe des eingehenden diffusen Lichtes ist. Die
+Richtung der Lichtquelle, ausgehend von Punkt $\bm{x}$, ergibt sich durch das
+Punktprodukt zwischen der Einheitsnormalen $\bm{n}$ des Punktes und dem
+Einheitsvektor $\bm{l}$.
 
-Der \textit{reflektierende Anteil} $\text{Amount}_{\text{specular}}$ ergibt sich
+Der \textit{reflektierende Anteil} $I_{\text{specular}}$ ergibt sich
 wie folgt:
 
 \begin{gather}
-    \text{Amount}_{\text{specular}} = c_{\text{facing}} \cdot k_{s}(\bm{x}) \cdot I_{\text{specular}} \cdot \max{(\bm{n} \cdot \bm{h}, 0)}^{k_{e}}
+    I_{\text{specular}} = c_{\text{facing}} \cdot k_{s}(\bm{x}) \cdot L_{\text{specular}} \cdot \max{(\bm{n} \cdot \bm{h}, 0)}^{k_{e}}
 \end{gather}
 
-wobei $k_{\text{specular}}(\bm{x})$ den reflektierenden Faktor des Punktes
-$\bm{x}$ und $I_{\text{specular}}$ die Farbe des eingehenden reflektierenden
-Lichtes ist. Bei $\bm{h}$ handelt es sich um einen Einheitsvektor, welcher in
-der Hälfte zwischen der Blickrichtung des Betrachters bzw.\ der Kamera
-($\vv{V}$) und $\bm{l}$ der Richtung der Lichtquelle ausgehend von dem Punkt
-$\bm{x}$ ist.
+wobei $k_{\text{specular}}(\bm{x})$ den reflektierenden Faktor des
+Punktes $\bm{x}$ und $L_{\text{specular}}$ die Farbe des eingehenden
+reflektierenden Lichtes ist. Bei $\bm{h}$ handelt es sich um einen
+Einheitsvektor, welcher in der Hälfte zwischen der Blickrichtung des
+Betrachters bzw.\ der Kamera ($\vv{V}$) und $\bm{l}$ der Richtung der
+Lichtquelle ausgehend von dem Punkt $\bm{x}$ ist. Der Exponent $k_{e}$
+gibt an, wie rau bzw.\ wie spiegelnd die Oberfläche am Punkt $\bm{x}$
+ist. Der Faktor $c_{\text{facing}}$ definiert, ob die Oberfläche
+überhaupt einen reflektierenden Anteil hat:
+
+\begin{equation}
+    \[ c_{\text{facing}} =
+        \begin{cases}
+            0 & \quad \text{if } \bm{n} \cdot \bm{l} \leq 0\\
+            1 & \quad \text{if } \bm{n} \cdot \bm{l} > 0 \\
+        \end{cases}
+    \]
+\end{equation}
+
+Für die Berechnung der Lichtintensität bzw.\ der Farbe einer Oberfläche
+wird die Normale der Oberfläche benötigt. Gemäss~\cite{hart_ray_1989}
+kann diese mittels des Gradienten des Distanzfeldes
+eines Punktes einer impliziten Oberfläche berechnet werden:
+
+\begin{gather}
+    \bm{n}_{x} = f(x + \varepsilon, y, z) - f(x - \varepsilon, y, z) \\
+    \bm{n}_{y} = f(x, y + \varepsilon,  z) - f(x, y - \varepsilon,  z) \\
+    \bm{n}_{z} = f(x, y, z + \varepsilon) - f(x, y, z - \varepsilon) \\
+\end{gather}
+
+wobei $\bm{n} = \begin{bmatrix} x_{n} \\ y_{n} \\ z_{n} \end{bmatrix}$
+die Normale der Oberfläche in Form eines Vektors, und $f$ eine
+Distanzfunktion ist.
+
+\cite{hart_ray_1989} gibt dabei $\varepsilon$ als die minimale
+Inkrementation eines (Licht-) Strahles an und definiert diesen als
+Sichtbarkeitsfunktion $\Gamma$ in Abhängikeit der euklidischen Distanz
+$d$ des Betrachters / der Kamera zur aktuellen Position des (Licht-)
+Strahles:
+
+\begin{gather}
+    \Gamma(d) = \alpha d^{\delta} \\
+    d = |r_{n} - r_{0}| \\
+    \varepsilon = \Gamma_{alpha, \gamma}(|r_n - r_0|)
+\end{gather}
+
+Der Gradient einer Funktion $f: \mathbb{R}^{n} \to \mathbb{R}$ wird wie
+folgt berechnet:
+
+\begin{gather}
+    \text{grad} f = \nabla f = \begin{bmatrix}
+        \frac{\partial f}{\partial x_{1}} \\
+        \frac{\partial f}{\partial x_{2}} \\
+        \vdots \\
+        \frac{\partial f}{\partial x_{n}} 
+    \end{bmatrix}\\
+    \text{grad} f = f_{x}\bm{i} + f_{y}\bm{j} + f_{z}\bm{k}\\
+\end{gather}
+
 
 \subsection{Rendering}
 \label{sec:rendering_implicit_surfaces_Rendering}
