@@ -26,7 +26,9 @@ ambienten, diffusen und reflektierenden Anteilen berechnet:
 Wie bereits zuvor in Kapitel~\ref{subsec:local_illumination_models} erwähnt,
 wird der emissive Term bewusst weggelassen, da keine emissiven Materialen
 dargestellt werden sollen. Als Lichtquelle wird eine einzelne direktionale
-Lichtquelle gewählt.
+Lichtquelle gewählt. Analog zu den vorherigen Abschnitten ist $\bm{x}$
+in den folgenden Abschnitten ein Punkt $(x, y, z)$ auf einer impliziten
+Oberfläche $A$.
 
 Der \textit{ambiente Anteil} $I_{\text{ambient}}$ ergibt sich dann wie
 folgt:
@@ -45,18 +47,17 @@ Der \textit{diffuse Anteil} $I_{\text{diffuse}}$ ergibt sich wie folgt:
     I_{\text{diffuse}} = k_{\text{diffuse}}(\bm{x}) \cdot L_{\text{diffuse}} \cdot \max(\bm{n} \cdot \bm{l}, 0)
 \end{gather}
 
-wobei $\bm{x}$ ein Punkt $(x, y, z)$ auf einer impliziten Oberfläche $A$,
-$k_{\text{diffuse}}(\bm{x})$ den diffusen Faktor am Punkt $\bm{x}$ und
-$L_{\text{diffuse}}$ die Farbe des eingehenden diffusen Lichtes ist. Die
-Richtung der Lichtquelle, ausgehend von Punkt $\bm{x}$, ergibt sich durch das
-Punktprodukt zwischen der Einheitsnormalen $\bm{n}$ des Punktes und dem
-Einheitsvektor $\bm{l}$.
+wobei $k_{\text{diffuse}}(\bm{x})$ den diffusen Faktor am Punkt $\bm{x}$
+und $L_{\text{diffuse}}$ die Farbe des eingehenden diffusen Lichtes ist.
+Die Richtung der Lichtquelle, ausgehend von Punkt $\bm{x}$, ergibt sich
+durch das Punktprodukt zwischen der Einheitsnormalen $\bm{n}$ des
+Punktes und dem Einheitsvektor $\bm{l}$.
 
 Der \textit{reflektierende Anteil} $I_{\text{specular}}$ ergibt sich
 wie folgt:
 
 \begin{gather}
-    I_{\text{specular}} = c_{\text{facing}} \cdot k_{s}(\bm{x}) \cdot L_{\text{specular}} \cdot \max{(\bm{n} \cdot \bm{h}, 0)}^{k_{e}}
+    I_{\text{specular}} = n_{\text{facing}} \cdot k_{s}(\bm{x}) \cdot L_{\text{specular}} \cdot \max{(\bm{n} \cdot \bm{h}, 0)}^{k_{e}}
 \end{gather}
 
 wobei $k_{\text{specular}}(\bm{x})$ den reflektierenden Faktor des
@@ -66,16 +67,14 @@ Einheitsvektor, welcher in der Hälfte zwischen der Blickrichtung des
 Betrachters bzw.\ der Kamera ($\vv{V}$) und $\bm{l}$ der Richtung der
 Lichtquelle ausgehend von dem Punkt $\bm{x}$ ist. Der Exponent $k_{e}$
 gibt an, wie rau bzw.\ wie spiegelnd die Oberfläche am Punkt $\bm{x}$
-ist. Der Faktor $c_{\text{facing}}$ definiert, ob die Oberfläche
+ist. Der Faktor $n_{\text{facing}}$ definiert, ob die Oberfläche
 überhaupt einen reflektierenden Anteil hat:
 
 \begin{equation}
-    \[ c_{\text{facing}} =
-        \begin{cases}
-            0 & \quad \text{if } \bm{n} \cdot \bm{l} \leq 0\\
-            1 & \quad \text{if } \bm{n} \cdot \bm{l} > 0 \\
-        \end{cases}
-    \]
+    n_{\text{facing}} = \begin{cases}
+        0 & \quad \text{if } \bm{n} \cdot \bm{l} \leq 0\\
+        1 & \quad \text{if } \bm{n} \cdot \bm{l} > 0 \\
+    \end{cases}
 \end{equation}
 
 Für die Berechnung der Lichtintensität bzw.\ der Farbe einer Oberfläche
@@ -93,18 +92,6 @@ wobei $\bm{n} = \begin{bmatrix} x_{n} \\ y_{n} \\ z_{n} \end{bmatrix}$
 die Normale der Oberfläche in Form eines Vektors, und $f$ eine
 Distanzfunktion ist.
 
-\cite{hart_ray_1989} gibt dabei $\varepsilon$ als die minimale
-Inkrementation eines (Licht-) Strahles an und definiert diesen als
-Sichtbarkeitsfunktion $\Gamma$ in Abhängikeit der euklidischen Distanz
-$d$ des Betrachters / der Kamera zur aktuellen Position des (Licht-)
-Strahles:
-
-\begin{gather}
-    \Gamma(d) = \alpha d^{\delta} \\
-    d = |r_{n} - r_{0}| \\
-    \varepsilon = \Gamma_{alpha, \gamma}(|r_n - r_0|)
-\end{gather}
-
 Der Gradient einer Funktion $f: \mathbb{R}^{n} \to \mathbb{R}$ wird wie
 folgt berechnet:
 
@@ -118,6 +105,49 @@ folgt berechnet:
     \text{grad} f = f_{x}\bm{i} + f_{y}\bm{j} + f_{z}\bm{k}\\
 \end{gather}
 
+\cite{hart_ray_1989} gibt dabei $\varepsilon$ als die minimale
+Inkrementation eines (Licht-) Strahles an und definiert diesen als
+Sichtbarkeitsfunktion $\Gamma_{\alpha, \delta}$:
+
+\begin{gather}
+    \Gamma(d) = \alpha d^{\delta}
+\end{gather}
+
+in Abhängikeit der euklidischen Distanz
+$d$ des Betrachters / der Kamera zur aktuellen Position des (Licht-)
+Strahles:
+
+\begin{gather}
+    d = |r_{\bm{n}} - r_{0}|
+\end{gather}
+
+wobei $\delta$ ein so genannter ``dept-cueing'' (oder auch ``foldback'',
+``a process for returning a signal to a performer
+instantly''~\cite{_collins_2015}) Exponent und $\alpha$ ein empirischer
+Anteil, welcher die Tiefenauflösung des Objektes definiert, ist.
+Details dazu finden sich unter~\cite{hart_ray_1989}[S. 293, Abschnitt
+4.2 --- `Clarity'].
+
+Es folgt also:
+
+\begin{gather}
+    \varepsilon = \Gamma_{\alpha, \delta}(|r_{\bm{n}} - r_0|)
+\end{gather}
+
+Die Korrektheit der Berechnung der Normalen $\bm{n}$ hängt von der
+Grösse von $\varepsilon$ ab. Daher wird für gewöhnlich ein kleiner Wert
+für $\varepsilon$ gewählt.
+
+Die Normale der Oberfläche sollte schliesslich noch normalisiert werden.
+
+\cite{hart_ray_1989} schreibt weiter, dass die oben genannte Gradiente,
+bestehend aus 6 Punkten, durch Hinzunahme von Punkten, welche eine
+gemeinsame Kante haben, erweitert werden kann. Dies erzeugt eine
+Gradiente bestehend aus 18 Punkten. Werden noch die Punkte
+hinzugenommen, welche gemeinsame Eckpunkte haben, so ergibt sich eine
+Gradiente bestehend aus 26 Punkten.
+Dies macht jedoch nur dann Sinn, wenn die Gradiente mit 6 Punkten eine
+unzureichende Genauigkeit liefert.
 
 \subsection{Rendering}
 \label{sec:rendering_implicit_surfaces_Rendering}
