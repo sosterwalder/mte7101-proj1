@@ -43,6 +43,8 @@
 \usepackage{pgfgantt}                                                   % Provides GANTT charts
 \usepackage{array}                                                      % ?
 \usepackage{esvect}                                                     % Provides nicer vector display in math mode
+\usepackage[owncaptions]{vhistory}                                      % Provides framework for creating history outline
+\renewcommand{\vhhistoryname}{Versionen}
 
 %---------------------------------------------------------------------------
 
@@ -198,13 +200,12 @@
 
 % Intro:
 %---------------------------------------------------------------------------
-%\begin{document}                                % Start Document
-\settocdepth{section}                                                       % Set depth of toc
-\pagenumbering{roman}                                                       
+%\begin{document}                             % Start Document
+\settocdepth{section}                         % Set depth of toc
+\pagenumbering{roman}
 %---------------------------------------------------------------------------
 
 \input{inc/static/doc_title}                  % Titel der Arbeit aus Datei titel.tex lesen
-\input{inc/static/current_version}                % Versionsnummer und -datum aus Datei version.tex lesen
 
 % Set up header and footer
 %---------------------------------------------------------------------------
@@ -215,7 +216,7 @@
   {}
   {}
   {}
-  {\color{bfhgrey} \footnotesize \titel, Version \versionnumber, \versiondate}
+  {\color{bfhgrey} \footnotesize \titel, Version \vhCurrentVersion, \vhCurrentDate}
   {}
   {\color{bfhgrey} \thepage}
 
