@@ -49,6 +49,10 @@ acs-*.bib
 *.snm
 *.vrb
 
+# vhistory
+*.ver
+*.hst
+
 #(e)ledmac/(e)ledpar
 *.end
 *.[1-9]
