@@ -1,5 +1,5 @@
 No.:              04
-Date:             18.10.2015 14:00 -
+Date:             18.10.2015 14:00 -14:30
 Place:            Skype
 Involved persons: Claude Fuhrer    (CF)
                   Sven Osterwalder (SO)
@@ -11,21 +11,32 @@ Presentation and discussion of the current state of the work (SO)
 -----------------------------------------------------------------
 
 * Illustration Phong model
-  * Verkleinern
-  * Alle Vektoren auf gleiche Länge, Polarkoordinaten
+  * illustration is too big, should be a bit scaled (CF)
+  (TODO, added)
+  * Normalize vectors to same length, use polarcoordinates eventually (CF)
+  (TODO, added)
 
 * Illustration Ray Tracing
-  * Auflösung besser
-  * Schrift grösser
-  * Bild erklären
-  * Alle Vektoren auf gleiche Länge, Polarkoordinaten
+  * Use a better resolution (CF)
+  (TODO, added)
+  * Make the fonts a bit bigger (CF)
+  (TODO, added)
+  * Explain the image (CF)
+  (TODO, added)
+  * Normalize vectors to same length, use polarcoordinates eventually (CF)
+  (TODO, added)
 
-* Auflistungen
-  * Auf Deutsch auch ein Punkt? (CF)
-    * Ist sicher richtig, da ngerman/babel verwendet wird (CF)
+* Listings
+  * Do listing in german also have a bullet in front or rather a dash? (CF)
+    * A bullet appears to be right, as the ngerman package with the babel
+      option is used (CF)
 
 Further steps/proceedings (CF, SO)
 ----------------------------------
+
+* Finish writing on chapter about rendering implicit surfacs (SO, CF)
+* Add a chapter about an eventual prototype (SO, CF)
+* Process TODOs (SO, CF)
 
 
 TODO for the next meeting
