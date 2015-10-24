@@ -8,18 +8,46 @@
 \chapter*{}
 \label{chap:versionen}
 
-\begin{textblock}{180} (15,150)
-\color{black}
-\begin{huge}
-Versionen
-\end{huge}
-\vspace{10mm}
-
-\fontsize{10pt}{18pt}\selectfont
-\begin{tabbing}
-xxxxxxxxxxx\=xxxxxxxxxxxxxxx\=xxxxxxxxxxxxxxxxxx\=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx     \kill
-\textbf{Version}    \> \textbf{Datum}   \> \textbf{Status}      \> \textbf{Bemerkungen}               \\
-0.1                 \> 25.09.2015       \> Entwurf              \> Initiale Erstellung des Dokumentes \\
-\end{tabbing}
-
-\end{textblock}
+\begin{versionhistory}
+    \vhEntry{0.1}{25.09.2015}{SO}{Initiale Erstellung des Dokumentes}
+    \vhEntry{0.2}{27.09.2015}{SO}{Entwickeln einer initialen Struktur,
+        Dokumentaufbau, Entwicklung Kapitel~\ref{chap:procedure}, Beschreibung von
+        Ray Tracing in Kapitel~\ref{chap:theoretical_background}, Hinzufügen des
+        Kapitels~\ref{chap:20_administrative}, Einführen von TODO-Notizen
+    }
+    \vhEntry{0.3}{29.09.2015}{SO}{Einführen von Meeting
+        Minutes~\ref{chap:10_meeting_minutes}, Erweitern des
+        Kapitels~\ref{chap:theoretical_background} um Belechtungsmodelle, Beschreiben von
+        lokalen Beleuchtungsmodellen
+    }
+    \vhEntry{0.4}{04.10.2015}{SO}{Hinzufügen von Standards und
+        Richtlinien~\ref{subsec:standards_guidelines}, Erweitern des
+        Kapitels~\ref{chap:theoretical_background} um globale
+        Belechtungsmodelle~\ref{subsec:global_illumination_models} sowie Ray
+        Casting~\ref{subsec:ray_casting}, Entfernen der Schriftart `cmbright', Hinzufügen
+        des Kapitels über (implizite) Oberflächen~\ref{sec:surfaces}
+    }
+    \vhEntry{0.5}{11.10.2015}{SO}{Neuordnung des
+        Kapitels~\ref{chap:theoretical_background}: Hinzufügen des Kapitels über Ray
+        Tracing~\ref{sec:ray_casting_tracing} sowie über Darstellung von impliziten
+        Oberflächen~\ref{sec:description_implicit_surfaces}
+    }
+    \vhEntry{0.6}{14.10.2015}{SO}{Hinzufügen von TODO-Notizen, Anpassung der
+        Textdarstellung in Formeln
+    }
+    \vhEntry{0.7}{16.10.2015}{SO}{Hinzufügen einer Illustration des
+        Phong-Beleuchtungmodelles in Kapitel~\ref{subsec:local_illumination_models},
+        Abarbeiten von TODO-Notizen in diversen Kapiteln, Erweitern des Kapitels über
+        (implizite) Oberflächen~\ref{sec:surfaces}
+    }
+    \vhEntry{0.8}{17.10.2015}{SO}{Hinzufügen einer Illustration des Ray Tracing
+        Algorithmus in Kapitel~\ref{subsec:global_illumination_models}
+    }
+    \vhEntry{0.9}{19.10.2015}{SO}{Beginn Kapitel über Rendering von impliziten
+        Oberflächen~\ref{sec:rendering_implicit_surfaces}
+    }
+    \vhEntry{0.10}{21.10.2015}{SO}{Erweiterung Kapitel über Rendering von
+        impliziten Oberflächen, Einführung Kapitel über die Umsetzung eines
+        Prototypen~\ref{chap:prototype}
+    }
+\end{versionhistory}
