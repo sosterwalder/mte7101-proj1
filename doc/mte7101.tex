@@ -228,28 +228,20 @@
 \renewcommand*{\footfont}{\normalfont}
 %---------------------------------------------------------------------------
 
-% We need this as mr. gantt chart (teh package..) thinks text should be gray..
+% We need this as mr. gantt chart (teh package..) thinks text should be gray
+% otherwise..
 \color{black}
 
 \begin{document}
 
 % Title Page and Abstract
 %---------------------------------------------------------------------------
-\include{inc/static/title}          % activate for Titelseite mit Bild
-\cleardoublepage{}
-\phantomsection{}
-\include{inc/static/versions}
-\phantomsection{}
-\cleardoubleemptypage{}
-\listoftodos{}
-\phantomsection{}
-\cleardoubleemptypage{}
 \setcounter{page}{1}
-\cleardoublepage{}
-\phantomsection{}
+\include{inc/static/title}
+\include{inc/static/versions}
+\listoftodos{}
 \addcontentsline{toc}{chapter}{Management Summary}
 \include{inc/static/management_summary}
-\cleardoubleemptypage{}
 %---------------------------------------------------------------------------
 
 % Make sure Umlauts are getting displayed correctly.
