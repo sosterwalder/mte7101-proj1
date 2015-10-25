@@ -1,5 +1,5 @@
 No.:              05
-Date:             25.10.2015 14:00 -
+Date:             25.10.2015 14:00 - 14:30
 Place:            Skype
 Involved persons: Claude Fuhrer    (CF)
                   Sven Osterwalder (SO)
@@ -10,7 +10,24 @@ Meeting minutes 2015-10-25
 Presentation and discussion of the current state of the work (SO)
 -----------------------------------------------------------------
 
-* Yet to be defined
+* Version
+  * Better like this
+* Citations
+  * May not be at the beginning of a sentence
+  * Style is ok
+    * Define citation style (CF)
+  * When using authors name use it and not only the abbrevation
+* Introduction
+  * May be rewritten when at end of the project work
+* Project schedule
+  * Adapt to current situation
+    * Prototype
+* Prototype
+  * Add version information for all used software (clang, GLEW CMake)
+  * Tabellarische Darstellung
+* Local illumination models
+    * Phong model, equation 5.2 (CF)
+      * Explan L_{i}
 
 Further steps/proceedings (CF, SO)
 ----------------------------------
@@ -23,10 +40,9 @@ TODO for the next meeting
 * Present the current state of the work (SO)
 * Discuss the current state of the work (CF, SO)
 * Define further steps/proceeding (CF, SO)
-* Define citation style (CF)
 
 Scheduling of the next meeting
 ==============================
 
-Date:  tbd
-Place: Skype, irl if needed
+Date:  02.11.2015 07:30
+Place: Spetaccolo Biel
