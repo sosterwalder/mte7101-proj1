@@ -1,3 +1,6 @@
+## Swap files made by Vi
+*.swp
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
