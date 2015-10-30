@@ -14,8 +14,10 @@ static long timeGetTime( void )
 
 int main(int argc, char *argv[])
 {
-    bool done       = false;
-    int  returnCode = 0;
+    bool  done          = false;
+    int   returnCode    = 0;
+    float resolution[2] = {1024, 768};
+    long  currentTime   = 0.0;
 
     if (!glfwInit()) {
         auto message = "Error initializing GLFW";
@@ -23,7 +25,13 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    auto window     = glfwCreateWindow(1024, 768, "MTE7101 - project 1", nullptr, nullptr);
+    auto window     = glfwCreateWindow(
+        resolution[0],
+        resolution[1],
+        "MTE7101 - project 1",
+        nullptr,
+        nullptr
+    );
 
     try {
         glfwMakeContextCurrent(window);
