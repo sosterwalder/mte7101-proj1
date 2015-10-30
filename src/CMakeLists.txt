@@ -19,12 +19,16 @@ if(GLFW_FOUND)
 endif(GLFW_FOUND)
 
 include_directories(${GLFW_INCLUDE_DIRS})
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/../inc)
 
 set(SOURCES
+    fatal_exception.hpp
     main.cpp
     main.hpp
-    fatal_exception.hpp
+    shader.cpp
+    shader.hpp
+    shader_factory.cpp
+    shader_factory.hpp
 )
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 add_executable(mte7101 ${SOURCES})
@@ -34,6 +38,9 @@ target_link_libraries(mte7101
     ${GLU_LIBRARY}
     ${EXTRA_LIBS}
     ${GLEW_LIBRARY}
+    boost_system
+    boost_filesystem
+    boost_regex
 )
 
 set_target_properties(mte7101 PROPERTIES
