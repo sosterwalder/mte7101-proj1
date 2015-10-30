@@ -48,8 +48,9 @@ int main(int argc, char *argv[])
         cout << "Renderer: " << renderer << endl;
         cout << "Supported OpenGL version: " << version << endl;
 
-        // TODO: Load shaders
-
+        ShaderFactory::instance().loadShaders();
+        currentTime = timeGetTime();
+ 
         while (!glfwWindowShouldClose(window) && !done) {
             // TODO: Get shader, bind and unbind
 
@@ -74,6 +75,8 @@ int main(int argc, char *argv[])
 
         returnCode = 1;
     }
+
+    ShaderFactory::instance().freeShaders();
 
     if (window) {
         glfwTerminate();
