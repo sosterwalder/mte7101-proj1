@@ -2,6 +2,16 @@
 
 using namespace std;
 
+
+static long timeGetTime( void )
+{
+    struct timeval now;
+
+    gettimeofday(&now, 0);
+
+    return (long)((now.tv_sec*1000) + (now.tv_usec/1000));
+}
+
 int main(int argc, char *argv[])
 {
     bool done       = false;
