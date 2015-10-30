@@ -52,7 +52,18 @@ int main(int argc, char *argv[])
         currentTime = timeGetTime();
  
         while (!glfwWindowShouldClose(window) && !done) {
-            // TODO: Get shader, bind and unbind
+            Shader& shader = ShaderFactory::instance().getShader("sphere_tracer");
+            shader.bind();
+
+            GLhandleARB programId = shader.getProgram();
+
+            int vec2Resolution = glGetUniformLocation(programId, "globalResolution");
+            glUniform2fv(vec2Resolution, 1, resolution);
+            int floatGlobalTime = glGetUniformLocation(programId, "globalTime");
+            glUniform1f(floatGlobalTime, 0.001f * (timeGetTime() - currentTime));
+
+            glRects(-1, -1, 1, 1);
+            ShaderFactory::instance().unbindShader();
 
             glfwSwapBuffers(window);
             glfwPollEvents();
