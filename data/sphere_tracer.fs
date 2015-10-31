@@ -81,7 +81,7 @@ vec2 scene(in vec3 position)
     vec3  boxDimension   = vec3(0.8);
 
     vec3 sphereOffset  = vec3(-2.0, 1.0, -2.0);
-    vec3 boxOffset     = vec3(-3.0, 1.0, 0.0);
+    vec3 boxOffset     = vec3(-3.0, 1.0,  0.0);
     vec3 box2Offset    = vec3(-2.0, 1.0, -2.0);
 
     vec2 res = union(
@@ -107,6 +107,28 @@ vec2 scene(in vec3 position)
     res = union(
         res,
         subtraction
+    );
+
+    return res;
+}
+
+vec2 testScene(in vec3 position)
+{
+    float sphereId      = 0.0;
+    float sphere2Id     = 1.0;
+    float sphereRadius  = 1.0;
+    vec3  sphereOffset  = vec3(-2.0, 1.0, -2.0);
+    vec3  sphere2Offset = vec3(2.5, 1.0,  -2.0);
+
+    vec2 res = union(
+        vec2(
+            sphere(position - sphereOffset, sphereRadius),
+            sphereId
+        ),
+        vec2(
+            sphere(position - sphere2Offset, sphereRadius),
+            sphere2Id
+        )
     );
 
     return res;
@@ -148,7 +170,8 @@ vec3 calcNormal(in vec3 position, in float eps) {
     return normalize(normal);
 }
 
-vec2 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, float precision, int steps)
+vec2 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float
+        maxDistance, in float precision, in int steps)
 {
     float latest    = precision * 2.0;
     float distance  = 0.0;
