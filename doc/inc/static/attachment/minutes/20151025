@@ -10,29 +10,48 @@ Meeting minutes 2015-10-25
 Presentation and discussion of the current state of the work (SO)
 -----------------------------------------------------------------
 
-* Version
-  * Better like this
+* Versioning
+  * Added new versioning style, based on versionhistory (SO)
+    * This is much better than the table-based approach used before (CF)
+
 * Citations
-  * May not be at the beginning of a sentence
-  * Style is ok
-    * Define citation style (CF)
-  * When using authors name use it and not only the abbrevation
+  * May not be at the beginning of a sentence (CF)
+  * Style is ok (CF)
+  * When referring to authors, use their name and not only the abbrevation
+    provided by the citation (CF)
+    (TODO)
+
 * Introduction
-  * May be rewritten when at end of the project work
+  * May resp. will most likely need to be rewritten at end of the
+    project work (CF)
+    (TODO, added)
+
 * Project schedule
-  * Adapt to current situation
-    * Prototype
+  * Adapt to current situation (CF)
+    * Prototype is missing (CF)
+  (TODO, added)
+
 * Prototype
-  * Add version information for all used software (clang, GLEW CMake)
-  * Tabellarische Darstellung
+  * Add version information for all used software (clang, GLEW and CMake
+    are missing e.g.) (CF)
+  * Use a tabular representation for maintain readability (CF)
+  (TODO, added)
+
 * Local illumination models
     * Phong model, equation 5.2 (CF)
-      * Explan L_{i}
+      * Explan L_{i} (CF)
+  (TODO, added)
 
 Further steps/proceedings (CF, SO)
 ----------------------------------
 
-* Yet to be defined
+* Process TODOs
+* Begin working on the prototype
+* Add most relevant shader code to the prototype section
+* Expand basic chapters about illumination models according to TODOs
+* Expand chapters "scope" and "administrative"
+* Re-work introduction
+* Add management summary
 
 TODO for the next meeting
 =========================
