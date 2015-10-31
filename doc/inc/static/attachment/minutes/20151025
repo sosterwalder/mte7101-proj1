@@ -35,7 +35,7 @@ Presentation and discussion of the current state of the work (SO)
   * Add version information for all used software (clang, GLEW and CMake
     are missing e.g.) (CF)
   * Use a tabular representation for maintain readability (CF)
-  (TODO, added)
+  (DONE)
 
 * Local illumination models
     * Phong model, equation 5.2 (CF)
