@@ -5,20 +5,38 @@
 \chapter{Prototyp}
 \label{chap:prototype}
 
-Um das Sphere Tracing Verfahren nicht nur theoretisch zu behandeln, wird
-im Rahmen dieser Projektarbeit ein Prototyp erstellt. Dieser wird in
-C++11~\footnote{\url{https://isocpp.org/wiki/faq/cpp11\#cpp11-what}} und
-OpenGL
-4.5~\footnote{\url{https://www.opengl.org/registry/doc/glspec45.core.pdf}}
-umgesetzt und basiert auf der
-GLFW-Bibliothek~\footnote{\url{http://www.glfw.org}} in der Version 3.2.
-Um allfällige OpenGL-Erweiterungen (Extensions) nicht selbst verwalten
-zu müssen, wird GLEW~\footnote{\url{http://glew.sourceforge.net}}
-eingesetzt. Als Buildsystem kommt
-CMake~\footnote{\url{https://www.cmake.org}}, als Compiler
-clang~\footnote{\url{http://clang.llvm.org}} zum Einsatz.
+Um das Sphere Tracing Verfahren nicht nur theoretisch zu behandeln, wird im
+Rahmen dieser Projektarbeit ein Prototyp erstellt.  Dieser wird in C++11 und
+OpenGL umgesetzt und basiert auf der GLFW-Bibliothek. Um allfällige
+OpenGL-Erweiterungen (Extensions) nicht selbst verwalten zu müssen, wird GLEW
+eingesetzt. Als Buildsystem kommt CMake, als Compiler GCC zum Einsatz. Um
+automatisch Shader erkennen und laden können (Dateien mit Dateiendung~.vs bzw.
+.fs) werden die Unterbibliotheken ``system'',  ``filesystem'' sowie
+``regex'' der Boost-Bibliothek eingesetzt.
 
-\todo[inline]{Use tabular format for describing components}
+Details der einzelnen Komponenten finden sich in der nachfolgenden Tabelle.
+
+
+\begin{tabular}{llp{10cm}l}
+    \toprule
+    \textbf{Komponente} & \textbf{Version} & \textbf{Beschreibung} & \textbf{Verweise} \\
+    \midrule
+    C++        & C++11   & Objektorientierte Programmiersprache &\protect\footnotemark\\
+    OpenGL     & 4.5     & Plattformunabhängige Programmierschnittstelle zur Entwicklung von 2D- und 3D-Computergrafikanwendungen~\cite{wikipedia_the_free_encyclopedia_opengl_2015} &\protect\footnotemark\\
+    GLFW       & 3.1.2   & OpenGL-Bibliothek, welche die Erstellung und Verwaltung von Fenstern sowie OpenGL-Kontexte vereinfacht~\cite{wikipedia_the_free_encyclopedia_glfw_2015} &\protect\footnotemark\\
+    GLEW       & 1.13    & OpenGL Extension Wrangler. Bibliothek zum Abfragen und Laden von OpenGL-Erweiterungen (Extensions)~\cite{wikipedia_the_free_encyclopedia_opengl_2015-1}     &\protect\footnotemark\\
+    CMake      & 3.3.2   & Software zur Verwaltung von Build-Prozessen von Software                                               &\protect\footnotemark\\
+    GCC        & 5.2     & GNU Compiler Collection. Compiler-System des GNU-Projektes                                             &\protect\footnotemark\\
+    Boost      & 1.59.0  & Freie Bibliothek bestehend aus einer Vielzahl von Unterbibliotheken, die den unterschiedlichsten Aufgaben von Algorithmen auf Graphen über Metaprogrammierung bis hin zu Speicherverwaltung dienen~\cite{wikipedia_the_free_encyclopedia_boost_2015} &\protect\footnotemark\\
+    \bottomrule
+\end{tabular}
+\footnotetext{\url{http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=50372}}
+\footnotetext{\url{https://www.opengl.org/registry/doc/glspec45.core.pdf}}
+\footnotetext{\url{http://www.glfw.org}}
+\footnotetext{\url{http://glew.sourceforge.net}}
+\footnotetext{\url{https://www.cmake.org}}
+\footnotetext{\url{http://gcc.gnu.org}}
+\footnotetext{\url{http://www.boost.org}}
 
 \section{Architektur}
 \label{sec:architecture}
@@ -68,8 +86,249 @@ in der untenstehenden Abbildung~\ref{fig:prototype_shaders} verdeutlicht.
     alle Rechte für das Bild liegen bei Marshall Astor
     (\url{http://www.marshallastor.com/}).}
 
-\section{Rendering}
-\label{sec:rendering}
+\section{Umsetzung}
+\label{sec:realization}
 
-\todo[inline]{Describe rendering algorithm as it will be used in
-    fragment shader}
+Nachfolgend werden die gemäss Kapitel~\ref{sec:description_implicit_surfaces}
+umgesetzten Konzepte genauer beschrieben. Es handelt sich dabei um Ausschnitte
+des umgesetzten Fragement-Shaders.
+
+Das eigentliche Sphere Tracing geschieht in der Funktion
+\textit{castRay}.  Diese hat als Parameter den Usprung eines Strahles
+(\textit{vec3 rayOrigin}), die Richtung eines Strahles (\textit{vec3
+    rayDirection}), die maximale Distanz (\textit{float maxDistance}),
+welche berechnet werden soll, die Präzision (\textit{float precision})
+sowie die Anzahl Durchgänge (\textit{int steps}).
+
+Ein Vergleich der letzten drei Parameter --- die maximale Distanz, die
+Präzision sowie die Anzahl Durchgänge --- findet sich in den
+Tabellen~\ref{table:sphere_tracing_distance},~\ref{table:sphere_tracing_precision}
+und~\ref{table:sphere_tracing_steps}.
+
+\begin{lstlisting}[language=GLSL,caption={Umsetzung des Sphere Tracings in
+        GLSL.},label={alg:glsl_sphere_tracing},captionpos=b,emph={castRay}]
+vec2 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in float precision, in int steps)
+{
+    float latest    = precision * 2.0;
+    float distance  = 0.0;
+    float type      = -1.0;
+    vec2  res       = vec2(-1.0, -1.0);
+
+    for(int i = 0; i < steps; i++) {
+        if (abs(latest) < precision || distance > maxDistance) {
+            continue;
+        }
+
+        vec2 result = scene(rayOrigin + rayDirection * distance);
+
+        latest     = result.x;
+        type       = result.y;
+        distance  += latest;
+    }
+
+    if (distance < maxDistance) {
+        res = vec2(distance, type);
+    }
+
+    return res;
+}
+\end{lstlisting}
+
+\begin{table}[H]\label{table:sphere_tracing_distance}
+    \centering
+    \caption{Vergleich des Distanz-Parameters anhand einer Beispielszene.}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+        \toprule
+            \textbf{Distanz: \textit{100.0}} &
+            \textbf{Distanz: \textit{9.0}}   &
+            \textbf{Distanz: \textit{6.3}}   \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_distance_full.png}
+            \newline
+            Alle in der Szene definierten Objekte sind sichtbar. &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_distance_less.png} \newline
+            Es ist nur noch das zum Betrachter näher liegende Objekt sichtbar. &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_distance_min.png} \newline
+            Es ist nur noch das zum Betrachter näher liegende Objekt
+            sichtbar, jedoch nicht mehr vollständig. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]\label{table:sphere_tracing_precision}
+    \centering
+    \caption{Vergleich des Präzisions-Parameters anhand einer Beispielszene.}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+        \toprule
+            \textbf{Präzision: \textit{0.00001}} &
+            \textbf{Präzision: \textit{0.1}}     &
+            \textbf{Präzision: \textit{1.0}}     \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_precision_full.png} \newline
+            Die Kugel ist weist keinerlei sichtbare Abstufungen auf. &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_precision_min.png} \newline
+            Die Kugel weist am unteren linken Rand sichtbare Farbabstufungen auf. &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_precision_pos.png} \newline
+            Die Kugel wird nicht mehr korrekt dargestellt. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]\label{table:sphere_tracing_steps}
+    \centering
+    \caption{Vergleich des Parameters zur Bestimmung der Anzahl der
+        Durchgänge anhand einer Beispielszene.}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+        \toprule
+            \textbf{Anzahl Schritte: \textit{100}} &
+            \textbf{Anzahl Schritte: \textit{10}}  &
+            \textbf{Anzahl Schritte: \textit{5}}   \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_steps_full.png} \newline
+            Alle in der Szene definierten Objekte sind korrekt sichtbar. &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_steps_less.png} \newline
+            Die Grenze zwischen den in der Szene definierten Objekten
+            ist bereits nicht mehr eindeutig. &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_steps_min.png} \newline
+            Die Szene ist als solche nicht mehr erkennbar, es erfolgt
+            keine klare Trennung zwischen den einzelnen Objekten mehr.  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Von den unter Kapitel~\ref{subsec:implicit_surfaces_ops} beschriebenen
+Operationen wurden die Operationen Vereinigung, Subtraktion sowie Intersektion
+umgesetzt.
+
+\begin{lstlisting}[language=GLSL,caption={Umsetzung von Operationen für implizite Oberflächen in GLSL.},label={alg:glsl_ops},captionpos=b,emph={subtract,union,intersect}]
+float subtract(float a, float b)
+{
+    return max(-b, a);
+}
+
+vec2 union(vec2 a, vec2 b)
+{
+    return (a.x < b.x) ? a : b;
+}
+
+vec2 intersect(vec2 a, vec2 b)
+{
+    return (a.x > b.x) ? a : b;
+}
+\end{lstlisting}
+
+Von den unter Kapitel~\ref{subsec:implicit_surfaces_primitives} beschriebenen
+Primitiven wurden die Primitiven Ebene sowie Kugel umgesetzt.
+
+\begin{lstlisting}[language=GLSL,caption={Umsetzung von Primitiven in Form von impliziten Oberflächen in GLSL.},label={alg:glsl_primitives},captionpos=b,emph={plane,sphere,box}]
+float plane(vec3 position)
+{
+    return position.y;
+}
+
+float sphere(vec3 position, float radius)
+{
+    return length(position) - radius;
+}
+
+float box(vec3 position, vec3 dimension)
+{
+    position = abs(position) - dimension;
+    return max(max(position.x, position.y), position.z);
+}
+\end{lstlisting}
+
+Verwendete Parameter sind dabei jeweils die (gewünschte) Position des Objektes
+(\textit{vec3 position}) sowie der Radius bzw.\ die Dimension
+(\textit{float radius} bzw. \textit{vec3 dimension}).
+
+Als Beleuchtungsmodell wurde das unter
+Kapitel~\ref{sec:rendering_implicit_surfaces} beschriebene
+Phong-Beleuchtungsmodell umgesetzt.
+
+
+\begin{lstlisting}[language=GLSL,caption={Umsetzung des Phong-Beleuchtungsmodelles in GLSL.},label={alg:glsl_lighting},captionpos=b,emph={calcLighting}]
+vec3 calcLighting(vec3 normal, vec3 rayDirection) {
+
+    vec3 lightDirection     = normalize(vec3(0.0, 4.0, 5.0));
+
+    vec3 ambientColor       = vec3(0.05, 0.15, 0.2);
+    float kAmbient          = clamp(0.5 + 0.5 * normal.y, 0.0, 1.0);
+    vec3 ambient            = kAmbient * ambientColor;
+
+    vec3 diffuseColor       = vec3(0.2, 0.6, 0.8);
+    float kDiffuse          = clamp(dot(lightDirection, normal), 0.0, 1.0);
+    vec3 diffuse            = kDiffuse * diffuseColor;
+
+    vec3 specularColor      = vec3(1.0);
+    float kSpecularExponent = 24.0;
+    vec3 h                  = normalize(-rayDirection + lightDirection);
+    float nFacing           = clamp(dot(lightDirection, normal), 0.0, 1.0);
+    float kSpecular         = pow(clamp(dot(h, normal), 0.0, 1.0), kSpecularExponent);
+    vec3 specular           = nFacing * kSpecular * specularColor;
+
+    vec3 color              = ambient + diffuse + specular;
+
+    return color;
+}
+\end{lstlisting}
+
+Als Parameter werden hier ein Normalvektor einer Oberfläche ($\bm{n}$)
+sowie die Richtung eines eingehenden Strahles (also die Blichrichtung
+des Betrachters bzw.\ der Kamera, $\vv{V}$) benötigt.
+Wie oben ersichtlich ist, wird zuerst die Richtung der Lichtquelle definiert,
+danach werden die einzelnen Anteile des Lichtes $I_{\text{ambient}}$,
+$I_{\text{diffuse}}$ sowie $I_{\text{sepcular}}$ berechnet.
+
+Die Normale einer Oberfläche wird wie unter
+Kapitel~\ref{sec:rendering_implicit_surfaces_lighting} beschrieben
+berechnet.
+
+\begin{lstlisting}[language=GLSL,caption={Berechnung der Normalen einer
+        impliziten Oberfläche in
+        GLSL.},label={alg:glsl_normal},captionpos=b,emph={calcNormal}]
+vec3 calcNormal(in vec3 position, in float eps) {
+
+    vec3 epsilon = vec3(eps, 0.0, 0.0);
+    vec3 normal  = vec3(
+        scene(position + epsilon.xyy).x - scene(position - epsilon.xyy).x,
+        scene(position + epsilon.yxy).x - scene(position - epsilon.yxy).x,
+        scene(position + epsilon.yyx).x - scene(position - epsilon.yyx).x
+    );
+
+    return normalize(normal);
+}
+}
+\end{lstlisting}
+
+Verwendete Parameter sind dabei ein Punkt der Oberfläche eines Objektes
+(\textit{vec3 position}) sowie die minimale Inkrementation eines
+(Licht-) Strahles ($\varepsilon$). Wie zuvor erwähnt, sollte
+für $\varepsilon$ ein möglichst kleiner Wert gewählt werden, daher wird
+standardmässig der Wert \textit{0.1} verwendet.
+
+Bei der Funktion \textit{scene} handelt es sich um eine Distanzfunktion
+$f$ gemäss Kapitel~\ref{ssubsec:distance_functions}. Diese definiert
+schliesslich, was an einem gegebenen Punkt dargestellt wird.
+
+\begin{lstlisting}[language=GLSL,caption={Distanzfunktion $f$ in
+        GLSL.},label={alg:glsl_distance_func},captionpos=b,emph={scene}]
+vec3 scene(in vec3 position) {
+{
+    float sphereId     = 0.0;
+    float sphereRadius = 1.0;
+    vec3  sphereOffset = vec3(-2.0, 1.0, -2.0);
+
+    vec2 res = vec2(
+        sphere(position - sphereOffset, sphereRadius),
+        sphereId
+    );
+
+    return res;
+}
+\end{lstlisting}
+
+In diesem Beispiel wird eine Kugel mit Radius \textit{1.0} dargestellt.
+Diese wird auf der \textit{X}-Achse um -2 Einheiten, auf der
+\textit{Y}-Achse um 1 Einheit und auf der \textit{Z}-Achse um -2
+Einheiten verschoben (Translation).
