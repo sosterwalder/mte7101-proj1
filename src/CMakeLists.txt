@@ -67,9 +67,12 @@ target_link_libraries(mte7101
     ${GLU_LIBRARY}
     ${EXTRA_LIBS}
     ${GLEW_LIBRARY}
-    boost_system
-    boost_filesystem
-    boost_regex
+    # boost_system
+    # boost_filesystem
+    # boost_regex
+    libboost_system.a
+    libboost_filesystem.a
+    libboost_regex.a
 )
 
 # Set output directory of executable
