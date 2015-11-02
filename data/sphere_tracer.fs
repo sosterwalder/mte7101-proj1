@@ -55,7 +55,7 @@ float box(vec3 position, vec3 dimension)
     return max(max(position.x, position.y), position.z);
 }
 
-float ruler(in vec3 position, in float rulerOffset = 0.01)
+float ruler(in vec3 position, in float rulerOffset)
 {
     return abs(position.y) - rulerOffset;
 }
@@ -66,9 +66,9 @@ float subtract(float a, float b)
     return max(-b, a);
 }
 
-float union(float a, float b)
+float merge(float a, float b)
 {
-    return (a < b) ? a : b;
+    return min(a, b);
 }
 
 float intersect(float a, float b)
@@ -78,6 +78,8 @@ float intersect(float a, float b)
 
 float scene1(in vec3 position)
 {
+    float result = 0.0;
+
     float sphereRadius   = 0.6;
     float sphere3Radius  = 1.0;
     vec3  boxDimension   = vec3(0.8);
@@ -85,6 +87,8 @@ float scene1(in vec3 position)
     vec3 sphereOffset  = vec3(-2.0, 1.0, -2.0);
     vec3 boxOffset     = vec3(-3.0, 0.7,  0.0);
     vec3 box2Offset    = vec3(-2.0, 1.0, -2.0);
+
+    float plane = plane(position);
 
     float intersection = intersect(
         box(position - boxOffset, vec3(0.8)),
@@ -96,12 +100,24 @@ float scene1(in vec3 position)
         sphere(position - box2Offset, sphere3Radius)
     );
 
-    float result = union(
-        sphere(position - sphereOffset, sphereRadius),
-        intersection
-    );
+    if (SHOW_DISTANCE) {
+        result = merge(
+            sphere(position - sphereOffset, sphereRadius),
+            intersection
+        );
+    }
+    else {
+        result = merge(
+            plane,
+            sphere(position - sphereOffset, sphereRadius)
+        );
+        result = merge(
+            result,
+            intersection
+        );
+    }
 
-    result = union(
+    result = merge(
         result,
         subtraction
     );
@@ -119,7 +135,7 @@ float testScene(in vec3 position)
 vec3 combineScenes(vec3 p)
 {
     float scene     = scene1(p);
-    float ruler     = ruler(p);
+    float ruler     = ruler(p, 0.01);
     float showRuler = ruler < scene ? 1.0 : 0.0;
 
     return vec3(min(scene, ruler), showRuler, scene);
