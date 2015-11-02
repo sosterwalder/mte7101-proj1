@@ -170,24 +170,32 @@ float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 
     return shadow;
 
-    vec3 lightDirection     = normalize(vec3(0.0, 4.0, 5.0));
+}
 
-    vec3 ambientColor       = vec3(0.05, 0.15, 0.2);
+vec3 calcLighting(in vec3 position, in vec3 normal, in vec3 rayDirection, in vec3 material, in vec3 lightPosition, in vec3 lightColor)
+{
+    vec3 lightDirection     = normalize(lightPosition);
+
+    float kDirectLight      = 0.1;
+    float shadows           = calcShadows(position, lightDirection);
+    vec3  direct            = vec3(kDirectLight * shadows);
+
+    vec3  ambientColor      = vec3(0.3, 0.3, 0.3);
     float kAmbient          = clamp(0.5 + 0.5 * normal.y, 0.0, 1.0);
-    vec3 ambient            = kAmbient * ambientColor;
+    vec3  ambient           = kAmbient * ambientColor;
 
-    vec3 diffuseColor       = vec3(0.2, 0.6, 0.8);
+    vec3  diffuseColor      = vec3(lightColor);
     float kDiffuse          = clamp(dot(lightDirection, normal), 0.0, 1.0);
-    vec3 diffuse            = kDiffuse * diffuseColor;
+    vec3  diffuse           = kDiffuse * diffuseColor;
 
-    vec3 specularColor      = vec3(1.0);
+    vec3  specularColor     = vec3(1.0);
     float kSpecularExponent = 24.0;
-    vec3 h                  = normalize(-rayDirection + lightDirection);
+    vec3  h                 = normalize(-rayDirection + lightDirection);
     float nFacing           = clamp(dot(lightDirection, normal), 0.0, 1.0);
     float kSpecular         = pow(clamp(dot(h, normal), 0.0, 1.0), kSpecularExponent);
-    vec3 specular           = nFacing * kSpecular * specularColor;
+    vec3  specular          = nFacing * kSpecular * specularColor;
 
-    vec3 light              = ambient + diffuse + specular;
+    vec3 light              = ambient + diffuse + specular + direct;
     vec3 color              = material * light;
 
     return color;
