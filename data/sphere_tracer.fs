@@ -321,8 +321,19 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
                 material = calcMaterial(position, normal);
             }
         }
+        else {
+            material = calcMaterial(position, normal);
+        }
 
-        color = calcLighting(normal, rayDirection, material);
+        vec3 light1Color = vec3(1.3, 0.2, 0.3);
+        vec3 light1Position = vec3(1.3, 0.2, 0.3);
+        vec3 light1 = calcLighting(position, normal, rayDirection, material, light1Position, light1Color);
+
+        vec3 light2Color = vec3(0.3, 0.2, 0.8);
+        vec3 light2Position = vec3(1.3, 0.2, 0.8);
+        vec3 light2 = calcLighting(position, normal, rayDirection, material, light2Position, light2Color);
+
+        color = light1 + light2;
     }
 
     vec3 gamma = vec3(1.0 / 2.2);
