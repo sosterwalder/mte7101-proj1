@@ -203,7 +203,7 @@ vec3 calcLighting(in vec3 position, in vec3 normal, in vec3 rayDirection, in vec
 
 vec3 calcMaterial(in vec3 position, in vec3 normal)
 {
-    return vec3(0.6);
+    return vec3(0.2);
 }
 
 vec3 calcNormal(in vec3 position, in float epsilon)
