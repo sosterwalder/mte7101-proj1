@@ -141,7 +141,34 @@ vec3 combineScenes(vec3 p)
     return vec3(min(scene, ruler), showRuler, scene);
 }
 
-vec3 calcLighting(vec3 normal, vec3 rayDirection, in vec3 material) {
+float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
+{
+    vec3  targetDistance = normalize(rayDirection - rayOrigin);
+    float maximalDistance = distance(rayDirection, rayOrigin);
+    float shadow = 1.0;
+    float minimalDistance = 0.01;
+    float currentDistance = 0.1;
+    int   steps = 40;
+    float kShadow = 32.0;
+
+    for (int i = 0; i < steps; ++i) {
+        if (minimalDistance >= maximalDistance) {
+            break;
+        }
+
+        vec3 ray = rayOrigin + rayDirection * currentDistance;
+        float scene = scene1(ray);
+
+        if (scene < minimalDistance) {
+            return 0.0;
+        }
+
+        float normalizedShadow = kShadow * scene / currentDistance;
+        shadow = min(shadow, normalizedShadow);
+        currentDistance += scene;
+    }
+
+    return shadow;
 
     vec3 lightDirection     = normalize(vec3(0.0, 4.0, 5.0));
 
@@ -300,13 +327,13 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
 void main()
 {
     vec2 resolution      = globalResolution;
-    float time           = globalTime * 0.1;
-    float cameraAngle    = 4.0;
+    float time           = globalTime * 1.1;
+    float cameraAngle    = 1.0;
     float cameraHeight   = 5.0;
-    float cameraPane     = 7.0;
-    float cameraDistance = 3.5;
+    float cameraPane     = 3.0;
+    float cameraDistance = 2.5;
     vec3 rayOrigin      = vec3(cameraPane * sin(cameraAngle), cameraHeight, cameraDistance * cos(cameraAngle * time));
-    vec3 rayTarget      = vec3(0.0, 0.0, 0.0);
+    vec3 rayTarget      = vec3(-1.0, 2.0, 0.0);
     vec2 screenPosition = squareFrame(resolution);
     vec3 rayDirection   = getRay(rayOrigin, rayTarget, screenPosition, 2.0);
 
