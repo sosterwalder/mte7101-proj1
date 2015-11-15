@@ -110,10 +110,34 @@ abschätzen zu können. Ist der gewählte Abstand zu gross gewählt, so findet g
 eine Abtastung weit im Inneren des Objektes statt und somit geht Präzision
 verloren.  Es ist auch möglich dass der erste eigentliche Punkt gar nicht
 abgetastet wird und erst der zweite abgetastete Punkt das Objekt ``erkennt''.
-Die Grafik~\todo{insert reference to image here} veranschaulicht diese
-Problematiken.\\
-\\
-\todo[inline]{Provide illustration for ray marching}
+
+\begin{figure}[H]
+    \caption{Illustration des Ray Marching Verfahrens.\protect\footnotemark}\label{fig:ray_marching_problems}
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/ray_marching_problems.png}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Geogebra.}
+
+Die Abbildung~\ref{fig:ray_marching_problems} veranschaulicht diese
+Problematiken. Zu sehen sind vier Primärstrahlen, \textit{e},
+\textit{f}, \textit{g} und \textit{h},  sowie zwei Objekte,
+\textit{poly1} und \textit{poly2}.
+
+Bei den Strahlen \textit{e} und \textit{g} handelt es sich um
+``normale'' Fälle: Der Strahl \textit{e} geht komplett an den Objekten
+vorbei, das Ray Marching wird also nach erreichen der maximalen Distanz
+\textit{d\textsubscript{max}} abgebrochen, der Strahl \textit{g} trifft
+das Objekt \textit{poly1} nach 6 Schritten.
+
+Bei den Strahlen \textit{f} und \textit{h} handelt es sich um
+Spezialfälle: Der Strahl \textit{f} trifft das Objekt \textit{poly1}
+nicht, obwohl der Strahl durch das Objekt hindurch geht. Dies geschieht
+aufgrund der gewählten Distanz zum Abtasten der Strahlen ($\Delta t$).
+Der Strahl \textit{h} trifft das Objekt \textit{poly2}, obwohl er
+eigentlich das Objekt \textit{poly1} treffen müsste. Das getroffene
+Objekt \textit{poly2} dürfte so gar nicht zu sehen sein. Dieser Fehler
+tritt wiederum aufgrund der gewählten Distanz zur Abtastung der Strahlen
+($\Delta t$) auf.
 
 \cite{hart_sphere_1994} weist darauf hin, dass Ray Marching durch den möglichst
 geringen Abstand zwischen den Abtastungen entsprechend langsam und paralleles
@@ -176,9 +200,37 @@ Abbruchkriterium ist eine definierte maximale Distanz eines Strahles. Ist diese
 erreicht und der Strahl erreicht die Oberfläche des Objektes nicht --- weil der
 Strahl das Objekt nicht schneidet oder das Objekt zu weit weg ist ---, wird
 abgebrochen. Somit ist auch ersichtlich, dass Sphere Tracing nicht die
-unter~\ref{subsec:ray_marching} genannten Problematiken aufweist.\\
-\\
-\todo[inline]{Provide illustration for sphere tracing}
+unter~\ref{subsec:ray_marching} genannten Problematiken aufweist.
+
+
+\begin{figure}[H]
+    \caption{Illustration des Sphere Tracing Verfahrens.\protect\footnotemark}\label{fig:sphere_tracing_1}
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/sphere_tracing_principle_1.png}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Geogebra.}
+\begin{figure}[H]
+    \caption{Illustration des Sphere Tracing Verfahrens.\protect\footnotemark}\label{fig:sphere_tracing_1}
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/sphere_tracing_principle_2.png}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Geogebra.}
+
+\begin{table}[H]
+    \centering
+    \caption{Vergleich des Skalierungsfaktors \textit{kShadow} für Schatten anhand einer Beispielszene.}\label{table:sphere_tracing_shadows}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+        \toprule
+            \textbf{kShadow: \textit{8.0}} &
+            \textbf{kShadow: \textit{16.0}}   &
+            \textbf{kShadow: \textit{32.0}}   \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_principle_3.png} \newline &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_principle_3_1.png} \newline &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_principle_3_2.png} \newline \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 Ausgehend von der parametrischen Beschreibung eines (Licht-) Strahles
 (Gleichung~\ref{eq:ray_param}), beschreibt~\cite{hart_sphere_1994} die Richtung
