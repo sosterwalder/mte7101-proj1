@@ -5,6 +5,8 @@
 \chapter{Prototyp}
 \label{chap:prototype}
 
+\todo[inline]{Comment source code of prototype}
+
 Um das Sphere Tracing Verfahren nicht nur theoretisch zu behandeln, wird im
 Rahmen dieser Projektarbeit ein Prototyp erstellt.  Dieser wird in C++11 und
 OpenGL umgesetzt und basiert auf der GLFW-Bibliothek. Um allfällige
@@ -332,3 +334,67 @@ In diesem Beispiel wird eine Kugel mit Radius \textit{1.0} dargestellt.
 Diese wird auf der \textit{X}-Achse um -2 Einheiten, auf der
 \textit{Y}-Achse um 1 Einheit und auf der \textit{Z}-Achse um -2
 Einheiten verschoben (Translation).
+
+Wie in Kapitel~\ref{sec:rendering_implicit_surfaces_shadows}
+beschrieben, wurden weiche Schatten implementiert.
+
+\begin{lstlisting}[language=GLSL,caption={Funktion zur Berechnung von
+        weichen Schatten  in
+        GLSL.},label={alg:glsl_soft_shadows},captionpos=b,emph={calcShadows}]
+float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
+{
+    float shadow            = 1.0;
+    float minimalDistance   = 0.01;
+    float maximalDistance   = 2.5;
+    float convergePrecision = 0.000001;
+    float kShadow           = 8.0;
+    float currentDistance   = minimalDistance;
+
+    while (currentDistance < maximalDistance) {
+        vec3 ray = rayOrigin + rayDirection * currentDistance;
+        float estimatedDistance = scene(ray);
+
+        if (estimatedDistance < convergePrecision) {
+            return 0.0;
+        }
+
+        float penumbraFactor = estimatedDistance / currentDistance;
+        shadow = min(shadow, kShadow * penumbraFactor);
+        currentDistance += estimatedDistance;
+    }
+
+    return shadow;
+
+}
+\end{lstlisting}
+
+Verwendete Parameter sind dabei der Usprung eines Strahles
+(\textit{vec3 rayOrigin}), sowie die Richtung eines Strahles (\textit{vec3
+    rayDirection}). 
+
+\begin{table}[H]
+    \centering
+    \caption{Vergleich des Skalierungsfaktors \textit{kShadow} für Schatten anhand einer Beispielszene.}\label{table:sphere_tracing_shadows}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+        \toprule
+            \textbf{kShadow: \textit{8.0}} &
+            \textbf{kShadow: \textit{16.0}}   &
+            \textbf{kShadow: \textit{32.0}}   \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_shadows_8.png} \newline &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_shadows_16.png} \newline &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_shadows_32.png} \newline \\
+        \bottomrule
+    \end{tabular}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+        \toprule
+            \textbf{kShadow: \textit{64.0}} &
+            \textbf{kShadow: \textit{128.0}}   &
+            \textbf{kShadow: \textit{256.0}}   \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_shadows_64.png} \newline &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_shadows_128.png} \newline &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_shadows_256.png} \newline \\
+        \bottomrule
+    \end{tabular}
+\end{table}
