@@ -5,6 +5,10 @@ uniform float globalTime;
 
 #define SHOW_DISTANCE false
 
+float hash(float n) {
+    return fract(sin(n)*33753.545383);
+}
+
 mat3 calcLookAtMatrix(vec3 origin, vec3 target, float roll) {
     vec3 rr = vec3(sin(roll), cos(roll), 0.0);
     vec3 ww = normalize(target - origin);
@@ -127,14 +131,21 @@ float scene1(in vec3 position)
 
 float testScene(in vec3 position)
 {
-    float result = sphere(position - vec3(0.0, 0.0, 0.0), 1.0);
+    float result = 0.0;
+
+    float plane = plane(position);
+    float sphere = sphere(position - vec3(0.0, 0.5, 0.0), 1.0);
+
+    result = merge(
+        plane, sphere
+    );
 
     return result;
 }
 
 vec3 combineScenes(vec3 p)
 {
-    float scene     = scene1(p);
+    float scene     = testScene(p);
     float ruler     = ruler(p, 0.01);
     float showRuler = ruler < scene ? 1.0 : 0.0;
 
@@ -143,29 +154,24 @@ vec3 combineScenes(vec3 p)
 
 float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 {
-    vec3  targetDistance = normalize(rayDirection - rayOrigin);
-    float maximalDistance = distance(rayDirection, rayOrigin);
-    float shadow = 1.0;
-    float minimalDistance = 0.01;
-    float currentDistance = 0.1;
-    int   steps = 40;
-    float kShadow = 32.0;
+    float shadow            = 1.0;
+    float minimalDistance   = 0.01;
+    float maximalDistance   = 2.5;
+    float convergePrecision = 0.000001;
+    float kShadow           = 8.0;
+    float currentDistance   = minimalDistance;
 
-    for (int i = 0; i < steps; ++i) {
-        if (minimalDistance >= maximalDistance) {
-            break;
-        }
-
+    while (currentDistance < maximalDistance) {
         vec3 ray = rayOrigin + rayDirection * currentDistance;
-        float scene = scene1(ray);
+        float estimatedDistance = testScene(ray);
 
-        if (scene < minimalDistance) {
+        if (estimatedDistance < convergePrecision) {
             return 0.0;
         }
 
-        float normalizedShadow = kShadow * scene / currentDistance;
-        shadow = min(shadow, normalizedShadow);
-        currentDistance += scene;
+        float penumbraFactor = estimatedDistance / currentDistance;
+        shadow = min(shadow, kShadow * penumbraFactor);
+        currentDistance += estimatedDistance;
     }
 
     return shadow;
@@ -262,6 +268,30 @@ vec3 calcRulerMaterial(float distanceToScene, float currentDistance) {
     return mix(calcRulerColor(stepSize * distanceToScene), calcRulerColor(stepSize * distanceToScene * 0.1), scale) * 0.8 * interpolatedRule;
 }
 
+vec3 calcPostFx(vec3 color, vec2 screenPosition)
+{
+    float contrast   = 1.0;
+    float saturation = 1.7;
+    float brightness = 1.2;
+
+    // Gamma correction
+    color = pow(color, vec3(0.45));
+
+    color = mix(vec3(.5), mix(vec3(dot(vec3(.2125, .7154, .0721),
+                        color*brightness)), color*brightness, saturation), contrast);
+
+    // Noise
+    float noiseFactor = hash(globalTime);
+    vec2 noise        = noiseFactor * screenPosition;
+    // color             = clamp(color + noise * 0.1, 0.0, 1.0);
+
+    // Vignetting
+    // color *=
+    // .4+0.5*pow(40.0*screenPosition.x*screenPosition.y*(1.0-screenPosition.x)*(1.0-screenPosition.y), 0.2 );
+
+    return color;
+}
+
 vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in float precision, in int steps)
 {
     float latest          = precision * 2.0;
@@ -325,15 +355,15 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
             material = calcMaterial(position, normal);
         }
 
-        vec3 light1Color = vec3(1.3, 0.2, 0.3);
-        vec3 light1Position = vec3(1.3, 0.2, 0.3);
+        vec3 light1Color = vec3(0.7, 0.2, 0.3);
+        vec3 light1Position = vec3(1.3, 1.7, 5.0);
         vec3 light1 = calcLighting(position, normal, rayDirection, material, light1Position, light1Color);
 
-        vec3 light2Color = vec3(0.3, 0.2, 0.8);
-        vec3 light2Position = vec3(1.3, 0.2, 0.8);
-        vec3 light2 = calcLighting(position, normal, rayDirection, material, light2Position, light2Color);
+        // vec3 light2Color = vec3(0.3, 0.2, 0.8);
+        // vec3 light2Position = vec3(1.3, 0.2, 0.8);
+        // vec3 light2 = calcLighting(position, normal, rayDirection, material, light2Position, light2Color);
 
-        color = light1 + light2;
+        color = light1; // + light2;
     }
 
     vec3 gamma = vec3(1.0 / 2.2);
@@ -346,17 +376,18 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
 void main()
 {
     vec2 resolution      = globalResolution;
-    float time           = globalTime * 1.1;
+    float time           = 1.0; // globalTime * 1.1;
     float cameraAngle    = 1.0;
     float cameraHeight   = 5.0;
     float cameraPane     = 3.0;
     float cameraDistance = 2.5;
     vec3 rayOrigin      = vec3(cameraPane * sin(cameraAngle), cameraHeight, cameraDistance * cos(cameraAngle * time));
-    vec3 rayTarget      = vec3(-1.0, 2.0, 0.0);
+    vec3 rayTarget      = vec3(-1.0, -5.0, -3.0);
     vec2 screenPosition = squareFrame(resolution);
     vec3 rayDirection   = getRay(rayOrigin, rayTarget, screenPosition, 2.0);
 
     vec3 color          = render(rayOrigin, rayDirection);
+    color               = calcPostFx(color, screenPosition);
 
     gl_FragColor.rgb = color;
     gl_FragColor.a   = 1.0;
