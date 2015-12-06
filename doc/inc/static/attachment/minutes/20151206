@@ -15,8 +15,14 @@ Presentation and discussion of the current state of the work (SO)
 
   * This is ok, it was originally planned to have some breaks in the first
     three weeks of December. Those weeks were so to say spent already during
-    November, so the work needs to be kept up during December.  Currently there
-    are no further aspects that need special attention. (CF)
+    November, so the work needs to be kept up during December. (CF)
+  * Currently there are no further aspects that need special attention. (CF)
+  * Make sure to commit also little progress at least to the Git repository,
+    even when not updating the versioning table of the document. This makes
+    progress visible, even if it is not finished yet. Keep that up on a weekly
+    basis. If no progress has been made, e.g. due to illness, inform by e-mail
+    that no progress has been made during a week, so that unnecessary effort
+    may be kept at a minimal level. (CF)
 
 * Effort has been but into re-generating the images as the currently used tool
   (Geogebra) leads to quick results, but makes it difficult to generte accurate
