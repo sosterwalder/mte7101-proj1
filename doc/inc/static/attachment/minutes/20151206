@@ -1,0 +1,64 @@
+No.:              08
+Date:             06.12.2015 14:00 - 14:15
+Place:            Skype
+Involved persons: Claude Fuhrer    (CF)
+                  Sven Osterwalder (SO)
+
+Meeting minutes 2015-12-06
+==========================
+
+Presentation and discussion of the current state of the work (SO)
+-----------------------------------------------------------------
+
+* The progress is still slowed down a lot unfortunately. This is mostly
+  due to an illness as well as work related issues. (SO)
+
+  * This is ok, it was originally planned to have some breaks in the first
+    three weeks of December. Those weeks were so to say spent already during
+    November, so the work needs to be kept up during December.  Currently there
+    are no further aspects that need special attention. (CF)
+
+* Effort has been but into re-generating the images as the currently used tool
+  (Geogebra) leads to quick results, but makes it difficult to generte accurate
+  images (e.g. all vectors need to have the same length and so on). First, IPE
+  was used as a replacement, but seems not to be suited as it seems to be
+  limited to basic operations. Second, Inkscape was which provde to be very
+  usedful/handy. But due to the fact, that most of the work was done during the
+  illness, the sources were unfortunately not saved, only the bitmap formats
+  which prevents (re-) editing. Therefore the decision was made to generate the
+  images using asymptote.
+
+  * If any help using asymptote is needed, feel free to ask at any time. (CF)
+
+* An introduction for the theoretical background was provided, a chapter about
+  shading models was added. (SO)
+
+* The timetable was completely re-worked. (SO)
+
+Further steps/proceedings (CF, SO)
+----------------------------------
+
+* Meetings
+  The next meeting will be arranged by e-mail by Sven Osterwalder as needed.
+  At the current stage of the project - which mainly consists of re-arrangement
+  and correction work - it is not useful to keep up a high-frequent
+  meeting-schedule. Mr. Fuhrer has the first week in January 2016 off, so a
+  meeting in real life may be scheduled then
+* Process TODOs
+* Expand basic chapters about illumination models according to TODOs
+* Expand chapters "scope" and "administrative"
+* Re-work introduction
+* Add management summary
+
+TODO for the next meeting
+=========================
+
+* Present the current state of the work (SO)
+* Discuss the current state of the work (CF, SO)
+* Define further steps/proceeding (CF, SO)
+
+Scheduling of the next meeting
+==============================
+
+Date:  tbd
+Place: Skype or in real life, if needed
