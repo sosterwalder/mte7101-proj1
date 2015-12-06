@@ -112,9 +112,10 @@ verloren.  Es ist auch möglich dass der erste eigentliche Punkt gar nicht
 abgetastet wird und erst der zweite abgetastete Punkt das Objekt ``erkennt''.
 
 \begin{figure}[H]
-    \caption{Illustration des Ray Marching Verfahrens.\protect\footnotemark}\label{fig:ray_marching_problems}
+    \caption{Illustration des Ray Marching Verfahrens und dessen
+    Problemen.\protect\footnotemark}\label{fig:ray_marching_problems}
     \centering
-    \includegraphics[width=1.0\textwidth]{img/ray_marching_problems.png}
+    \includegraphics[width=0.5\textwidth]{img/ray_marching_problems.png}
 \end{figure}
 \footnotetext{Eigene Darstellung mittels Geogebra.}
 
@@ -206,31 +207,31 @@ unter~\ref{subsec:ray_marching} genannten Problematiken aufweist.
 \begin{figure}[H]
     \caption{Illustration des Sphere Tracing Verfahrens.\protect\footnotemark}\label{fig:sphere_tracing_1}
     \centering
-    \includegraphics[width=1.0\textwidth]{img/sphere_tracing_principle_1.png}
+    \includegraphics[width=1.0\textwidth]{img/sphere_tracing_principle.png}
 \end{figure}
-\footnotetext{Eigene Darstellung mittels Geogebra.}
+\footnotetext{Eigene Darstellung mittels Inkscape.}
 \begin{figure}[H]
-    \caption{Illustration des Sphere Tracing Verfahrens.\protect\footnotemark}\label{fig:sphere_tracing_1}
+    \caption{Illustration des Sphere Tracing Verfahrens, Nahaufnahme.\protect\footnotemark}\label{fig:sphere_tracing_2}
     \centering
-    \includegraphics[width=1.0\textwidth]{img/sphere_tracing_principle_2.png}
+    \includegraphics[width=0.5\textwidth]{img/sphere_tracing_principle_1.png}
 \end{figure}
-\footnotetext{Eigene Darstellung mittels Geogebra.}
-
+\footnotetext{Eigene Darstellung mittels Inkscape.}
 \begin{table}[H]
     \centering
-    \caption{Vergleich des Skalierungsfaktors \textit{kShadow} für Schatten anhand einer Beispielszene.}\label{table:sphere_tracing_shadows}
+    \caption{INSERT CAPTION HERE\protect\footnotemark}\label{table:sphere_tracing_3}
     \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
         \toprule
             \textbf{kShadow: \textit{8.0}} &
             \textbf{kShadow: \textit{16.0}}   &
             \textbf{kShadow: \textit{32.0}}   \\
         \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
-            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_principle_3.png} \newline &
+            \includegraphics[width=0.3\textwidth]{img/sphere_tracing_principle_3_0.png} \newline &
             \includegraphics[width=0.3\textwidth]{img/sphere_tracing_principle_3_1.png} \newline &
             \includegraphics[width=0.3\textwidth]{img/sphere_tracing_principle_3_2.png} \newline \\
         \bottomrule
     \end{tabular}
 \end{table}
+\footnotetext{Eigene Darstellung mittels Inkscape.}
 
 Ausgehend von der parametrischen Beschreibung eines (Licht-) Strahles
 (Gleichung~\ref{eq:ray_param}), beschreibt~\cite{hart_sphere_1994} die Richtung
