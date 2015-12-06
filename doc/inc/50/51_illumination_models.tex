@@ -21,12 +21,16 @@ Es wird dabei zwischen lokalen und globalen Belechtungsmodellen unterschieden.
 \subsection{Lokale Beleuchtungsmodelle}
 \label{subsec:local_illumination_models}
 
-\todo[inline]{Develop further, add gouraud.}
-
-Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben lokalen, Oberflächen. Diese Modelle sind in deren Umfang allerdings limitiert, da sie normalerweise nur Lichtquellen sowie die Orientierung einer Oberfläche einbeziehen. Sie ignorieren dabei aber die globale Umgebung, in welcher sich eine Oberfläche befindet.
-Dies ist dadurch bedingt, dass die traditionell verwendeten Algorithmen zur Berechnung der Sichtbarkeit von Oberflächen, über keine globalen Daten verfügen.
-
-Als Beispiel für ein lokales Beleuchtungsmodell dient das Phong-Beleuchtungsmodell, welches von Bui-Tong Phong entwickelt wurde.
+Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben lokalen,
+Oberflächen. Diese Modelle sind in deren Umfang allerdings limitiert, da sie
+normalerweise nur Lichtquellen sowie die Orientierung einer Oberfläche
+einbeziehen. Sie ignorieren dabei aber die globale Umgebung, in welcher sich
+eine Oberfläche befindet.  Dies ist dadurch bedingt, dass die traditionell
+verwendeten Algorithmen zur Berechnung der Sichtbarkeit von Oberflächen, über
+keine globalen Daten verfügen. Das bekannteste lokale Beleuchtungsmodell ist
+das \textbf{Phong}-Beleuchtungsmodell, welches 1975 von Phong Bui-Tong
+entwickelt wurde. Es beschreibt nicht-perfekte Reflektoren wie zum Beispiel einen
+Apfel~\cite{foley_computer_1996}[Kapitel 16, Seite 729].
 
 \begin{figure}[H]
     \centering
@@ -271,3 +275,4 @@ a better resolution, use bigger font, use same length for vectors}
 \todo[inline]{Explain transmission and refraction}
 \todo[inline]{Add an (sphere) example, explain basic terminology (illum.\ and
     shadow rays, aliasing and so on)}
+
