@@ -35,23 +35,28 @@ Die Phasen der Erarbeitung der theoretischen Grundlagen sowie die Erstellung der
 \begin{figure}[H]
     \begin{ganttchart}[
         vgrid,
-        x unit=0.7cm,
+        x unit=0.5cm,
         bar/.append style={fill=bfhgrey!50},
-    ]{1}{16}
-        \gantttitle{2015}{14}
-        \gantttitle{2016}{2} \\
-        \gantttitlelist{1,...,16}{1} \\ % chktex 11: Disable "you should use \ldots to achieve.."
-        \ganttbar{Projektstart}{1}{1} \\
+    ]{1}{22}
+        \gantttitle{2015}{15}
+        \gantttitle{2016}{7} \ganttnewline{}
+        \gantttitlelist{38,...,52,1,2,3,4,5,6,7}{1} \ganttnewline{} % chktex 11: Disable "you should use \ldots to achieve.."
+        % \gantttitlelist{1,...,21}{1} \\ % chktex 11: Disable "you should use \ldots to achieve.."
+        \ganttbar{Projektstart}{1}{1} \ganttnewline{}
         \ganttlinkedbar{Anforderungen}{2}{3} \ganttnewline{}
-        \ganttbar{Erarbeitung theoretische Grundlagen}{2}{12} \\
-        \ganttbar{Dokumentation}{1}{2} \ganttbar{}{1}{16} \\
-        \ganttbar{Präsentation/Verteidigung vorbereiten}{15}{16}
+        \ganttbar{Erarbeitung Theorie}{2}{10} \ganttnewline{}
+        \ganttbar{Erstellung Prototyp}{6}{7} \ganttnewline{}
+        \ganttbar{Dokumentation}{1}{10} \ganttnewline{}
+        \ganttlinkedbar{Korrekturen}{9}{13} \ganttnewline{}
+        \ganttmilestone{Rohfassung Dokumentation}{13} \ganttnewline{}
+        \ganttbar{Korrekturen}{14}{19} \ganttnewline{}
+        \ganttbar{Vorbereitung Präsentation/Verteidigung}{20}{21} \ganttnewline{}
+        \ganttlinkedbar{Präsentation/Verteidigung}{22}{22} \ganttnewline{}
+        \ganttmilestone{Abgabe Dokumentation}{22}
     \end{ganttchart}
-    \caption{Zeitplan; Der Titel stellt Jahreszahlen, der Untertitel Semesterwochen dar}
+    \caption{Zeitplan; Der Titel stellt Jahreszahlen, der Untertitel
+    Kalenderwochen dar}
 \end{figure}
-\todo[inline]{Update schedule}
-\todo[inline]{Add deadline for rough draft for end ov nov / beginning
-    of dec}
 
 \subsubsection{Projektstart}
 \label{subsubsec:kick_off}
