@@ -5,3 +5,41 @@
 \section{Shading models (Modelle zur Schattierung)}
 \label{sec:shading}
 
+* Lighting model at each vertex, e.g. Lambert
+* Shading: Compute the color of interior points between vertices
+* Example image of mesh (vertices)
+
+\subsection{Flat shading --- per vertex lighting}
+\label{subsec:flat_shading}
+
+* Calculate normal for each vertice by averaging line-segment normals, e.g.
+  (normal(V1V2) + normal(V3V4)) / 2 to determine per vertex color
+  * Image of calculated normals: line-segment (given through mesh) and vertex
+* One color per face determined by vertex' color
+
+\subsection{Gouraud shading --- face interpolated lighting}
+\label{subsec:gouraud_shading}
+
+Bei Gouraud-Shading handelt es sich um ein Shading-Verfahren, welches die
+Farbintensitätswerte der Eckpunkte von Oberflächen eines Meshes interpoloiert.
+
+Dazu wird mittels einem Beleuchtungsmodell an jedem Eckpunkt einer Oberfläche
+(Polygon) die Farbe berechnet, als Beispiel dienen hier die Eckpunkte $V_{1}$ ,
+$V_{2}$, $V_{3}$ und $V_{4}$. Um einen Farbintensitätswert für einen Eckpunkt
+$V_{1}$ zu berechnen, wird der Normalenvektor des Eckpunktes (vertex normal)
+benötigt. Es handelt sich dabei um den Normalenvektor der Oberfläche an der
+Position des Eckpunktes $V_{1}$.
+
+Um diesen zu berechnen, schlägt Gouraud die Berechnung des Durchschnittswertes
+der Oberflächennormalen zweier adjazenter Liniensegmente (im 2D-Raum) bzw.
+aller adjazenter Dreiecke (im 3D-Raum) vor.
+
+\todo[inline]{Image explaining average calculation}
+
+Die Berechnung des Normalenvektors eines Eckpunktes via Durchschnittswert ist
+üblicherweise eine genügend gute Näherung der Oberflächennormale der
+eigentlichen Oberfläche. Die Präzision hängt dabei aber klar von der
+Granularität des Modelles (mesh) ab.
+
+\subsection{Phong shading --- normal interpolated lighting}
+\label{subsec:phong_shading}
