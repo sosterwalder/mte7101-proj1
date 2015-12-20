@@ -5,6 +5,7 @@ JOB       := mte7101
 BUILD     := mte7101
 CLEAN_EXT := nls,ilg,aux,log,idx,out,glo,toc,lot,tex~,backup,bbl,blg,1,2,3,4,5,6,7,8,9,10,dvi,emp*mp,ooplss*mp,nlo,tdo,dvi,lof,lol,glg,gls,ist,hst,ver
 PDFLATEX  := pdflatex
+OS        := $(shell uname)
 
 .PHONY: all build build-fast clean dist-clean watch watch-fast
 
@@ -15,7 +16,11 @@ PDFLATEX  := pdflatex
 	$(eval BUILD_COMMAND = build)
 
 .watch-command:
+ifeq ($(OS), Darwin)
 	fswatch -o . -r --include '\.tex$$' --include '\.png$$' --include 'minutes/.*' --exclude '.*' | (while read; do make $(BUILD_COMMAND); done)
+else
+	while true; do inotifywait -r -e modify --exclude="(.*.lol|.*.lot|.*.lof|.*.toc|.*.tdo|.*.ist|.*.out|.*.pdf|.*.aux|.*.glo|.*.idx|.*.bbl|.*.swp|.*.blg|.*.fdb_latexmk|.*.fls|.*.log)" . && make $(BUILD_COMMAND); done
+endif
 
 test: .set-build
 	@echo $(BUILD_TYPE)
