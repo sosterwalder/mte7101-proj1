@@ -9,6 +9,35 @@
 * Shading: Compute the color of interior points between vertices
 * Example image of mesh (vertices)
 
+Bei der Anwendung von Shading models geht es grundsätzlich darum die emitierte
+Lichtintensität bzw. die Farbe einer Oberfläche an einem bestimmten Punkt zu
+berechnen. Es wäre naheliegend dies für jeden sichtbaren Punkt der Oberfläche
+zu berechnen, dies ist jedoch häufig viel zu aufwändig. Viele Modelle zur
+Schattierung berechnen daher die Licht- bzw. Farbintensität nur an gewissen
+Schlüsselpunkten und wenden dann vereinfachte Modelle zur Berechnung an um so
+Rechenzeit zu sparen.
+
+Als Beispiel zur Anwendung der Schattierungsmodelle wird nachfolgend
+angenommen, dass mittels einem Beleuchtungsmodell an jedem Eckpunkt einer
+Oberfläche (Polygon) die Farbe berechnet wird. Als Beispiel dienen hier die
+Eckpunkte $V_{1}$ , $V_{2}$, $V_{3}$ und $V_{4}$.
+
+Um einen Farbintensitätswert für einen Eckpunkt $V_{1}$ zu berechnen, wird der
+Normalenvektor des Eckpunktes (vertex normal) benötigt. Es handelt sich dabei
+um den Normalenvektor der Oberfläche an der Position des Eckpunktes $V_{1}$.
+
+\todo[inline]{Translate/cite}
+Modern shaders are really graphics programs rather than being restricted to
+computing colors of points. There are geometry shaders, which can alter the
+list of triangles to be processed in subsequent stages, and tessellation
+shaders, which take high-level descriptions of surfaces and produce triangle
+lists from them; an example is a subdivision surface shader, which might take
+as input the vertices and mesh structure of a subdivision surface’s control
+mesh, and produce as output a collection of tiny triangles that form a good
+approximation of the limit surface. There are also vertex shaders that serve
+only to transform the vertex locations, and generally have nothing to do with
+eventual color.
+
 \subsection{Flat shading --- per vertex lighting}
 \label{subsec:flat_shading}
 
@@ -17,22 +46,21 @@
   * Image of calculated normals: line-segment (given through mesh) and vertex
 * One color per face determined by vertex' color
 
+Bei Flat-Shading wird pro Oberfläche (Polygon) ein Eckpunkt $V_{1}$ dieser als
+farb- bzw. intensitätgebender Schlüsselpunkt bestimmt. Danach wird die Farbe
+des Punktes als Farbe für die Oberfläche genommen.
+\todo[inline]{Add rules for calculating intensity}
+
 \subsection{Gouraud shading --- face interpolated lighting}
 \label{subsec:gouraud_shading}
 
 Bei Gouraud-Shading handelt es sich um ein Shading-Verfahren, welches die
 Farbintensitätswerte der Eckpunkte von Oberflächen eines Meshes interpoloiert.
 
-Dazu wird mittels einem Beleuchtungsmodell an jedem Eckpunkt einer Oberfläche
-(Polygon) die Farbe berechnet, als Beispiel dienen hier die Eckpunkte $V_{1}$ ,
-$V_{2}$, $V_{3}$ und $V_{4}$. Um einen Farbintensitätswert für einen Eckpunkt
-$V_{1}$ zu berechnen, wird der Normalenvektor des Eckpunktes (vertex normal)
-benötigt. Es handelt sich dabei um den Normalenvektor der Oberfläche an der
-Position des Eckpunktes $V_{1}$.
-
-Um diesen zu berechnen, schlägt Gouraud die Berechnung des Durchschnittswertes
-der Oberflächennormalen zweier adjazenter Liniensegmente (im 2D-Raum) bzw.
-aller adjazenter Dreiecke (im 3D-Raum) vor.
+Um den Farbintensitätswert eines Eckpunktes von Oberflächen  zu berechnen,
+schlägt Gouraud die Berechnung des Durchschnittswertes der Oberflächennormalen
+zweier adjazenter Liniensegmente (im 2D-Raum) bzw.  aller adjazenter Dreiecke
+(im 3D-Raum) vor.
 
 \todo[inline]{Image explaining average calculation}
 
@@ -43,3 +71,22 @@ Granularität des Modelles (mesh) ab.
 
 \subsection{Phong shading --- normal interpolated lighting}
 \label{subsec:phong_shading}
+
+Sofern nicht anders vermerkt, basieren die nachfolgenden Abschnitte
+auf~\cite{foley_computer_1996}[S. 738–739].
+
+\todo[inline]{Translate/cite}
+
+Phong shading improves upon Gouraud shading and provides a better approximation
+of the shading of a smooth surface. Phong shading assumes a smoothly varying
+surface normal vector. The Phong interpolation method works better than Gouraud
+shading when applied to a reflection model that has small specular highlights
+such as the Phong reflection model.
+
+Unlike Gouraud shading, which interpolates colors across polygons, in Phong
+shading a normal vector is linearly interpolated across the surface of the
+polygon from the polygon's vertex normals. The surface normal is interpolated
+and normalized at each pixel and then used in a reflection model, e.g. the
+Phong reflection model, to obtain the final pixel color. Phong shading is more
+computationally expensive than Gouraud shading since the reflection model must
+be computed at each pixel instead of at each vertex.
