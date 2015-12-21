@@ -26,6 +26,15 @@ angenommen, dass mittels einem Beleuchtungsmodell an jedem Eckpunkt einer
 Oberfläche (Polygon) die Farbe berechnet wird. Als Beispiel dienen hier die
 Eckpunkte $\bm{V}_{1}$, $\bm{V}_{2}$, $\bm{V}_{3}$ und $\bm{V}_{4}$.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics{img/shading_mesh.pdf}
+    \caption{Illustration der Ausgangslage\protect\footnotemark}\label{
+        fig:shading_mesh_illustration}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Inkscape, angelehnt
+    an~\cite{hughes_computer_2013}}
+
 Um einen Farbintensitätswert für einen Eckpunkt $\bm{V}_{1}$ zu berechnen, wird der
 Normalenvektor des Eckpunktes (vertex normal) benötigt. Es handelt sich dabei
 um den Normalenvektor der Oberfläche an der Position des Eckpunktes $\bm{V}_{1}$.
@@ -67,6 +76,15 @@ Diese Annahme ist unter den folgenden Voraussetzungen gültig:
     \item{Das Polygon ist eine effektive Repräsentation der Oberfläche
             und nicht nur eine Näherung einer runden Oberfläche.}
 \end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{img/flat_shading.pdf}
+    \caption{Illustration des Flat shadings\protect\footnotemark}\label{
+        fig:flat_shading_illustration}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Inkscape, angelehnt
+    an~\cite{hughes_computer_2013}}
 
 Ist eine der ersten beiden Annahmen falsch, so muss für den Vektor der
 Lichtquelle $\bm{l}$ bzw.\ den Vektor des Betrachters $\bm{v}$ ein
