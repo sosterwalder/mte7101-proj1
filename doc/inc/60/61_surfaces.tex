@@ -23,11 +23,18 @@ Parametrische Modellierung und implizite Modellierung.\\
 Bei der parametrsichen Darstellung wird eine Oberfläche überlicherweise als
 eine Menge von Punkten definiert, so zum Beispiel:
 
-\todo[inline]{Provide example by means of a sphere}
-
 \begin{gather}\label{eq:surface_parametric}
     \bm{p}(s, t) = (x(s, t), y(s, t), z(s, t))
 \end{gather}
+
+Die Einheitskugel mit Radius 1, würde beispielsweise wie folgt mittels der
+parametrischen Darstellung beschrieben:
+
+
+\begin{gather}\label{eq:unit_sphere_parametric}
+    \bm{unitsphere}(s, t) = (x^{2}(s, t), y^{2}(s, t), z^{2}(s, t)) - 1^{2}
+\end{gather}
+\todo[inline]{Check if correct}
 
 Bei der impliziten Darstellung wird eine Oberfläche überlicherweise als Kontur
 einer Funktion mit Wert 0 definiert, so zum Beispiel:
@@ -35,6 +42,13 @@ einer Funktion mit Wert 0 definiert, so zum Beispiel:
 \begin{gather}\label{eq:surface_implicit}
     f(\bm{p}) = f(x, y, z) = 0
 \end{gather}
+
+Daher am Beispiel der Einheitskugel:
+
+\begin{gather}\label{eq:unit_sphere_implicit}
+    f(\bm{unitsphere}) = f(x^{2}, y^{2}, z^{2}) - 1 = 0
+\end{gather}
+\todo[inline]{Check if correct}
 
 Die parametrische Darstellung bringt Vorteile wie die Unabhängigkeit von einem
 Koordinatensystem oder eine effiziente Berechnung von Punkten auf einer
