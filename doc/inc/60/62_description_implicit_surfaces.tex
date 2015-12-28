@@ -402,12 +402,12 @@ vorzeichenabhängigen  Distanzfunktion $f_{A}$ respektive $f_{B}$ definiert:
 
 wobei $\bm{x}$ den abzutastenden Punkt im Raum darstellt.
 
-Wie~\ref{hart_sphere_1994} schreibt, ist die Distanz zu einer Liste von
+Wie~\citet*{hart_sphere_1994} schreibt, ist die Distanz zu einer Liste von
 impliziten Oberflächen die kleinste Distanz der jeweiligen Distanzfunktion.
-Somit erlaubt es die Vereinigung --- neben der Kombination von Objekten ---
-mehrere implizite Oberflächen zu kombinieren, ohne dass diese miteinander in
-Kontakt stehen müssen. So kann beispielsweise eine komplexe Szene modelliert
-werden.
+Somit erlaubt es die Vereinigung --- neben der eigentlichen Vereinigung von
+Objekten --- mehrere implizite Oberflächen zu kombinieren, ohne dass diese
+miteinander in Kontakt stehen müssen. So kann beispielsweise eine komplexe
+Szene modelliert werden.
 
 \subsubsection{Subtraktion}
 \label{ssubsec:implicit_surfaces_ops_subtraction}
@@ -448,13 +448,15 @@ wobei $\bm{x}$ den abzutastenden Punkt im Raum darstellt.
 \subsection{Primitive}
 \label{subsec:implicit_surfaces_primitives}
 
-\cite{hart_sphere_1994} führt in seinem Paper einige (geometrische) Primitve
-auf, welche nachfolgende erläutert werden.
+\cite{hart_sphere_1994} führt in seinem Paper~\todo{Use another word?} einige
+(geometrische) Primitve auf, welche nachfolgende erläutert werden.
 
 \subsubsection{Ebene}
 \label{ssubsec:implicit_surfaces_primitives_plane}
 
-Die vorzeichenbehaftete Distanz zu einer Ebene $P$ mit einer Einheitsnormalen $\bm{n}$, welche sich mit dem Punkt $\bm{n} \cdot r$ schneidet ist wie folgt:
+Die vorzeichenbehaftete Distanz zu einer Ebene $P$ mit einer Einheitsnormalen
+$\bm{n}$, welche sich mit dem Punkt $\bm{n} \cdot r$ schneidet ist wie folgt
+definiert:
 
 \begin{gather}
     d(\bm{x}, P) = \bm{x} \cdot \bm{n} - r
