@@ -26,12 +26,12 @@ Theoretical background
       * The exponent 'n', as used in the legend, is missing in the equation
         (DONE)
       * An image of the situation could be added for better understanding
-        (TODO, added)
+        (DONE)
 
 * Global illumination models
   * Rendering equation, 5.3 (CF)
     * Add the correct reference, either to Kajiya or another source
-      (TODO, added)
+      (DONE)
     * Spell the letter 's', used for the integral as well as for the
       explanations, always the same case, either upper or lower
       (DONE)
@@ -58,24 +58,24 @@ Theoretical background
     (TODO, added)
   * The reference when referring Whitted's publication is missing(CF)
     * Add reference (SO)
-    (TODO, added)
+    (DONE)
   * Is the material sufficient? (SO)
     * Yes, the material is sufficient, but an illustration would probably be
       good (CF)
-      (TODO, added)
+      (DONE)
 
 * Implicit surfaces
   * Does one need to explain euclidean distance? (SO)
     * No, the term does not need to be explained as it is rather a standard
       term, but the notation may rather be (x^2 + y^2 + z^2)^{1/2} as this
       allows the usage of any basis, e.g. ln
-      (TODO, added)
+      (DONE)
   * Equation (5.11) (CF)
     * Give an example by means of a sphere (CF)
-    (TODO, added)
+    (DONE)
   * Functions for implicit surfaces (5.4.1) (CF)
     * Use an explanation of the signs as well when explaining the results (CF)
-      (TODO, added)
+      (DONE)
   * Equation (5.15) (CF)
     * In the paragraph below the equation a sentence begins directly with a
       mathematical function. This is generally not a very good idea, so that

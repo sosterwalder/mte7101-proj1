@@ -29,7 +29,7 @@ Presentation and discussion of the current state of the work (SO)
 * Project schedule
   * Adapt to current situation (CF)
     * Prototype is missing (CF)
-  (TODO, added)
+  (DONE)
 
 * Prototype
   * Add version information for all used software (clang, GLEW and CMake
@@ -40,7 +40,7 @@ Presentation and discussion of the current state of the work (SO)
 * Local illumination models
     * Phong model, equation 5.2 (CF)
       * Explan L_{i} (CF)
-  (TODO, added)
+  (DONE)
 
 Further steps/proceedings (CF, SO)
 ----------------------------------
