@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="133.5264mm"
-   height="49.970058mm"
-   viewBox="0 0 473.12502 177.05926"
+   width="59.244213mm"
+   height="27.740393mm"
+   viewBox="0 0 209.92044 98.292729"
    id="svg5532"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="shading_mesh.svg">
+   sodipodi:docname="phong_shading_mesh.svg">
   <defs
      id="defs5534">
     <marker
@@ -334,11 +334,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="224.42398"
-     inkscape:cy="116.04735"
+     inkscape:zoom="1.4"
+     inkscape:cx="100.85993"
+     inkscape:cy="43.326569"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer2"
      showgrid="true"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -354,42 +354,42 @@
     <inkscape:grid
        type="xygrid"
        id="grid6080"
-       originx="-91.365147"
-       originy="-609.74994" />
+       originx="-214.9292"
+       originy="-653.89929" />
     <sodipodi:guide
-       position="43.634852,55.250031"
+       position="-79.929197,11.100681"
        orientation="1,0"
        id="guide6102" />
     <sodipodi:guide
-       position="63.634854,50.250033"
+       position="-59.929194,6.1006832"
        orientation="1,0"
        id="guide6104" />
     <sodipodi:guide
-       position="73.634853,30.250033"
+       position="-49.929195,-13.899317"
        orientation="0,1"
        id="guide6106" />
     <sodipodi:guide
-       position="142.63485,44.250037"
+       position="19.070803,0.10068721"
        orientation="0,1"
        id="guide6108" />
     <sodipodi:guide
-       position="123.63485,35.250032"
+       position="0.070802967,-8.8993178"
        orientation="1,0"
        id="guide6110" />
     <sodipodi:guide
-       position="143.63485,30.250033"
+       position="20.070803,-13.899317"
        orientation="1,0"
        id="guide6112" />
     <sodipodi:guide
-       position="178.63485,80.250035"
+       position="55.070804,36.100685"
        orientation="0,1"
        id="guide6117" />
     <sodipodi:guide
-       position="68.634853,0.25003455"
+       position="-54.929195,-43.899315"
        orientation="0,1"
        id="guide6119" />
     <sodipodi:guide
-       position="254.60017,131.8249"
+       position="131.03613,87.67555"
        orientation="0,1"
        id="guide5566" />
   </sodipodi:namedview>
@@ -409,7 +409,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="normals"
-     transform="translate(-49.203203,-7.6200995)"
+     transform="translate(-172.76725,-42.237278)"
      style="display:inline">
     <path
        style="display:inline;fill:#800000;fill-opacity:1;fill-rule:evenodd;stroke:#800000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
@@ -481,7 +481,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="helper lines"
-     transform="translate(-91.365143,-265.55298)"
+     transform="translate(-214.92919,-300.17016)"
      style="display:none">
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.94575715;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.7830286, 0.94575715;stroke-dashoffset:0;stroke-opacity:1"
@@ -509,7 +509,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      style="display:inline"
-     transform="translate(-91.365143,-265.55298)">
+     transform="translate(-214.92919,-300.17016)">
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.8915143px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 217.76646,385.39391 37.83029,-37.83029 113.49086,2e-5 37.83028,37.83029"
@@ -521,7 +521,7 @@
      id="layer7"
      inkscape:label="surface"
      style="display:inline"
-     transform="translate(-91.365143,-265.55298)">
+     transform="translate(-214.92919,-300.17016)">
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#2c89a0;stroke-width:1.8915143px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 218.10423,384.38062 c 11.35512,-32.34487 56.40766,-47.41877 95.2483,-47.41877 41.24241,0 77.19799,14.77129 93.90313,47.41877 l 0,0"
@@ -534,7 +534,7 @@
      id="layer5"
      inkscape:label="verts"
      style="display:inline"
-     transform="translate(-91.365143,-265.55298)">
+     transform="translate(-214.92919,-300.17016)">
     <circle
        id="path6154"
        style="display:inline;fill:#800000;stroke:none"
@@ -564,7 +564,7 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="vert helpers"
-     transform="translate(-91.365143,-265.55298)"
+     transform="translate(-214.92919,-300.17016)"
      style="display:none">
     <text
        xml:space="preserve"
@@ -621,7 +621,7 @@
      id="layer2"
      inkscape:label="vert texts"
      style="display:inline"
-     transform="translate(-49.203203,-7.6200995)">
+     transform="translate(-172.76725,-42.237278)">
     <text
        transform="translate(-42.161941,-257.93288)"
        xml:space="preserve"
@@ -651,17 +651,16 @@
    style="font-size:11.25px;baseline-shift:sub"
    id="tspan6193">2</tspan></tspan></text>
     <text
-       transform="translate(-42.161941,-257.93288)"
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:11.25px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="341.05264"
-       y="360.05438"
+       x="311.74783"
+       y="102.12151"
        id="text6195"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan6197"
-         x="341.05264"
-         y="360.05438">V<tspan
+         x="311.74783"
+         y="102.12151">V<tspan
    style="font-size:11.25px;baseline-shift:sub"
    id="tspan6201">3</tspan></tspan></text>
     <text
@@ -683,7 +682,7 @@
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="normals texts"
-     transform="translate(-49.203203,-7.6200995)"
+     transform="translate(-172.76725,-42.237278)"
      style="display:inline">
     <text
        xml:space="preserve"
@@ -716,7 +715,8 @@
      inkscape:groupmode="layer"
      id="layer9"
      inkscape:label="gouraud normals text"
-     style="display:none;opacity:1">
+     style="display:none;opacity:1"
+     transform="translate(-123.56405,-34.617178)">
     <text
        transform="translate(-49.203203,-7.6200995)"
        sodipodi:linespacing="125%"

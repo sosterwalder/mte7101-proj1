@@ -8,11 +8,12 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="122.41553mm"
+   width="129.10464mm"
    height="18.848793mm"
-   viewBox="0 0 433.75581 66.787062"
+   viewBox="0 0 457.4574 66.78706"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -22,6 +23,26 @@
    inkscape:export-ydpi="149.5799">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient4325"
+       inkscape:collect="always">
+      <stop
+         id="stop4329"
+         offset="0"
+         style="stop-color:#00222b;stop-opacity:1" />
+      <stop
+         style="stop-color:#004455;stop-opacity:1"
+         offset="0.34848484"
+         id="stop4335" />
+      <stop
+         id="stop4337"
+         offset="0.64177489"
+         style="stop-color:#006680;stop-opacity:1" />
+      <stop
+         id="stop4331"
+         offset="1"
+         style="stop-color:#0088aa;stop-opacity:1" />
+    </linearGradient>
     <marker
        inkscape:stockid="Arrow2Mend"
        orient="auto"
@@ -124,6 +145,15 @@
          offset="1"
          style="stop-color:#0088aa;stop-opacity:0;" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4325"
+       id="linearGradient4317"
+       x1="274.5"
+       y1="214.8622"
+       x2="505.5"
+       y2="214.8622"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -132,11 +162,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.8"
-     inkscape:cx="109.60476"
-     inkscape:cy="-204.64096"
+     inkscape:zoom="1.6"
+     inkscape:cx="219.59285"
+     inkscape:cy="120.35904"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:snap-bbox="false"
      inkscape:object-paths="false"
@@ -146,10 +176,10 @@
      inkscape:snap-midpoints="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1678"
-     inkscape:window-height="1030"
-     inkscape:window-x="1920"
-     inkscape:window-y="18"
+     inkscape:window-width="1280"
+     inkscape:window-height="751"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -158,26 +188,26 @@
     <inkscape:grid
        type="xygrid"
        id="grid4155"
-       originx="-71.744188"
-       originy="-826.02873" />
+       originx="-48.042614"
+       originy="-826.02871" />
     <sodipodi:guide
-       position="203.25582,48.971246"
+       position="226.95738,48.971241"
        orientation="1,0"
        id="guide4189" />
     <sodipodi:guide
-       position="433.25582,48.971246"
+       position="456.95738,48.971241"
        orientation="1,0"
        id="guide4191" />
     <sodipodi:guide
-       position="248.25582,78.971245"
+       position="271.95738,78.97124"
        orientation="1,0"
        id="guide4301" />
     <sodipodi:guide
-       position="318.25582,13.971248"
+       position="341.95738,13.971244"
        orientation="1,0"
        id="guide4303" />
     <sodipodi:guide
-       position="388.25582,63.971245"
+       position="411.95738,63.97124"
        orientation="1,0"
        id="guide4305" />
   </sodipodi:namedview>
@@ -194,61 +224,11 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-71.744186,-159.54639)">
-    <circle
-       style="fill:#00222b;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path3338"
-       cx="284.63873"
-       cy="176.83176"
-       r="9.6387196" />
-    <circle
-       style="fill:#004455;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path3338-2"
-       cx="354.6384"
-       cy="176.83182"
-       r="9.6387196" />
-    <circle
-       style="fill:#006680;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path3338-2-5"
-       cx="424.63879"
-       cy="176.83182"
-       r="9.6387196" />
-    <circle
-       r="9.6387196"
-       cy="176.83182"
-       cx="494.6384"
-       id="circle4187"
-       style="fill:#0088aa;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:Sans;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="195.39775"
-       y="172.84229"
-       id="text4231"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4233"
-         x="195.39775"
-         y="172.84229">Lichtintensität</tspan><tspan
-         sodipodi:role="line"
-         x="195.39775"
-         y="194.71729"
-         id="tspan4235">pro Eckpunkt</tspan></text>
-  </g>
-  <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Flat shading"
-     style="display:inline"
-     transform="translate(-71.744186,-159.54639)">
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker4658)"
-       d="m 205,177.3622 c 55,0 55,0 55,0"
-       id="path4318"
-       inkscape:connector-curvature="0" />
+     style="display:none"
+     transform="translate(-48.042618,-159.54639)">
     <rect
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4193"
@@ -300,5 +280,86 @@
        id="path4320"
        d="m 205,217.6122 c 55,0 55,0 55,0"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)" />
+  </g>
+  <g
+     transform="translate(-48.042618,-159.54639)"
+     style="display:inline"
+     inkscape:label="Gouraud shading"
+     id="g4293"
+     inkscape:groupmode="layer">
+    <rect
+       y="207.3622"
+       x="275"
+       height="15"
+       width="230"
+       id="rect4295"
+       style="fill:url(#linearGradient4317);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:Sans;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="197.38222"
+       y="222.69331"
+       id="text4297"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan4299"
+         sodipodi:role="line"
+         x="197.38222"
+         y="222.69331">Gouraud shading</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 205,217.6122 c 55,0 55,0 55,0"
+       id="path4309"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:label="Intensity"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-48.042618,-159.54639)"
+     style="display:inline">
+    <circle
+       style="fill:#00222b;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3338"
+       cx="284.63873"
+       cy="176.83176"
+       r="9.6387196" />
+    <circle
+       style="fill:#004455;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3338-2"
+       cx="354.6384"
+       cy="176.83182"
+       r="9.6387196" />
+    <circle
+       style="fill:#006680;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3338-2-5"
+       cx="424.63879"
+       cy="176.83182"
+       r="9.6387196" />
+    <circle
+       r="9.6387196"
+       cy="176.83182"
+       cx="494.6384"
+       id="circle4187"
+       style="fill:#0088aa;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:Sans;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="195.39775"
+       y="172.84229"
+       id="text4231"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4233"
+         x="195.39775"
+         y="172.84229">Lichtintensität</tspan><tspan
+         sodipodi:role="line"
+         x="195.39775"
+         y="194.71729"
+         id="tspan4235">pro Eckpunkt</tspan></text>
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker4658)"
+       d="m 205,177.3622 c 55,0 55,0 55,0"
+       id="path4318"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
