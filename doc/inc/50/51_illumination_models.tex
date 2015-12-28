@@ -63,7 +63,9 @@ wobei gilt:
     \item $k_{a} \cdot L_{a}$:      Ambiente Komponente des
                                     Beleuchtungsmodelles. Mittels diesem Faktor
                                     wird versucht allem indirekten Licht der
-                                    Szene gerecht zu werden.
+                                    Szene gerecht zu werden. Bei $k_{a}$
+                                    handelt es sich um eine Konstante, welche
+                                    den ambienten Lichtanteil $L_{a}$ skaliert
     \item $k_{d}$:                  Konstante für die diffuse Komponente des
                                     reflektierten Lichtes, basierend auf der
                                     Wellenlänge bzw. Frequenz
@@ -80,8 +82,9 @@ wobei gilt:
                                     Kamera
     \item $k_{e}$:                  Exponent, welcher von der Rauheit bzw.
                                     Reflektion der Oberfläche abhängt
+    \item $L_{i}$                   Licht- bzw.\ Farbintnsität der $i$-ten
+                                    Lichtquelle
 \end{itemize}
-\todo[inline]{Explain $L_{i}$!}
 
 Meist wird der emissive Term bewusst weggelassen, da dieser meist eher für
 Spezialeffekte statt für die Beleuchtung ``normaler'' Objekte benutzt wird.
