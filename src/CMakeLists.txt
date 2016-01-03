@@ -9,6 +9,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # Set compiler to GCC/G++
 set(CMAKE_C_COMPILER "/usr/bin/gcc")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+# Use C++11
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # Do not show deprecated warnings
@@ -72,7 +73,7 @@ target_link_libraries(mte7101
     # boost_regex
     libboost_system.a
     libboost_filesystem.a
-    libboost_regex.a
+    ${CMAKE_SOURCE_DIR}/../lib/libboost_regex.a
 )
 
 # Set output directory of executable
