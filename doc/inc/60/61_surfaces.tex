@@ -193,3 +193,35 @@ dann ist $f$ eine \textit{vorzeichenabhängige Distanzfunktion (signed distance
 \label{ssubsec:distance_fields}
 
 \todo[inline]{Introduce distance fields?}
+
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+auf~\cite{jones_3d_2006}.
+
+Bei einem Distanzfeld handelt es sich um eine Repräsentation respektive eine
+Datenstruktur, bei welcher von jedem Punkt aus die geringste Distanz zu
+einem beliebigen Objekt der Domäne bekannt ist.
+
+Zusätzlich zu der Distanz können aus einem Distanzfeld andere Parameter
+wie beispielswiese die Richtung einer Oberfläche abgeleitet werden.
+
+Handelt es sich bei einem Distanzfeld um ein vorzeichenbehaftetes
+Distanzfeld, so kann bei jedem Punkt bestimmt werden, ob sich dieser
+innerhalb, ausserhalb oder genau auf einem Objekt befindet. Dies verhält
+sich analog zu Abschnitt~\ref{subsec:implicit_surfaces}.
+
+Distanzfelder bilden somit die Grundlage der Algorithmen zur Darstellung
+von impliziten Oberflächen. Siehe dazu auch
+Kapitel~\ref{sec:rendering_implicit_surfaces}. Die unter
+Abschnitt~\ref{ssubsec:distance_functions} genannte~\textit{Point-to-set
+    distance}-Funktion  liefert bereits die näheste Distanz zu einer
+Menge von Punkten und somit auch zu Objekten auseghend von einem Punkt
+der Domäne.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/distance_field.pdf}
+    \caption{Darstellung des Dinstanzfeldes einer dreidimensionalen
+        Szene anhand Farbwerten\protect\footnotemark}\label{
+        fig:distance_field_illustration}
+\end{figure}
+\footnotetext{Eigene Darstellung}
