@@ -19,41 +19,34 @@
 ]{scrreprt}                 % KOMA-script report
 %---------------------------------------------------------------------------
 \raggedbottom{}
-%\KOMAoptions{cleardoublepage=plain}         % Add header and footer on blank pages
+\KOMAoptions{cleardoublepage=plain}         % Add header and footer on blank pages
 
 
 % Load Standard Packages:
 %---------------------------------------------------------------------------
-\usepackage{scrpage2}
+\usepackage{scrpage2}                                                   % Control of page headers and footers in LaTeX,
+                                                                        % needed for e.g. deftripstyle (to defined page styles)
 \usepackage[ngerman]{babel}                                             % german hyphenation
 \usepackage[utf8]{inputenc}                                             % UTF-8 input encoding
 \usepackage[T1]{fontenc}                                                % hyphenation of words with ä,ö and ü
 \usepackage{textcomp}                                                   % additional symbols
-\usepackage{etoolbox}                                                   % color manipulation of header and footer
-\usepackage{graphicx}                                                   % integration of images
 \usepackage{float}                                                      % floating objects
-\usepackage[font={footnotesize,it}]{caption}                            % for captions of figures and tables
 \usepackage{booktabs}                                                   % package for nicer tables
 \usepackage{tocvsec2}                                                   % provides means of controlling the sectional numbering
-\usepackage[
-    style=alphabetic,
-    natbib=true,
-    backend=bibtex,
-    citestyle=authoryear
-]{biblatex}                                                             % Citations
-\usepackage{nameref}                                                    % provides printing names of references
-\usepackage{colortbl}                                                   % Colored tables
-\usepackage{scrhack}                                                    % Remove float errors and warnings
 \usepackage{pgfgantt}                                                   % Provides GANTT charts
-\usepackage{array}                                                      % ?
-\usepackage{esvect}                                                     % Provides nicer vector display in math mode
 \usepackage[owncaptions]{vhistory}                                      % Provides framework for creating history outline
-\renewcommand{\vhhistoryname}{Versionen}
+\renewcommand{\vhhistoryname}{Versionen}                                % Rename version history to german name "Versionen"
+\usepackage{csquotes}
 %---------------------------------------------------------------------------
 
 % Bibliography
 %---------------------------------------------------------------------------
-\addbibresource{inc/static/bibliography}
+\usepackage[
+    style=alphabetic,
+    backend=biber,
+    citestyle=authoryear
+]{biblatex}
+\addbibresource{inc/static/bibliography.bib}
 \DefineBibliographyStrings{ngerman}{
     andothers = {{et\,al\adddot}},
 }
@@ -62,27 +55,13 @@
 % Load Math Packages
 %---------------------------------------------------------------------------
 \usepackage{mathtools}                                                  % Provide equation and gather environments
-
 \usepackage{amsthm}                                                     % Provide the possibility to define definitions
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
-
 \usepackage{bm}                                                         % bold font in math mode
-\usepackage{amsfonts}                                                   % set of miscellaneous TeX fonts that augment the standard CM
-\usepackage{amssymb}                                                    % mathematical special characters
+\usepackage{amssymb}                                                    % mathematical special characters, e.g. mathbb
 \usepackage{exscale}                                                    % mathematical size corresponds to textsize
-%---------------------------------------------------------------------------
-
-% Package to facilitate placement of boxes at absolute positions
-%---------------------------------------------------------------------------
-\usepackage[absolute]{textpos}
-\setlength{\TPHorizModule}{1mm}
-\setlength{\TPVertModule}{1mm}
-%---------------------------------------------------------------------------
-
-% PDF as attachment
-%---------------------------------------------------------------------------
-\usepackage{pdfpages}
+\usepackage{esvect}                                                     % Provides nicer vector display in math mode
 %---------------------------------------------------------------------------
 
 % Definition of fonts
@@ -93,43 +72,56 @@
 
 % Definition of colors
 %---------------------------------------------------------------------------
-\RequirePackage{color}                          % Color (not xcolor!)
+\RequirePackage{color}
 \definecolor{linkblue}{rgb}{0,0,0.8}            % Standard
 \definecolor{darkblue}{rgb}{0,0.08,0.45}        % Dark blue
 \definecolor{bfhgrey}{rgb}{0.41,0.49,0.57}      % BFH grey
-%\definecolor{linkcolor}{rgb}{0,0,0.8}              % Blue for the web- and cd-version!
-\definecolor{linkcolor}{rgb}{0,0,0}                 % Black for the print-version!
+\definecolor{linkcolor}{rgb}{0,0,0}
 \colorlet{Black}{black}
 \definecolor{keywords}{rgb}{255,0,0}
 \definecolor{red}{rgb}{0.6,0,0}
 \definecolor{green}{rgb}{0,0.5,0}
 \definecolor{blue}{rgb}{0,0,0.5}
-
+% Syntax colors
+\definecolor{syntaxRed}{rgb}{0.6,0,0}
+\definecolor{syntaxBlue}{rgb}{0,0,0.5}
+\definecolor{syntaxComment}{rgb}{0,0.5,0}
 %---------------------------------------------------------------------------
 
 % Load listings package
 % which provides source code formatting
 %---------------------------------------------------------------------------
-\usepackage{listings}                                                   % provides source code formatting
-% Define XML colors
-\lstdefinelanguage{XML}
-{
-  basicstyle=\ttfamily\footnotesize,
-  morestring=[b]'',
-  moredelim=[s][\bfseries\color{maroon}]{<}{\ },
-  moredelim=[s][\bfseries\color{maroon}]{</}{>},
-  moredelim=[l][\bfseries\color{maroon}]{/>},
-  moredelim=[l][\bfseries\color{maroon}]{>},
-  morecomment=[s]{<?}{?>},
-  morecomment=[s]{<!--}{-->},
-  commentstyle=\color{codecommentcolor},
-  stringstyle=\color{darkblue},
-  identifierstyle=\color{red}
-}
+\usepackage{listings}
 % Change captions of listings
 \renewcommand{\lstlistingname}{Auflistung}
 \renewcommand{\lstlistlistingname}{Auflistungsverzeichnis}
 \usepackage{glslListings}
+% Make sure Umlauts are getting displayed correctly.
+\lstset{literate=%
+    {Ö}{\textcolor{black}{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\textcolor{black}{\"a}}}1
+    {ö}{{\textcolor{black}{\"o}}}1
+    {~}{{\textasciitilde}}1
+    {?}{{\textcolor{black}{?}}}1
+}
+% Define a list style for Python programming language
+\lstset{language=Python,
+    basicstyle=\ttm,
+    columns=fullflexible,
+    commentstyle=\color{green},
+    emphstyle=\ttb\color{red},
+    frame=tb,
+    identifierstyle=\color{black},
+    keywordstyle=\ttb\color{blue},
+    otherkeywords={self},
+    % procnamekeys={def,class},
+    showstringspaces=false,
+    stringstyle=\color{green},
+}
 %---------------------------------------------------------------------------
 
 % Hyperref Package (Create links in a pdf)
@@ -165,24 +157,13 @@
 
 % Makeindex Package
 %---------------------------------------------------------------------------
-\usepackage{makeidx}                                % To produce index
-\makeindex                                      % Index-Initialisation
+\usepackage{makeidx}
+\makeindex
 %---------------------------------------------------------------------------
 
 % Glossary Package
 %---------------------------------------------------------------------------
-% the glossaries package uses makeindex
-% if you use TeXnicCenter do the following steps:
-%  - Goto "Ausgabeprofile definieren" (ctrl + F7)
-%  - Select the profile "LaTeX => PDF"
-%  - Add in register "Nachbearbeitung" a new "Postprozessoren" point named Glossar
-%  - Select makeindex.exe in the field "Anwendung" ( ..\MiKTeX x.x\miktex\bin\makeindex.exe )
-%  - Add this [ -s "%tm.ist" -t "%tm.glg" -o "%tm.gls" "%tm.glo" ] in the field "Argumente"
-%
-% for futher informations go to http://ewus.de/tipp-1029.html
-%---------------------------------------------------------------------------
 \usepackage[nonumberlist,nomain]{glossaries}
-%\usepackage[xindy,nonumberlist]{glossaries}
 \input{inc/static/glossary}
 \makeglossaries{}
 %---------------------------------------------------------------------------
@@ -192,13 +173,10 @@
 \usepackage{fancyvrb}
 \RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}
 {fontsize=\footnotesize,
-    %
     frame=lines,  % top and bottom rule only
     framesep=2em, % separation between frame and text rulecolor=\color{Gray},
-    %
     label=\fbox{\color{Black}},
     labelposition=topline,
-    %
     % commandchars=\|\(\), % escape character and argument delimiters for
     % commands within the verbatim
     % commentchar=*        % comment character
@@ -210,41 +188,48 @@
 \usepackage[textwidth=65mm]{todonotes}
 %---------------------------------------------------------------------------
 
-% Intro:
-%---------------------------------------------------------------------------
-%\begin{document}                             % Start Document
-\settocdepth{section}                         % Set depth of toc
+\begin{document}
+\settocdepth{section}
 \pagenumbering{roman}
+
+% Document title
+%---------------------------------------------------------------------------
+\providecommand{\titel}{Volume ray casting --- basics \& principles}
 %---------------------------------------------------------------------------
 
-\input{inc/static/doc_title}                  % Titel der Arbeit aus Datei titel.tex lesen
-
-% Set up header and footer
+% Set up header and footer using page style
 %---------------------------------------------------------------------------
-
 \deftripstyle{newlayout}
   [0pt] % no header line
   [0pt] % no footer line
-  {}
-  {}
-  {}
-  {\color{bfhgrey} \footnotesize \titel, Version \vhCurrentVersion, \vhCurrentDate}
-  {}
-  {\color{bfhgrey} \thepage}
+  {} % Header left
+  {} % Header center
+  {} % Header right
+  {\color{bfhgrey} \footnotesize \titel, Version \vhCurrentVersion,
+      \vhCurrentDate} % Footer left
+  {} % Footer center
+  {\color{bfhgrey} \thepage} % Footer right
+
+\deftripstyle{titlepageStyle}
+  [0pt] % no header line
+  [0pt] % no footer line
+  {} % Header left
+  {} % Header center
+  {} % Header right
+  {\color{bfhgrey}\fontsize{9pt}{10pt}\selectfont
+    Berner Fachhochschule | Haute école spécialisée bernoise | Bern
+    University of Applied Sciences} % Footer left
+  {} % Footer center
+  {} % Footer right
+
 
 \pagestyle{newlayout}
-% use "pagestyle" also on chapter starting pages 
+% use "pagestyle" also on chapter starting pages
 \renewcommand{\chapterpagestyle}{newlayout}
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.  #1}{}}
 \renewcommand*{\headfont}{\normalfont}
 \renewcommand*{\footfont}{\normalfont}
 %---------------------------------------------------------------------------
-
-% We need this as mr. gantt chart (teh package..) thinks text should be gray
-% otherwise..
-\color{black}
-
-\begin{document}
 
 % Title Page and Abstract
 %---------------------------------------------------------------------------
@@ -255,33 +240,6 @@
 \addcontentsline{toc}{chapter}{Management Summary}
 \include{inc/static/management_summary}
 %---------------------------------------------------------------------------
-
-% Make sure Umlauts are getting displayed correctly.
-\lstset{literate=%
-    {Ö}{\textcolor{black}{\"O}}1
-    {Ä}{{\"A}}1
-    {Ü}{{\"U}}1
-    {ß}{{\ss}}1
-    {ü}{{\"u}}1
-    {ä}{{\textcolor{black}{\"a}}}1
-    {ö}{{\textcolor{black}{\"o}}}1
-    {~}{{\textasciitilde}}1
-    {?}{{\textcolor{black}{?}}}1
-}
-% Define a list style for Python programming language
-\lstset{language=Python,
-    basicstyle=\ttm,
-    columns=fullflexible,
-    commentstyle=\color{green},
-    emphstyle=\ttb\color{red},
-    frame=tb,
-    identifierstyle=\color{black},
-    keywordstyle=\ttb\color{blue},
-    otherkeywords={self},
-    % procnamekeys={def,class},
-    showstringspaces=false,
-    stringstyle=\color{green},
-}
 
 % Table of contents
 %---------------------------------------------------------------------------
@@ -314,11 +272,9 @@
 
 % Bibliography
 %---------------------------------------------------------------------------
-%\cleardoublepage
+\cleardoublepage{}
 \phantomsection{}
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
-% \bibliographystyle{alpha}
-% \bibliography{inc/static/bibliography}{}
 \printbibliography{}
 %---------------------------------------------------------------------------
 
