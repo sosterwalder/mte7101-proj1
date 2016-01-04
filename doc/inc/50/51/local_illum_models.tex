@@ -1,0 +1,78 @@
+\subsection{Lokale Beleuchtungsmodelle}
+\label{subsec:local_illumination_models}
+
+Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben lokalen,
+Oberflächen. Diese Modelle sind in deren Umfang allerdings limitiert, da sie
+normalerweise nur Lichtquellen sowie die Orientierung einer Oberfläche
+einbeziehen. Sie ignorieren dabei aber die globale Umgebung, in welcher sich
+eine Oberfläche befindet.  Dies ist dadurch bedingt, dass die traditionell
+verwendeten Algorithmen zur Berechnung der Sichtbarkeit von Oberflächen, über
+keine globalen Daten verfügen. Das bekannteste lokale Beleuchtungsmodell ist
+das \textbf{Phong}-Beleuchtungsmodell, welches 1975 von Phong Bui-Tong
+entwickelt wurde. Es beschreibt nicht-perfekte Reflektoren wie zum Beispiel einen
+Apfel~\cite{foley_computer_1996}[Kapitel 16, Seite 729].
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/phong_illumination_model.pdf}
+    \caption{Illustration des Phong-Beleuchtungsmodelles\protect\footnotemark}\label{fig:phong_illustration}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Geogebra, angelehnt an~\cite{foley_computer_1996}[Kapitel 16, Seite 731, Abbildung 16.12]}
+
+Es beschreibt die reflektierte (Licht-) Intensität als Zusammensetzung aus der ambienten, der diffusen und der ideal spiegelnden Reflexion einer Oberfläche:
+
+\begin{gather}
+    I = I_{\text{ambient}} + I_{\text{diffuse}} + I_{\text{specular}} + I_{\text{emissive}}
+\end{gather}
+
+oder mathematisch ausgedrückt:
+
+\begin{gather}
+    I(\vv{V}) = k_{a} \cdot L_{a} +
+                k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\vv{S_{i}} \cdot \vv{N}) +
+                k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\vv{R_{i}} \cdot \vv{V})}^{k_{e}}
+\end{gather}
+
+wobei gilt:
+
+\begin{itemize}
+    \item $I(\vv{V})$:              Die reflektierte (Licht-) Intensität in Richtung des Vektors $\vv{V}$
+    \item $n$:                      Anzahl Lichtquellen
+    \item $k_{a} \cdot L_{a}$:      Ambiente Komponente des
+                                    Beleuchtungsmodelles. Mittels diesem Faktor
+                                    wird versucht allem indirekten Licht der
+                                    Szene gerecht zu werden. Bei $k_{a}$
+                                    handelt es sich um eine Konstante, welche
+                                    den ambienten Lichtanteil $L_{a}$ skaliert
+    \item $k_{d}$:                  Konstante für die diffuse Komponente des
+                                    reflektierten Lichtes, basierend auf der
+                                    Wellenlänge bzw. Frequenz
+    \item $\vv{S_{i}}$:             Richtung, in welcher das Licht der $i$-ten
+                                    Lichtquelle ankommt, normalisierter
+                                    Einheitsvektor
+    \item $\vv{N}$:                 Einheitsnormale der Oberfläche
+    \item $k_{s}$:                  Koeffizient der spiegelenden Komponente,
+                                    basierend auf der Wellenlänge bzw. Frequenz
+    \item $\vv{R_{i}}$:             Richtung, in welcher das Licht der $i$-ten
+                                    Lichtquelle reflektiert wird,
+                                    normalisierter Einheitsvektor
+    \item $\vv{V}$:                 Blickrichtung des Betrachters bzw.\ der
+                                    Kamera
+    \item $k_{e}$:                  Exponent, welcher von der Rauheit bzw.
+                                    Reflektion der Oberfläche abhängt
+    \item $L_{i}$                   Licht- bzw.\ Farbintnsität der $i$-ten
+                                    Lichtquelle
+\end{itemize}
+
+Meist wird der emissive Term bewusst weggelassen, da dieser meist eher für
+Spezialeffekte statt für die Beleuchtung ``normaler'' Objekte benutzt wird.
+
+Der reflektive Vektor $R_{i}$ ist gegeben durch
+
+\begin{gather}
+    R_{i} = S_{i} + 2(S_{i} \cdot N)N
+\end{gather}
+
+Damit die Energieerhaltung gewährleistet ist, muss weiter $k_{d} + k_{s} < 1$
+gelten. Der Winkel zwischen $\vv{R}$ und $\vv{V}$ wird mittels $\cos{\alpha}$
+ermittelt.

@@ -1,0 +1,191 @@
+\subsection{Ray Tracing}
+\label{subsec:ray_tracing}
+
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+auf~\cite{glassner_introduction_1989}[S. 1 bis 77].
+
+Bei dem heute als Ray Tracing bekannten Verfahren, handelt es sich um
+eine verbesserte Version des unter~\ref{subsec:ray_casting} genannten
+Ray Casting Verfahrens. Dieses wurde im Juni 1980
+durch~\citeauthor{whitted_improved_1980} verbessert.
+
+Grundsätzlich ist die Idee, dass jeder Bildpunkt der gewählten Region
+Licht aus nur einer Richtung erhält --- derer der Lichtstrahlen
+(\textit{light rays}), welche durch die gewählte Region und die
+sichtbare Bildfläche gehen. Somit trägt jedes Photon, welches aus dieser
+Richtung kommt, zum Farbwert bzw.\ der Farbintensität eines Bildpunktes
+bei.
+
+Die Lichtstrahlen werden in dieser Richtung verfolgt, um festzustellen
+wie das Licht ``erzeugt'' wird:
+\begin{itemize}
+    \item{Der Lichtstrahl trifft auf nichts} --- die Strahlenverfolgung
+        wird beendet, der Bildpunkt wird mit der Farbe des Hintergrundes
+        eingefärbt.
+    \item{Der Lichtstrahl trifft auf eine Lichtquelle} --- die
+        Strahlenverfolgung wird beendet, der Bildpunkt wird mit der
+        Farbe und Intensität der Lichtquelle eingefärbt.
+    \item{Der Lichtstrahl trifft auf eine Oberfläche} --- der Prozess
+        wird von diesem Punkt aus neu gestartet um festzustellen, wie
+        das Licht dort ``erzeugt'' wurde.
+\end{itemize}
+
+Wie der letzte Punkt zeigt, handelt es sich also um ein rekurisves Verfahren
+und wird daher teilweise auch rekurisves Ray Tracing genannt.
+
+\citeauthor{glassner_introduction_1989} unterscheidet analog zu den
+genannten Fällen zwischen folgenden Typen von Strahlen:
+\begin{itemize}
+    \item{\textit{Pixel- oder Augen-Strahlen}:} Strahlen, welche das Licht von
+        einer Lichtquelle durch einen Bildpunkt direkt zu der sichtbaren
+        Bildfläche (also dem Betrachter) transportieren.
+
+        Die Strahlengleichung lautet:
+
+        $r(t) = x_{0} + t \cdot (S - x_{0})$
+
+        wobei $x_{0}$ der Ausgangspunkt (also der Betrachter), $t$ ein
+        Skalierungsfaktor zwischen $[1, \infty]$ und $S$ der Schnittpunkt mit der
+        Bildfläche ist.
+
+    \item{\textit{Licht- oder Schatten-Strahlen}:} Strahlen, welche das Licht von
+        einer Lichtquelle direkt zu einer Oberfläche eines Objektes
+        transportieren.
+
+        Die Strahlengleichung lautet:
+
+        $r(t) = p_{0} + t \cdot (L_{i} - p_{0})$
+
+        wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer
+        Oberfläche eines Objektes), $t$ ein Skalierungsfaktor zwischen
+        $[\epsilon, 1]$ und $L_{i}$ der Ort der $i$-ten Lichtquelle ist.
+        Bei Epsilon handelt es sich um einen Faktor zur Steuerung der
+        Präzision, welcher verhindert, dass ein Objekt lokal auf sich
+        selbst Schatten wirft.
+
+    \item{\textit{Reflektions-Strahlen}:} Strahlen, welche das an einem
+        Objekt gespiegelte Licht transportieren.
+
+        Die Strahlengleichung lautet:
+
+        $r(t) = p_{0} + t \cdot F$
+
+        wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer
+        Oberfläche eines Objektes), $t$ ein Skalierungsfaktor zwischen
+        $[\epsilon, 1]$ und $F$ der reflektierte Vektor ausgehend vom
+        eingehenden Strahl in Abhängigkeit der Oberflächennormale ist:
+        $F = (S - x_{0}) - 2((S - x_{0}) \cdot N)N$.  Bei Epsilon
+        handelt es sich wiederum um einen Faktor zur Steuerung der
+        Präzision, welcher verhindert, dass ein Objekt lokal in sich
+        selbst gespiegelt wird.
+
+    \item{\textit{Transparenz-Strahlen}:} Strahlen, welche Licht
+        transportieren, dass durch ein Objekt hindurch geht.
+
+        Die Strahlengleichung der Transparenz-Strahlen wird untenstehend
+        genauer erläutert.
+
+\end{itemize}~\cite{glassner_introduction_1989}[S. 10]
+
+Zur Berechnung des emitierten Lichtes an einem gewissen Punkt eines Objektes
+wird in einem ersten Schritt die Lichtintensität dieses Punktes
+bestimmt.
+
+In einem weiteren Schritt wird berechnet, wie die Oberfläche an diesem
+Punkt Licht in eine spezifische Richtung weitergibt.  Dies geschieht
+durch die Lichtintensität des Punktes sowie dessen physikalischen
+Eigenschaften. 
+
+Die oben genannten Strahlenarten \textit{Schatten, Reflektion und
+    Transparenz} beschreiben die Prinzipien, wie Licht an einem Punkt
+ankommt und sich von diesem entfernt.
+
+Die Eigenschaften von Licht, welches direkt von einer Lichtquelle kommt
+und dann weiter emitiert bzw.\ propagiert wird, werden durch
+die~\textit{Schatten-Strahlen} bestimmt. Bei jedem Schnittpunkt eines
+Lichtstrahles mit einem Objekt wird ein Schatten-Strahl in Richtung jeder
+Lichtquelle der Szene ``geworfen''. Trifft der Schatten-Strahl die
+Lichtquelle, wird das Licht zur Berechnung der Farbe und Lichtintensität
+genutzt. Trifft der Schatten-Strahl keine Lichtquelle, so wird das Licht
+nicht berücksichtigt. Schatten-Strahlen generieren keine weiteren
+Strahlen.
+
+Trifft ein Lichtstrahl auf eine Oberfläche wird dieses zu gewissen
+Teilen~\textit{absorbiert}, \textit{reflektiert} und \textit{gebrochen}.
+Die jeweiligen Anteile hängen dabei vom Medium der Oberfläche bzw.\ des
+Objektes, der Frequenz des Lichtes sowie dem Winkel zwischen dem
+Eingangswinkel des Lichtstrahles und der Oberflächennormale ab. Licht
+kann je nach Medium auch gestreut werden.
+
+Die Eigenschaften von Licht, welches auf ein Objekt trifft und dann an
+diesem gespiegelt wird, werden durch die~\textit{Reflektions-Strahlen}
+bestimmt. Handelt es sich dabei um eine perfekte spekuläre Reflektion,
+so wird die eingehende Energie, ausgehend nur in eine Richtung
+reflektiert.
+\todo[inline]{Add image and formula for perfect specular reflection and
+    perfect diffuse reflection}
+
+Und schliesslich werden die Eigenschaften von Licht, welches durch ein
+Objekt hindurch geht und vielleicht von diesem gebrochen wird, durch
+die~\textit{Transparenz-Strahlen} beschrieben. Tritt Licht in ein neues
+Medium ein (z.B.\ von Luft in Wasser), so wird das Licht gebrochen.
+Dabei wird die Bahn des Lichtstrahles nach innen hin abgelenkt, wenn das
+Licht in ein Medium mit höherer Dichte eintritt.
+\todo[inline]{Add image and formula for refraction (perfect specular
+    transmission), total internal reflection and transmission}
+
+Ein möglicher Algorithmus, wie solch ein Verfahren umgesetzt werden kann,
+findet sich in~\ref{fig:ray_tracing:high_level}.
+
+\begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des
+        Ray Tracings \protect\footnotemark.},
+    label={fig:ray_tracing:high_level},captionpos=b,emph={ray_trace}]
+def ray_trace(current_point, direction):
+"""Traces light rays from current point in space in given direction.
+
+:param current_point: current point in space
+:type  current_point: three dimensional point object
+:param direction:     the direction to trace
+:type  direction:     three dimensional vector
+
+:return:              the color for the given point
+:rtype:               float
+"""
+
+    # Set color to currently set background color
+    color = self.background_color
+
+    # "pixels" is a list of all pixels of the image plane
+    for pixel in pixels:
+
+        # Returns the ray passing through the given
+        # pixel from the eye
+        ray = ray_at_pixel(pixel)
+
+        # object_list is a list containing all the meshes contained in
+        # the scene to render
+        for object in object_list:
+            p = intersect(ray, object)
+
+            if object.is_reflective:
+                reflection_vector = reflect(direction, object)
+                reflected_color   = ray_trace(p, reflection_vector)
+                color = color + object.coeff * reflected_color
+
+            if object.is_refractive:
+                refracted_vector = refract(direction, object)
+                refracted_color  = ray_trace(p, refracted_vector)
+                color = color + object.coeff * refracted_color
+
+            for light in incoming_lights_at(p):
+                if not is_shadow_ray(p, light.position):
+                    color = color + calc_lighting(p, direction, light, object)
+            end
+        end
+    end
+
+    return color
+end
+\end{lstlisting}
+\footnotetext{Algorithmus in Pseudocode
+    gemäss~\cite{glassner_introduction_1989}[Seite 283]}

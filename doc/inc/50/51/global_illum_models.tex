@@ -1,0 +1,66 @@
+\subsection{Globale Beleuchtungsmodelle}
+\label{subsec:global_illumination_models}
+
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt auf~\cite{foley_computer_1996}[S. 775ff]
+
+Globale Beleuchtungsmodelle beschreiben die reflektierte (Licht-) Intensität
+eines Punktes aufgrund direkter Lichteinstrahlung durch Lichtquellen sowie
+durch alles Licht, welches diesen Punkt nach Reflektion von bzw. Durchdringen
+der eigenen oder anderer Oberflächen erreicht.
+
+Bei globalen Beleuchtungsmodellen unterscheidet man zwischen
+blickwinkelabhängigen Algorithmen, wie etwa Ray Tracing, und zwischen
+blickwinkelunabhängigen Algorithmen, wie etwa Photon Mapping.
+
+Blickwinkelabhängige Algorithmen verwenden eine Diskretisierung der sichtbaren
+Fläche bzw. Bildfläche um zu entscheiden, an welchen Punkten, in Blickrichtung
+des Betrachters, die Beleuchtungsberechnung durchgeführt werden soll.
+Blickwinkelunabhängige Algorithmen hingegen diskretisieren und verarbeiten die
+Umgebung um genügend Informationen für die Beleuchtungsberechnung zu haben.
+Dies erlaubt ihnen die Beleuchtungsberechnung an einem beliebigen Punkt aus
+einer beliebigen Blickrichtung.
+
+Beide Arten von Algorithmen haben jedoch Vor- und Nachteile. So sind
+blickwinkelabhängige Algorithmen gut geeignet um Spiegelungen, basierend auf
+der Blickrichtung des Betrachtes, zu berechnen, eignen sich aber weniger um
+gleichbleibende diffuse Anteile über weiter Flächen eines Bildes zu berechnen.
+Bei blickwinkelabhängigen Algorithmen verhält es sich genau umgekehrt.
+
+\subsubsection{Renderinggleichung}
+\label{ssubsec:rendering_equation}
+
+Die unter~\ref{subsec:global_illumination_models} genannten Verfahren versuchen
+auszudrücken, wie sich Licht von einem Punkt im Raum zu einem anderen bewegt.
+Dabei beschreiben sie die Intensität des Lichtes, ausgehend vom ersten Punkt
+zum zweiten Punkt. Zusätzlich wird die Intensität des Lichtes, ausgehend von
+allen anderen Punkten, welche den ersten Punkt erreichen, und zum zweiten Punkt
+emitiert werden, beschrieben.
+
+James (Jim) Kajiya stellte 1986 die so genannte Renderinggleichung auf, welche
+genau dieses Verhalten beschreibt~\cite{kajiya_rendering_1986}
+und~\cite{foley_computer_1996}:
+\begin{equation}
+    I(x, x') = g(x, x')[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx'']
+\end{equation}
+wobei gilt:
+
+\begin{itemize}
+    \item $x, x' \text{und } x''$: Punkte in der Umgebung
+    \item $ I(x, x')$:            Lichtintensität von Punkt $x'$ nach Punkt $x$
+    \item $ g(x, x')$:            Ein auf die Geometrie bezogener Term\\
+                                  \hspace*{4mm} $0$:     \hspace*{6mm} $x$ und $x'$ verdecken sich\\
+                                  \hspace*{4mm} $1/r^2$: \hspace*{1mm} $x$ und $x'$ sehen sich, wobei $r$ die Distanz zwischen $x$ und $x'$ ist
+    \item $\epsilon(x, x')$:      Intensität des Lichtes, welches von $x'$ nach $x$ emitiert wird
+    \item $\rho(x, x', x'')$:     Intensität des Lichtes, welches von $x''$
+                                  durch die Oberfläche bei $x'$ nach $x$
+                                  gestreut wird
+    \item $\int\limits_{S}$:      Integral über die Vereinigung aller Flächen,
+                                  daher $ S = \bigcup{S_{i}} $\\
+                                      Dies bedeutet, dass die Punkte $x$, $x'$
+                                      und $x''$ über alle Flächen aller Objekte
+                                      der Szene ``streifen''.  Wobei es sich
+                                      bei $S_{0}$ um eine zusätzliche Fläche
+                                      handelt, welche als Hintergrund verwendet
+                                      wird.  $S_{0}$ ist dabei eine Hemisphäre,
+                                      welche die gesamte Szene umspannt.
+\end{itemize}
