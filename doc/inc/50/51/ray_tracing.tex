@@ -6,136 +6,295 @@ auf~\cite{glassner_introduction_1989}[S. 1 bis 77].
 
 Bei dem heute als Ray Tracing bekannten Verfahren, handelt es sich um
 eine verbesserte Version des unter~\ref{subsec:ray_casting} genannten
-Ray Casting Verfahrens. Dieses wurde im Juni 1980
-durch~\citeauthor{whitted_improved_1980} verbessert.
+Ray Casting Verfahrens. \citeauthor{whitted_improved_1980} publizierte
+das Verfahren~\citeyear{whitted_improved_1980} im Paper
+``\citetitle{whitted_improved_1980}''.
+
+Ein möglicher Algorithmus, wie Ray Tracing umgesetzt werden kann,
+findet sich in~\ref{fig:ray_tracing:high_level}.
 
 Grundsätzlich ist die Idee, dass jeder Bildpunkt der gewählten Region
-Licht aus nur einer Richtung erhält --- derer der Lichtstrahlen
+Licht aus nur einer Richtung erhält --- der Richtung der Lichtstrahlen
 (\textit{light rays}), welche durch die gewählte Region und die
 sichtbare Bildfläche gehen. Somit trägt jedes Photon, welches aus dieser
-Richtung kommt, zum Farbwert bzw.\ der Farbintensität eines Bildpunktes
-bei.
+Richtung kommt, zum Farbwert bzw.\ der Intensität der Farbe eines
+Bildpunktes bei. Bei Strahlen, welche das Licht direkt zur sichtbaren
+Bildfläche transportieren, spricht man von \textit{Pixel}- bzw.\
+\textit{Augen-Strahlen}.~\cite{glassner_introduction_1989}[S. 10]
 
-Die Lichtstrahlen werden in dieser Richtung verfolgt, um festzustellen
-wie das Licht ``erzeugt'' wird:
-\begin{itemize}
-    \item{Der Lichtstrahl trifft auf nichts} --- die Strahlenverfolgung
-        wird beendet, der Bildpunkt wird mit der Farbe des Hintergrundes
-        eingefärbt.
-    \item{Der Lichtstrahl trifft auf eine Lichtquelle} --- die
-        Strahlenverfolgung wird beendet, der Bildpunkt wird mit der
-        Farbe und Intensität der Lichtquelle eingefärbt.
-    \item{Der Lichtstrahl trifft auf eine Oberfläche} --- der Prozess
-        wird von diesem Punkt aus neu gestartet um festzustellen, wie
-        das Licht dort ``erzeugt'' wurde.
-\end{itemize}
 
-Wie der letzte Punkt zeigt, handelt es sich also um ein rekurisves Verfahren
-und wird daher teilweise auch rekurisves Ray Tracing genannt.
+Die Strahlen werden in dieser Richtung verfolgt, um festzustellen wie
+das Licht ``erzeugt'' wird. Trifft der Strahl auf nichts wird die
+Verfolgung des Strahles beendet und der Bildpunkt wird mit der Farbe des
+Hintergrundes eingefärbt. Trifft der Strahl direkt auf eine Lichtquelle
+wird die Verfolgung des Strahles beendet und der Bildpunkt wird mit der
+Farbe und Intensität der Lichtquelle eingefärbt.  Trifft der Lichtstrahl
+auf eine Oberfläche, wird der Prozess von diesem Punkt aus neu gestartet
+um festzustellen, wie das Licht dort ``erzeugt'' wurde. 
 
-\citeauthor{glassner_introduction_1989} unterscheidet analog zu den
-genannten Fällen zwischen folgenden Typen von Strahlen:
-\begin{itemize}
-    \item{\textit{Pixel- oder Augen-Strahlen}:} Strahlen, welche das Licht von
-        einer Lichtquelle durch einen Bildpunkt direkt zu der sichtbaren
-        Bildfläche (also dem Betrachter) transportieren.
+Wie der letzte Punkt zeigt, handelt es sich um ein rekursives Verfahren
+und wird daher teilweise auch rekursives Ray Tracing genannt.
 
-        Die Strahlengleichung lautet:
+Zur Berechnung des emittierten Lichtes an einem gewissen Punkt auf der
+Oberfläche eines Objektes, wird in einem ersten Schritt die Intensität
+des Lichtes dieses Punktes bestimmt. Man spricht dabei von \textit{Licht}- bzw.\
+\textit{Schatten-Strahlen}.~\cite{glassner_introduction_1989}[S. 10]
 
-        $r(t) = x_{0} + t \cdot (S - x_{0})$
+In einem weiteren Schritt wird berechnet, wie die Oberfläche an
+diesem Punkt Licht in eine spezifische Richtung weitergibt. Dies
+geschieht durch die Intensität des Lichtes des Punktes sowie dessen
+physikalischen Eigenschaften.
 
-        wobei $x_{0}$ der Ausgangspunkt (also der Betrachter), $t$ ein
-        Skalierungsfaktor zwischen $[1, \infty]$ und $S$ der Schnittpunkt mit der
-        Bildfläche ist.
+Trifft ein Lichtstrahl auf eine Oberfläche, wird dieses zu gewissen
+Teilen~\textit{absorbiert}, \textit{reflektiert} und
+\textit{gebrochen}.Die jeweiligen Anteile hängen dabei vom Medium der
+Oberfläche bzw.\ des Objektes, der Frequenz des Lichtes sowie zwischen
+dem eingehenden Winkel des Lichtstrahles und der Oberflächennormale ab.
+Licht kann je nach Medium auch gestreut werden.
 
-    \item{\textit{Licht- oder Schatten-Strahlen}:} Strahlen, welche das Licht von
-        einer Lichtquelle direkt zu einer Oberfläche eines Objektes
-        transportieren.
+Man unterscheidet zwischen vier verschiedenen Mechanismen wie Licht
+transportiert wird: Perfekt diffuse, perfekt spiegelnde, perfekt
+brechende und total interne
+Reflexion.~\cite{glassner_introduction_1989}[S. 130 bis 137]
+In der Realität bzw.\ der Natur kann es sein, dass mehrere der
+Mechanismen gemischt auftreten. So wird z.B.\ ein Teil des Lichtes
+reflektiert, wohingegen ein anderer Teil das Objekt durchdringt.
 
-        Die Strahlengleichung lautet:
+Die von diesen Mechanismen emittierten Strahlen können
+gemäss~\citeauthor{glassner_introduction_1989}
+in~\textit{Reflexion-Strahlen}, welche die perfekte diffuse und die
+perfekt spiegelnde Reflexion beschreiben,
+und~\textit{Transparenz-Strahlen}, welche die perfekt brechende und die
+totale interne Reflexion beschreiben,unterteilt
+werden.~\cite{glassner_introduction_1989}[S. 10]
 
-        $r(t) = p_{0} + t \cdot (L_{i} - p_{0})$
+\todo[inline]{Add image of scene}
 
-        wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer
-        Oberfläche eines Objektes), $t$ ein Skalierungsfaktor zwischen
-        $[\epsilon, 1]$ und $L_{i}$ der Ort der $i$-ten Lichtquelle ist.
-        Bei Epsilon handelt es sich um einen Faktor zur Steuerung der
-        Präzision, welcher verhindert, dass ein Objekt lokal auf sich
-        selbst Schatten wirft.
+Nachfolgend werden die oben genannten Strahlen im Einzelnen beschrieben.
 
-    \item{\textit{Reflektions-Strahlen}:} Strahlen, welche das an einem
-        Objekt gespiegelte Licht transportieren.
+\subsubsection{Augen- oder Pixel-Strahlen}
+\label{ssubsec:ray_tracing:eye_rays}
 
-        Die Strahlengleichung lautet:
+Augen- oder Pixel-Strahlen sind Strahlen, welche das Licht von einer
+Lichtquelle durch einen Bildpunkt direkt zu der sichtbaren Bildfläche
+(also dem Betrachter) transportieren.
 
-        $r(t) = p_{0} + t \cdot F$
+Die Gleichung solcher Strahlen lautet:
 
-        wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer
-        Oberfläche eines Objektes), $t$ ein Skalierungsfaktor zwischen
-        $[\epsilon, 1]$ und $F$ der reflektierte Vektor ausgehend vom
-        eingehenden Strahl in Abhängigkeit der Oberflächennormale ist:
-        $F = (S - x_{0}) - 2((S - x_{0}) \cdot N)N$.  Bei Epsilon
-        handelt es sich wiederum um einen Faktor zur Steuerung der
-        Präzision, welcher verhindert, dass ein Objekt lokal in sich
-        selbst gespiegelt wird.
+\begin{gather}
+    r(t) = x_{0} + t \cdot (S - x_{0})
+\end{gather}
 
-    \item{\textit{Transparenz-Strahlen}:} Strahlen, welche Licht
-        transportieren, dass durch ein Objekt hindurch geht.
+Wobei $x_{0}$ der Ausgangspunkt (also der Betrachter), $t$ ein
+Skalierungsfaktor zwischen $[1, \infty]$ und $S$ der Schnittpunkt mit der
+Bildfläche ist.
 
-        Die Strahlengleichung der Transparenz-Strahlen wird untenstehend
-        genauer erläutert.
+\subsubsection{Licht- oder Schatten-Strahlen}
+\label{ssubsec:ray_tracing:shadow_rays}
+Bei Licht- bzw.\ Schatten-Strahlen handelt es sich um Strahlen, welche
+das Licht von einer Lichtquelle direkt zu der Oberfläche eines
+Objektes transportieren. Bei jedem Schnittpunkt eines Primär-Strahles
+(also ein Strahl welcher vom Betrachter aus in die Szene ``geworfen''
+wird) mit einem Objekt wird ein Schatten- bzw.\ Licht-Strahl in Richtung jeder
+Lichtquelle der Szene ``geworfen''. Trifft der Schatten- bzw.\
+Licht-Strahl die Lichtquelle, wird das Licht zur Berechnung der Farbe
+und Intensität des Lichtes genutzt. Trifft der Schatten-Strahl keine
+Lichtquelle, so wird das Licht nicht berücksichtigt. Schatten-Strahlen
+generieren keine weiteren Strahlen.
 
-\end{itemize}~\cite{glassner_introduction_1989}[S. 10]
+Die Gleichung von Licht- bzw.\ Schatten-Strahlen lautet:
 
-Zur Berechnung des emitierten Lichtes an einem gewissen Punkt eines Objektes
-wird in einem ersten Schritt die Lichtintensität dieses Punktes
-bestimmt.
+\begin{gather}
+    r(t) = p_{0} + t \cdot (L_{i} - p_{0})
+\end{gather}
 
-In einem weiteren Schritt wird berechnet, wie die Oberfläche an diesem
-Punkt Licht in eine spezifische Richtung weitergibt.  Dies geschieht
-durch die Lichtintensität des Punktes sowie dessen physikalischen
-Eigenschaften. 
+Wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer Oberfläche
+eines Objektes), $t$ ein Skalierungsfaktor zwischen $[\epsilon, 1]$ und
+$L_{i}$ der Ort der $i$-ten Lichtquelle ist. Bei $\epsilon$ handelt es
+sich um einen Faktor zur Steuerung der Präzision, welcher verhindert,
+dass ein Objekt lokal auf sich selbst Schatten wirft.
 
-Die oben genannten Strahlenarten \textit{Schatten, Reflektion und
-    Transparenz} beschreiben die Prinzipien, wie Licht an einem Punkt
-ankommt und sich von diesem entfernt.
 
-Die Eigenschaften von Licht, welches direkt von einer Lichtquelle kommt
-und dann weiter emitiert bzw.\ propagiert wird, werden durch
-die~\textit{Schatten-Strahlen} bestimmt. Bei jedem Schnittpunkt eines
-Lichtstrahles mit einem Objekt wird ein Schatten-Strahl in Richtung jeder
-Lichtquelle der Szene ``geworfen''. Trifft der Schatten-Strahl die
-Lichtquelle, wird das Licht zur Berechnung der Farbe und Lichtintensität
-genutzt. Trifft der Schatten-Strahl keine Lichtquelle, so wird das Licht
-nicht berücksichtigt. Schatten-Strahlen generieren keine weiteren
-Strahlen.
-
-Trifft ein Lichtstrahl auf eine Oberfläche wird dieses zu gewissen
-Teilen~\textit{absorbiert}, \textit{reflektiert} und \textit{gebrochen}.
-Die jeweiligen Anteile hängen dabei vom Medium der Oberfläche bzw.\ des
-Objektes, der Frequenz des Lichtes sowie dem Winkel zwischen dem
-Eingangswinkel des Lichtstrahles und der Oberflächennormale ab. Licht
-kann je nach Medium auch gestreut werden.
+\subsubsection{Reflexion-Strahlen}
+\label{ssubsec:ray_tracing:reflection_rays}
 
 Die Eigenschaften von Licht, welches auf ein Objekt trifft und dann an
-diesem gespiegelt wird, werden durch die~\textit{Reflektions-Strahlen}
-bestimmt. Handelt es sich dabei um eine perfekte spekuläre Reflektion,
-so wird die eingehende Energie, ausgehend nur in eine Richtung
-reflektiert.
-\todo[inline]{Add image and formula for perfect specular reflection and
-    perfect diffuse reflection}
+diesem gespiegelt wird, werden durch~\textit{Reflexion-Strahlen}
+bestimmt. Wie bereits vorhergehend beschrieben, gibt es zwei Arten der
+Reflexion: Perfekt diffuse und perfekt spiegelnde Reflexion.
+
+\textbf{Perfekt spiegelnde Reflexion}
+
+Bei der perfekt spiegelnden Reflexion verlässt der ausgehende Strahl die
+Oberfläche in demselben Winkel wie der eingehende Strahl hat. Der
+Ausfallswinkel entspricht also dem Einfallswinkel.
+
+Die Gleichung eines von einer perfekt spiegelnden Reflexion ausgehenden
+Strahles lautet~\cite{glassner_introduction_1989}[S. 132]:
+
+\begin{align}
+    r(t) &= p_{0} + t \cdot R \\
+    R &= I - 2(I \cdot N)N
+\end{align}
+
+Wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer Oberfläche
+eines Objektes), $t$ ein Skalierungsfaktor zwischen $[\epsilon, 1]$, $I$
+der eingehende Vektor, also $S - x_{0}$, und $N$ die Oberflächennormale
+ist. Bei Epsilon handelt es sich wiederum um einen Faktor zur Steuerung
+der Präzision, welcher verhindert, dass ein Objekt lokal in sich selbst
+gespiegelt wird.
+
+\todo[inline]{Add image of specular reflection}
+
+\textbf{Perfekt diffuse Reflexion}
+
+Bei der perfekt diffusen Reflexion wird das eingehende Licht mit
+gleicher Amplitude (also Stärke) gleichmässig in alle Richtungen
+gestreut. Die Amplitude ist dabei proportional zum Kosinus des
+Einfallswinkels und der Oberflächennormale.
+
+\todo[inline]{Add image of perfect diffuse reflection}
+
+
+\subsubsection{Transparenz-Strahlen}
+\label{ssubsec:ray_tracing:transparency_rays}
 
 Und schliesslich werden die Eigenschaften von Licht, welches durch ein
 Objekt hindurch geht und vielleicht von diesem gebrochen wird, durch
-die~\textit{Transparenz-Strahlen} beschrieben. Tritt Licht in ein neues
-Medium ein (z.B.\ von Luft in Wasser), so wird das Licht gebrochen.
-Dabei wird die Bahn des Lichtstrahles nach innen hin abgelenkt, wenn das
-Licht in ein Medium mit höherer Dichte eintritt.
-\todo[inline]{Add image and formula for refraction (perfect specular
-    transmission), total internal reflection and transmission}
+die~\textit{Transparenz-Strahlen} beschrieben.  Auch hier werden zwei
+Arten der Reflexion unterschieden: Perfekt brechende und total interne
+Reflexion.
 
-Ein möglicher Algorithmus, wie solch ein Verfahren umgesetzt werden kann,
-findet sich in~\ref{fig:ray_tracing:high_level}.
+\textbf{Perfekt brechende Reflexion}
+
+Tritt Licht von einem Medium (z.B.\ Luft) in ein anderes Medium (z.B.\
+Glas) ein, so wird das Licht umgelenkt. Die Umlenkung des Lichtes bei
+Eintritt in ein neues Medium wird auch Transmission oder Refraktion
+genannt. Jedes Medium hat dabei einen eignen Index der Refraktion,
+welcher Lichtgeschwindigkeit in dem Medium gegenüber
+Lichtgeschwindigkeit im Vakuum beschreibt.
+Um zu entscheiden wie Licht umgelenkt wird, werden die
+Refraktion-Indizes der Medien sowie der Einfalls- bzw. Ausfallswinkel
+verglichen.
+
+Die Beziehung zwischen dem Einfalls- und Ausfallswinkel sowie dem
+übertragenen Licht wird durch das Gesetz von ``Snell'' beschrieben:
+
+\begin{gather}
+    \frac{\sin(\theta_{1})}{\sin(\theta_{2})} = \eta_{21} = \frac{\eta_{2}}{\eta_{1}}
+\end{gather}
+
+Wobei $\theta_{1}$ der Einfallswinkel der Einfallswinkel, $\theta_{2}$
+der Ausfallswinkel, $\eta_{1}$ der Refraktion-Index des ersten Mediums
+in Abhängigkeit zum Vakuum, $\eta_{2}$ der Refraktion-Index des zweiten
+Mediums in Abhängigkeit zum Vakuum und $\eta_{21}$ der Refraktion-Index
+des zweiten Mediums in Abhängigkeit zu dem ersten Medium
+ist.~\cite{glassner_introduction_1989}[S. 134 bis 135]
+
+Umgekehrt kann das Verhältnis des ausgehenden Strahles zum eingehenden
+Strahl beschreiben werden:
+
+\begin{gather}
+    \eta_{12} = \frac{\eta_{1}}{\eta_{2}} = \frac{\sin(\eta_{2})}{\sin(\eta_{1})}
+\end{gather}
+
+Mithilfe dieses Verhältnisses kann der gebrochene Strahl wie folgt
+berechnet werden~\cite{glassner_introduction_1989}[S. 137 bis 140]:
+
+\begin{align}
+    r(t) &= p_{0} + t \cdot T \\
+    T &= \eta_{12}I + (\eta_{12} \cdot C_{1} - \sqrt{C_{2}})N \label{eq:ray_tracing:tansm} \\
+    C_{1} &= -I \cdot N \\
+    C_{2} &= 1 + \eta_{12}^{2}(C_{1}^{2} - 1) \label{eq:ray_tracing:tansm_c2}
+\end{align}
+
+Wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer Oberfläche
+eines Objektes), $t$ ein Skalierungsfaktor zwischen $[\epsilon, 1]$, $I$
+der eingehende Vektor, also $S - x_{0}$, $N$ die Oberflächennormale und
+$\eta_{12}$ das oben beschriebene Verhältnis ist.
+Bei Epsilon handelt es sich wiederum um einen Faktor zur Steuerung
+der Präzision, welcher verhindert, dass ein Objekt lokal in sich selbst
+gespiegelt wird.
+
+\todo[inline]{Add image of perfect specular transmission}
+
+\textbf{Totale interne Reflexion}
+
+Die totale interne Reflexion tritt dann auf, wenn Licht unter einem zu
+flachen Winkel versucht von einem dichten Medium in ein weniger dichtes
+Medium zu gelangen. Das Licht prallt am Übergang der beiden Medien ab
+und wird gespiegelt anstatt in das andere Medium
+einzutreten.~\cite{glassner_introduction_1989}[S. 136 bis 137]
+
+Dies geschieht dann, wenn der Term $C_{2}$
+(Gleichung~\ref{eq:ray_tracing:transm_c2}) negativ ist und somit das
+Ergebnis der Wurzel aus $C_{2}$ in~\ref{eq:ray_tracing:transm} eine
+imaginäre Zahl wird.~\cite{glassner_introduction_1989}[S. 137 bis 138]
+
+\todo[inline]{Add image of total internal reflection}
+
+\subsubsection{Modelle zur Schattierung (shading models)}
+\label{ssubsec:ray_tracing:shading_models}
+
+\citeauthor{glassner_introduction_1989} beschreibt auf der Physik
+basierende Modelle zur Schattierung (shading models, welche heute unter
+dem Begriff PBRT --- Physically Based Rendering bekannt sind). Diese
+hier aufzuführen würden den Rahmen dieser Projektarbeit sprengen, daher
+wird darauf verzichtet. Dem geneigten Leser sei
+auf~\citetitle{glassner_introduction_1989}[S. 143ff]
+sowie~\citetitle{pharr_physically_2010} empfohlen.
+
+\subsubsection{Rekursion und Strahlen-Baum}
+\label{ssubsec:ray_tracing:recursion}
+
+Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+auf~\cite{glassner_introduction_1989}[S. 16 bis 17].
+
+Wie zu Beginn des Kapitels bereits angesprochen wurde, handelt es sich
+bei Ray Tracing um ein rekursives Verfahren. Es stellt sich somit die
+Frage, wie tief die Rekursion gehen soll und auch kann.\\
+Zusätzlich zu dem genannten Fall, dass ein Strahl auf kein Objekt
+innerhalb der Szene trifft, schlagen~\citeauthor{whitted_improved_1980}
+wie auch~\citeauthor{glassner_introduction_1989} den Abbruch in
+folgenden Fällen vor:
+\begin{itemize}
+        \item{Nach Erreichen einer festgelegten, maximalen Tiefe},
+            sofern die Rekursion rein auf reflexive Oberflächen trifft.
+        \item{Nach dem Auftreffen auf eine rein diffuse Oberfläche.}
+        \item{Nach Unterschreiten eines minimalen Energiewertes des
+                Lichtes.}
+\end{itemize}
+
+Aus den genannten Abbruch-Kriterien ergibt sich folgende
+nach~\citeauthor{heckbert_adaptive_1990} folgende, auf einem regulären
+Ausdruck basierende Lichtweg-Notation: \textbf{LD?S*E}. Diese beschreibt den
+Weg, welchen ein Photon ausgehend von einer Lichtquelle (\textbf{L}) zum Auge eines
+Betrachters (\textbf{E}) nehmen kann. Es kann auf null oder genau eine diffuse
+Oberfläche (\textbf{D?}) so wie auf 0 oder theoretisch unendlich viele reflektierende
+Oberflächen (\textbf{S*}) treffen.~\cite{heckbert_adaptive_1990}[S. 148]
+
+Ausgehend von der sichtbaren Bildfläche, also dem Auge des Betrachters
+der Szene, kann so ein Strahlen-Baum (\textit{ray tree}) aufgebaut
+werden.
+
+Jeder Schnittpunkt eines Strahles mit einem Objekt kann
+Sekundär-Strahlen generieren und so bilden reflektierte und gebrochene
+Strahlen den Strahlen-Baum.
+
+Dabei sind die \textit{Knoten} des Baumes die Schnittpunkte und die
+\textit{Kanten} sind die reflektierten oder gebrochenen Strahlen.
+
+Wie bereits erwähnt wird bei jedem Schnittpunkt ein Schatten-Strahl
+ausgesendet, welcher aber keine zusätzlichen Strahlen und somit auch
+keine zusätzlichen Kanten generiert.
+
+Der Strahlen-Baum kann so schliesslich von unten nach oben
+(\textit{bottom-up}) traversiert werden, was einer Tiefensuche
+(depth-first traversal) entspricht. Die Farbe eines Knoten wird aufgrund
+der Farbe der Kindes-Knoten berechnet.
+
+\todo[inline]{Add image of scene and ray tree}
+
 
 \begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des
         Ray Tracings \protect\footnotemark.},
