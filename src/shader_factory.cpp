@@ -1,3 +1,28 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2015-2016 Sven Osterwalder
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+// Implementation of a shader factory. For comments of the methods see the
+// header file.
+
 #include "main.hpp"
 #include "shader_factory.hpp"
 
@@ -36,6 +61,8 @@ void ShaderFactory::loadShaders()
 
     bfs::directory_iterator end_itr;
 
+    // Iterate the shader path and search for vertex and fragment
+    // shaders.
     for (bfs::directory_iterator itr(shaderPath); itr != end_itr; ++itr) {
         if (!bfs::is_regular_file(itr->status())) {
             continue;
@@ -49,15 +76,18 @@ void ShaderFactory::loadShaders()
         }
     }
 
+    // Make sure that at least the number of each type matches.
     if (vsFilenames.size() != fsFilenames.size()) {
         throw FatalException("Vertex and fragment shader counts do not match!");
     }
 
+    // Sort the filenames ascending.
     sort(vsFilenames.begin(), vsFilenames.end());
     sort(fsFilenames.begin(), fsFilenames.end());
 
     int shaderCount = (int)vsFilenames.size();
 
+    // Load all found shader files into memory.
     for (int i = 0; i < shaderCount; ++i) {
         string shadername = vsFilenames[i].substr(0, vsFilenames[i].length() - 3);
 
@@ -105,10 +135,12 @@ char* ShaderFactory::loadShaderSource(string& filename)
         file.read(data, size);
         file.close();
         data[size] = 0;
+
         return data;
     }
     else {
         throw FatalException("Could not open shader source file!");
+
         return 0;
     }
 }

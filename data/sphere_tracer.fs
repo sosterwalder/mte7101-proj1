@@ -1,14 +1,52 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2015-2016 Sven Osterwalder
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+// FRAGMENT SHADER
+
+// Vertex shader of a sphere tracer.
+
 #version 110
 
+// Global uniform two dimensional vector containing the currently set
+// resolution of the screen.
 uniform vec2 globalResolution;
+
+// Global uniform floating point variable containing the current point
+// in time.
 uniform float globalTime;
 
+// Switch to turn the visualisation of the distance field on or off.
 #define SHOW_DISTANCE false
 
+
+// Returns a hash value based on the given number.
 float hash(float n) {
     return fract(sin(n)*33753.545383);
 }
 
+// Calculates the look at matrix, based on the origin, target and the
+// roll of the camera.
+//
+// Returns a 3x3 matrix.
 mat3 calcLookAtMatrix(vec3 origin, vec3 target, float roll) {
     vec3 rr = vec3(sin(roll), cos(roll), 0.0);
     vec3 ww = normalize(target - origin);
@@ -18,17 +56,28 @@ mat3 calcLookAtMatrix(vec3 origin, vec3 target, float roll) {
     return mat3(uu, vv, ww);
 }
 
+// Calculates the direction of a ray, based on the given camera matrix,
+// screen position and the lens length.
+//
+// Returns a three-dimensional vector.
 vec3 getRay(mat3 cameraMatrix, vec2 screenPosition, float lensLength) {
     return normalize(cameraMatrix * vec3(screenPosition, lensLength));
 }
 
+// Calculates the direction of a ray, based on the given origin, target,
+// screen position and the lens length.
+//
+// Returns a three-dimensional vector.
 vec3 getRay(vec3 origin, vec3 target, vec2 screenPosition, float lensLength) {
     mat3 cameraMatrix = calcLookAtMatrix(origin, target, 0.0);
 
     return getRay(cameraMatrix, screenPosition, lensLength);
 }
 
-
+// Calculates the screen position based on the screen size and the
+// window-relative coordinates of the current fragment (gl_FragCoord).
+//
+// Returns a two-dimensional vector.
 vec2 squareFrame(vec2 screenSize) {
     vec2 position = 2.0 * (gl_FragCoord.xy / screenSize.xy) - 1.0;
     position.x *= screenSize.x / screenSize.y;
@@ -36,6 +85,10 @@ vec2 squareFrame(vec2 screenSize) {
     return position;
 }
 
+// Calculates the screen position based on the given screen size and the
+// given coordinates.
+//
+// Returns a two-dimensional vector.
 vec2 squareFrame(vec2 screenSize, vec2 coord) {
     vec2 position = 2.0 * (coord.xy / screenSize.xy) - 1.0;
     position.x *= screenSize.x / screenSize.y;
@@ -43,51 +96,67 @@ vec2 squareFrame(vec2 screenSize, vec2 coord) {
     return position;
 }
 
+// Returns the signed distance to a plane for the given position.
 float plane(vec3 position)
 {
     return position.y;
 }
 
+// Returns the signed distance to a sphere with given radius for the
+// given position.
 float sphere(vec3 position, float radius)
 {
     return length(position) - radius;
 }
 
+// Returns the signed distance to a box with given dimension for the
+// given position.
 float box(vec3 position, vec3 dimension)
 {
     position = abs(position) - dimension;
     return max(max(position.x, position.y), position.z);
 }
 
+// Returns the signed distance to a ruler (-line) with given offset.
+// Is used for the visualisation of the distance field.
 float ruler(in vec3 position, in float rulerOffset)
 {
     return abs(position.y) - rulerOffset;
 }
 
 
+// Returns the signed distance for a substraction of given signed
+// distance a to signed distance b.
 float subtract(float a, float b)
 {
     return max(-b, a);
 }
 
+// Returns the signed distance for a merge of given signed
+// distance a and signed distance b.
 float merge(float a, float b)
 {
     return min(a, b);
 }
 
+// Returns the signed distance for a intersection  of given signed
+// distance a and signed distance b.
 float intersect(float a, float b)
 {
     return (a > b) ? a : b;
 }
 
+// Defines the scene which will be drawn at given position.
 float scene1(in vec3 position)
 {
     float result = 0.0;
 
+    // Define dimensions.
     float sphereRadius   = 0.6;
     float sphere3Radius  = 1.0;
     vec3  boxDimension   = vec3(0.8);
 
+    // Define offsets/translations.
     vec3 sphereOffset  = vec3(-2.0, 0.8, -2.0);
     vec3 boxOffset     = vec3(-3.0, 0.8,  0.0);
     vec3 box2Offset    = vec3(-2.0, 0.8, -2.0);
@@ -105,6 +174,8 @@ float scene1(in vec3 position)
     );
 
     if (SHOW_DISTANCE) {
+        // Do not show ground plane when the visualisation of the
+        // distance function is enabled.
         result = merge(
             sphere(position - sphereOffset, sphereRadius),
             intersection
@@ -129,6 +200,7 @@ float scene1(in vec3 position)
     return result;
 }
 
+// Returns a simple scene for testing/documenting.
 float testScene(in vec3 position)
 {
     float result = 0.0;
@@ -140,11 +212,13 @@ float testScene(in vec3 position)
         plane, sphere
     );
 
-    // result = sphere;
-
     return result;
 }
 
+// Combines the defined scene with the ruler for visualising the
+// distance function/field. Note that the input as well as the output
+// are three-dimensional vectors, whose third parameter is used as
+// identifier.
 vec3 combineScenes(vec3 p)
 {
     float scene     = scene1(p);
@@ -154,6 +228,9 @@ vec3 combineScenes(vec3 p)
     return vec3(min(scene, ruler), showRuler, scene);
 }
 
+// Calcuates soft shadows for the given ray origin and direction.
+//
+// Returns a shadow color for the given origin between 0.0 and 1.0.
 float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 {
     float shadow            = 1.0;
@@ -180,51 +257,12 @@ float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 
 }
 
-vec3 calcBRDFLighting(in vec3 position, in vec3 normal, in vec3 rayDirection, in vec3 material, in vec3 lightPosition, in vec3 lightColor, in float currentDistance)
-{
-    vec3 lightDirection     = normalize(lightPosition);
-    vec3 reflection         = reflect(rayDirection, normal);
-
-    lightColor              = 0.45 + 0.3 * sin(vec3(0.05, 0.08, 0.10) * (currentDistance - 1.0));
-
-    if (currentDistance < 1.5) {
-        float f = mod(floor(5.0 * lightDirection.z) + floor(5.0 * lightDirection.x), 2.0);
-        lightColor = 0.4 + 0.1 * f * vec3(1.0);
-    }
-
-    vec3  ambientColor      = vec3(0.5, 0.7, 1.0);
-    vec3  diffuseColor      = vec3(1.0, 0.9, 0.6);
-    vec3  specularColor     = vec3(1.0, 0.9, 0.6);
-    vec3  domColor          = vec3(0.5, 0.7, 1.0);
-    vec3  bacColor          = vec3(0.25, 0.25, 0.25);
-    vec3  fresnelColor      = vec3(1.0);
-
-    float kOcclusion        = 0.0;
-    float kAmbient          = clamp(0.5 + 0.5 * normal.y, 0.0, 1.0);
-    float kDiffuse          = clamp(dot(lightDirection, normal), 0.0, 1.0);
-    float kBac              = clamp(dot(normal, normalize(vec3(-lightDirection.x, 0.0, -lightDirection.z))), 0.0, 1.0) * clamp(1.0 - position.y, 0.0, 1.0);
-    float kDom              = smoothstep(-0.1, 0.1, reflection.y);
-    float kFresnel          = pow(clamp(1.0 + dot(normal, rayDirection), 0.0, 1.0), 2.0);
-    float kSpecular         = pow(clamp(dot(reflection, lightDirection), 0.0, 1.0), 16.0);
-
-    kDiffuse               *= calcShadows(position, lightDirection);
-    kDom                   *= calcShadows(position, reflection);
-
-    vec3 brdf               = vec3(0.0);
-    brdf                   += 1.20 * kDiffuse  * diffuseColor;
-    brdf                   += 1.20 * kSpecular * specularColor * kDiffuse;
-    brdf                   += 0.30 * kAmbient  * ambientColor  * kOcclusion;
-    brdf                   += 0.40 * kDom      * domColor      * kOcclusion;
-    brdf                   += 0.30 * kBac      * bacColor      * kOcclusion;
-    brdf                   += 0.40 * kFresnel  * fresnelColor  * kOcclusion;
-    brdf                   += 0.02;
-
-    lightColor             = lightColor * brdf * material;
-    lightColor             = mix(lightColor, vec3(0.8, 0.9, 1.0), 1.0 - exp(-0.0005 * currentDistance * currentDistance));
-
-    return lightColor;
-}
-
+// Calculates the lighting for the given position, normal and direction,
+// the given light (position and color) respecting the 'material'.
+//
+// This is mainly applying the phong lighting model inlcuding shadows.
+//
+// Returns the calculated color as three-dimensional vector.
 vec3 calcLighting(in vec3 position, in vec3 normal, in vec3 rayDirection, in vec3 material, in vec3 lightPosition, in vec3 lightColor)
  {
      vec3 lightDirection     = normalize(lightPosition);
@@ -254,11 +292,15 @@ vec3 calcLighting(in vec3 position, in vec3 normal, in vec3 rayDirection, in vec
      return color;
  }
 
+// Calculates the material for the given position and normal.
+// Not implemented yet.
 vec3 calcMaterial(in vec3 position, in vec3 normal)
 {
     return vec3(1.0);
 }
 
+// Calculates the normal vector for given position with respect to a
+// certain offset given by epsilon.
 vec3 calcNormal(in vec3 position, in float epsilon)
 {
     const vec3 v1 = vec3( 1.0, -1.0, -1.0);
@@ -296,16 +338,21 @@ vec3 calcNormal(in vec3 position, in float epsilon)
                      v4 * currentDistanceAtV4);
 }
 
+// Calculates a 'rule' (a line) for the given distance with the given
+// scale.
 float calcRule(in float currentDistance, in float scale) {
     return mix(1.0, 0.35, smoothstep(0.6, 1.0, abs(fract(currentDistance * scale) * 2.0 - 1.0)));
 }
 
+// Calcualtes the color of a 'rule' at given step size. The color can be
+// between 0.0 and 1.0.
 vec3 calcRulerColor(float stepSize) {
     stepSize = clamp(log(stepSize + 1.0), 0.0, 1.0);
 
     return mix(mix(vec3(0.0, 0.1, 1.0), vec3(1.0, 0.1, 0.0), stepSize * 5.0), vec3(1.0), smoothstep(0.2, 0.5, stepSize));
 }
 
+// Calcualtes the color between 'rules' at given step size. 
 vec3 calcRulerMaterial(float distanceToScene, float currentDistance) {
     float limit = log(currentDistance) / log(10.0);
     float stepSize = pow(10.0, -floor(limit));
@@ -315,6 +362,9 @@ vec3 calcRulerMaterial(float distanceToScene, float currentDistance) {
     return mix(calcRulerColor(stepSize * distanceToScene), calcRulerColor(stepSize * distanceToScene * 0.1), scale) * 0.8 * interpolatedRule;
 }
 
+// Calculates post processing effects based on given color and screen
+// position. This may be used for performing gamma correction, adding
+// noise or e.g. vignetting.
 vec3 calcPostFx(vec3 color, vec2 screenPosition)
 {
     float contrast   = 1.0;
@@ -337,6 +387,9 @@ vec3 calcPostFx(vec3 color, vec2 screenPosition)
     return color;
 }
 
+// Casts a ray from given origin i given direction. Stops at given
+// maximal distance and after given amount of steps. Maintains given
+// precision.
 vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in float precision, in int steps)
 {
     float latest          = precision * 2.0;
@@ -374,6 +427,9 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
     return vec3(result, showRuler, renderedScene);
 }
 
+// Performs rendering of a scene beginning at given origin in given ray
+// direction. This invokes calculating the normal vector, the material
+// as well as the lighting.
 vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
 {
     vec3  color           = vec3(0.05, 0.08, 0.10);
@@ -402,12 +458,10 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
 
         vec3 light1Color = vec3(0.7, 0.2, 0.3);
         vec3 light1Position = vec3(-0.6, 0.7, -0.5);
-        // vec3 light1 = calcBRDFLighting(position, normal, rayDirection, material, light1Position, light1Color, currentDistance);
         vec3 light1 = calcLighting(position, normal, rayDirection, material, light1Position, light1Color);
 
         vec3 light2Color = vec3(0.3, 0.2, 0.8);
         vec3 light2Position = vec3(1.3, 0.2, 0.8);
-        // vec3 light2 = calcBRDFLighting(position, normal, rayDirection, material, light2Position, light2Color, currentDistance);
         vec3 light2 = calcLighting(position, normal, rayDirection, material, light2Position, light2Color);
 
         color = light1 + light2;
@@ -417,6 +471,7 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
     return color;
 }
 
+// Main method of the shader.
 void main()
 {
     vec2 resolution      = globalResolution;
