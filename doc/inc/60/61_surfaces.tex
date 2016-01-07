@@ -6,7 +6,8 @@
 \label{sec:surfaces}
 
 Sofern nicht anders vermerkt, basiert der folgende Abschnitt
-auf~\cite{division_introduction_1996}[S. 1 ff].\\
+auf~\cite{division_introduction_1996}[S. 1 ff] sowie
+auf~\cite{glassner_introduction_1989}[S. 79 bis 115].\\
 \\
 Um in Computergrafiken überhaupt etwas darstellen zu können, muss erst einmal
 definiert werden, was dargestellt werden soll. Häufig orientiert sich die
@@ -20,35 +21,45 @@ von bestehenden Objekten und Modellierung von Grund auf.\\
 Zur Modellierung von Oberflächen werden hauptsächlich zwei Techniken verwendet:
 Parametrische Modellierung und implizite Modellierung.\\
 \\
-Bei der parametrsichen Darstellung wird eine Oberfläche überlicherweise als
+Bei der parametrischen Darstellung wird eine Oberfläche üblicherweise als
 eine Menge von Punkten definiert, so zum Beispiel:
 
 \begin{gather}\label{eq:surface_parametric}
     \bm{p}(s, t) = (x(s, t), y(s, t), z(s, t))
 \end{gather}
 
-Die Einheitskugel mit Radius 1, würde beispielsweise wie folgt mittels der
-parametrischen Darstellung beschrieben:
+So kann eine Kugel mittels sphärischen Koordinaten wie
+folgt parametrisch dargestellt werden:
 
+\begin{align}\label{eq:sphere_parametric}
+    x(s, t) &= r \cdot \cos(s) \cdot \sin(t) \\
+    y(s, t) &= r \cdot \sin(s) \cdot \sin(t) \\
+    z(s, t) &= r \cdot \cos(t)
+\end{align}
 
-\begin{gather}\label{eq:unit_sphere_parametric}
-    \bm{unitsphere}(s, t) = (x^{2}(s, t), y^{2}(s, t), z^{2}(s, t)) - 1^{2}
-\end{gather}
-\todo[inline]{Check if correct}
+Wobei $r$ der Radius der Kugel, $s$ der Azimutwinkel $\in [0, 2\pi]$ und
+$t$ der Polarwinkel $\in [0, \pi]$.
 
-Bei der impliziten Darstellung wird eine Oberfläche überlicherweise als Kontur
+Bei der impliziten Darstellung wird eine Oberfläche üblicherweise als Kontur
 einer Funktion mit Wert 0 definiert, so zum Beispiel:
 
 \begin{gather}\label{eq:surface_implicit}
     f(\bm{p}) = f(x, y, z) = 0
 \end{gather}
 
-Daher am Beispiel der Einheitskugel:
+Wobei $\bm{p}$ ein Punkt $(x, y, z)$ auf der Oberfläche, welche durch die Funktion
+$f$ beschrieben wird, ist.
 
-\begin{gather}\label{eq:unit_sphere_implicit}
-    f(\bm{unitsphere}) = f(x^{2}, y^{2}, z^{2}) - 1 = 0
-\end{gather}
-\todo[inline]{Check if correct}
+Am Beispiel einer Kugel:
+
+\begin{align}\label{eq:sphere_implicit}
+    f(\bm{p}, r) = f(x, y, z, r) &= 0 \\
+    f(\bm{p}, r) = \bm{p}^{2} - r^{2} &= 0 \\
+    f(\bm{p}, r) = x^{2} + y^{2} + z^{2} - r^{2} &= 0
+\end{align}
+
+Wobei $\bm{p}$ ein Punkt $(x, y, z)$ auf der Oberfläche, welche durch die Funktion
+$f$ beschrieben wird, und $r$ der Radius der Kugel ist.~\cite{glassner_introduction_1989}[S. 91]
 
 Die parametrische Darstellung bringt Vorteile wie die Unabhängigkeit von einem
 Koordinatensystem oder eine effiziente Berechnung von Punkten auf einer
