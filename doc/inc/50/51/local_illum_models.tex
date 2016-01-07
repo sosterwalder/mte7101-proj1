@@ -36,32 +36,45 @@ oder mathematisch ausgedrückt:
 wobei gilt:
 
 \begin{itemize}
-    \item $I(\vv{V})$:              Die reflektierte (Licht-) Intensität in Richtung des Vektors $\vv{V}$
-    \item $n$:                      Anzahl Lichtquellen
-    \item $k_{a} \cdot L_{a}$:      Ambiente Komponente des
-                                    Beleuchtungsmodelles. Mittels diesem Faktor
-                                    wird versucht allem indirekten Licht der
-                                    Szene gerecht zu werden. Bei $k_{a}$
-                                    handelt es sich um eine Konstante, welche
-                                    den ambienten Lichtanteil $L_{a}$ skaliert
-    \item $k_{d}$:                  Konstante für die diffuse Komponente des
-                                    reflektierten Lichtes, basierend auf der
-                                    Wellenlänge bzw. Frequenz
-    \item $\vv{S_{i}}$:             Richtung, in welcher das Licht der $i$-ten
-                                    Lichtquelle ankommt, normalisierter
-                                    Einheitsvektor
-    \item $\vv{N}$:                 Einheitsnormale der Oberfläche
-    \item $k_{s}$:                  Koeffizient der spiegelenden Komponente,
-                                    basierend auf der Wellenlänge bzw. Frequenz
-    \item $\vv{R_{i}}$:             Richtung, in welcher das Licht der $i$-ten
-                                    Lichtquelle reflektiert wird,
-                                    normalisierter Einheitsvektor
-    \item $\vv{V}$:                 Blickrichtung des Betrachters bzw.\ der
-                                    Kamera
-    \item $k_{e}$:                  Exponent, welcher von der Rauheit bzw.
-                                    Reflektion der Oberfläche abhängt
-    \item $L_{i}$                   Licht- bzw.\ Farbintnsität der $i$-ten
-                                    Lichtquelle
+    \item $I(\vv{V})$:
+        Die reflektierte (Licht-) Intensität in Richtung des Vektors
+        $\vv{V}$
+
+    \item $n$:
+        Anzahl Lichtquellen
+
+    \item $k_{a} \cdot L_{a}$:
+        Ambiente Komponente des Beleuchtungsmodelles. Mittels diesem
+        Faktor wird versucht allem indirekten Licht der Szene gerecht zu
+        werden. Bei $k_{a}$ handelt es sich um eine Konstante, welche
+        den ambienten Anteils des Lichtes $L_{a}$ skaliert
+
+    \item $k_{d}$:
+        Konstante für die diffuse Komponente des reflektierten Lichtes,
+        basierend auf der Wellenlänge bzw. Frequenz
+
+    \item $\vv{S_{i}}$:
+        Richtung, in welcher das Licht der $i$-ten Lichtquelle ankommt,
+        normalisierter Einheitsvektor
+
+    \item $\vv{N}$:
+        Einheitsnormale der Oberfläche
+
+    \item $k_{s}$:
+        Koeffizient der spiegelnden Komponente, basierend auf der
+        Wellenlänge bzw. Frequenz
+
+    \item $\vv{R_{i}}$:
+        Richtung, in welcher das Licht der $i$-ten Lichtquelle
+        reflektiert wird, normalisierter Einheitsvektor
+
+    \item $\vv{V}$:
+        Blickrichtung des Betrachters bzw.\ der Kamera
+
+    \item $k_{e}$:
+        Exponent, welcher von der Rauheit
+        bzw.  Reflektion der Oberfläche abhängt \item $L_{i}$
+        Licht- bzw.\ Farbintensität der $i$-ten Lichtquelle
 \end{itemize}
 
 Meist wird der emissive Term bewusst weggelassen, da dieser meist eher für
