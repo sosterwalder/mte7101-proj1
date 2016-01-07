@@ -39,17 +39,19 @@ Um einen Farbintensitätswert für einen Eckpunkt $\bm{V}_{1}$ zu berechnen, wir
 Normalenvektor des Eckpunktes (vertex normal) benötigt. Es handelt sich dabei
 um den Normalenvektor der Oberfläche an der Position des Eckpunktes $\bm{V}_{1}$.
 
-\todo[inline]{Translate/cite}
-Modern shaders are really graphics programs rather than being restricted to
-computing colors of points. There are geometry shaders, which can alter the
-list of triangles to be processed in subsequent stages, and tessellation
-shaders, which take high-level descriptions of surfaces and produce triangle
-lists from them; an example is a subdivision surface shader, which might take
-as input the vertices and mesh structure of a subdivision surface’s control
-mesh, and produce as output a collection of tiny triangles that form a good
-approximation of the limit surface. There are also vertex shaders that serve
-only to transform the vertex locations, and generally have nothing to do with
-eventual color.
+Im Laufe der Zeit hat sich die Schattierung so weit entwickelt, dass
+diese praktisch ausschliesslich auf der Grafikkarte (GPU) statt findet.
+Man spricht hier vom Begriff ``Shader''. Es handelt sich dabei
+mittlerweile um eigene (Grafik-) Applikationen, deren Zweck weit über
+die reine Berechnung von Schattierungen hinausgeht.  Man unterscheidet
+dabei zwischen Shadern für geometrische Berechnungen (\textit{geometry
+    shaders} oder \textit{vertex shaders}) sowie Shader für Berechnungen
+bezüglich Pixeln  oder (Bild-) Fragmenten (\textit{pixel shaders} oder
+\textit{fragment shaders}).~\cite{hughes_computer_2013}[Kapitel 33]\\
+Der interessierte Leser sei für weitere Details
+auf~\cite{hughes_computer_2013}[Kapitel
+33],~\cite{opengl_foundation_rendering_2015},
+sowie~\cite{fernando_cg_2003} verwiesen.
 
 \subsection{Flat-Shading --- per vertex lighting}
 \label{subsec:flat_shading}
