@@ -22,6 +22,13 @@ Bildpunktes bei. Bei Strahlen, welche das Licht direkt zur sichtbaren
 Bildfläche transportieren, spricht man von \textit{Pixel}- bzw.\
 \textit{Augen-Strahlen}.~\cite{glassner_introduction_1989}[S. 10]
 
+\begin{figure}[H]\label{fig:ray_tracing_scene}
+    \centering
+    \includegraphics{img/ray_tracing_scene.pdf}
+    \caption{Illustration des Ray Tracing Verfahrens\protect\footnotemark}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
+    an~\cite{glassner_introduction_1989}[S. 16]}
 
 Die Strahlen werden in dieser Richtung verfolgt, um festzustellen wie
 das Licht ``erzeugt'' wird. Trifft der Strahl auf nichts wird die
@@ -68,7 +75,21 @@ und~\textit{Transparenz-Strahlen}, welche die perfekt brechende und die
 totale interne Reflexion beschreiben,unterteilt
 werden.~\cite{glassner_introduction_1989}[S. 10]
 
-\todo[inline]{Add image of scene}
+\begin{figure}[H]\label{fig:ray_tracing_scene_rays}
+    \centering
+    \includegraphics{img/ray_tracing_scene_rays.pdf}
+    \caption{Illustration der einzelnen Strahlen und deren Verhalten
+        ausgehend von der Szene in
+        Abbildung.~\ref{fig:ray_tracing_scene}\protect\footnotemark{}
+        Das im Bild ersichtliche, orange-farbige Dreieck hat eine
+        undurchlässige, reflexive Oberfläche. Der türkis-farbige Würfel
+        hat eine diffuse Oberfläche.  Bei der Kugel, rechts im Bild,
+        handelt es sich um eine Kugel aus Glas, welche das Licht
+        teilweise bricht und reflektiert.}
+\end{figure}
+
+\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
+    an~\cite{glassner_introduction_1989}[S. 16]}
 
 Nachfolgend werden die oben genannten Strahlen im Einzelnen beschrieben.
 
@@ -144,7 +165,19 @@ ist. Bei Epsilon handelt es sich wiederum um einen Faktor zur Steuerung
 der Präzision, welcher verhindert, dass ein Objekt lokal in sich selbst
 gespiegelt wird.
 
-\todo[inline]{Add image of specular reflection}
+\begin{figure}[H]\label{fig:ray_tracing_specular_reflection}
+    \centering
+    \includegraphics{img/perfect_specular_reflection.pdf}
+    \caption{Illustration einer perfekt spiegelnden
+        Reflexion.~\protect\footnotemark{}
+        $I$ ist der eingehende Strahl, welcher am Normalenvektor $N$ der
+        schraffierten Oberfläche in Richtung $R$ reflektiert wird. Der
+        Winkel des eingehenden Strahles $\theta_{I}$ ist gleichgross wie der
+        Winkel des ausgehenden Strahles $\theta_{R}$.}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
+    an~\cite{glassner_introduction_1989}[S. 131]}
+
 
 \textbf{Perfekt diffuse Reflexion}
 
@@ -153,8 +186,17 @@ gleicher Amplitude (also Stärke) gleichmässig in alle Richtungen
 gestreut. Die Amplitude ist dabei proportional zum Kosinus des
 Einfallswinkels und der Oberflächennormale.
 
-\todo[inline]{Add image of perfect diffuse reflection}
-
+\begin{figure}[H]\label{fig:ray_tracing_diffuse_reflection}
+    \centering
+    \includegraphics{img/perfect_diffuse_reflection.pdf}
+    \caption{Illustration einer perfekt diffusen
+        Reflexion.~\protect\footnotemark{}
+        $I$ ist der eingehende Strahl, welcher am Ort des
+        Normalenvektors $N$ der schraffierten Oberfläche auftrifft. Das
+        Licht wird gleichmässig in alle Richtungen gestreut.}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
+    an~\cite{glassner_introduction_1989}[S. 134]}
 
 \subsubsection{Transparenz-Strahlen}
 \label{ssubsec:ray_tracing:transparency_rays}
@@ -203,9 +245,10 @@ berechnet werden~\cite{glassner_introduction_1989}[S. 137 bis 140]:
 
 \begin{align}
     r(t) &= p_{0} + t \cdot T \\
-    T &= \eta_{12}I + (\eta_{12} \cdot C_{1} - \sqrt{C_{2}})N \label{eq:ray_tracing:tansm} \\
+    T &= \eta_{12}I + (\eta_{12} \cdot C_{1} - \sqrt{C_{2}})N
+    \label{eq:ray_tracing:transm} \\
     C_{1} &= -I \cdot N \\
-    C_{2} &= 1 + \eta_{12}^{2}(C_{1}^{2} - 1) \label{eq:ray_tracing:tansm_c2}
+    C_{2} &= 1 + \eta_{12}^{2}(C_{1}^{2} - 1) \label{eq:ray_tracing:transm_c2}
 \end{align}
 
 Wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer Oberfläche
@@ -216,7 +259,18 @@ Bei Epsilon handelt es sich wiederum um einen Faktor zur Steuerung
 der Präzision, welcher verhindert, dass ein Objekt lokal in sich selbst
 gespiegelt wird.
 
-\todo[inline]{Add image of perfect specular transmission}
+\begin{figure}[H]\label{fig:ray_tracing_specular_transmission}
+    \centering
+    \includegraphics{img/perfect_specular_tranmission.pdf}
+    \caption{Illustration einer perfekt brechenden
+        Reflexion.~\protect\footnotemark{}
+        $I$ ist der eingehende Strahl, welcher am Ort des
+        Normalenvektors $N$ im Winkel von $\theta_{1}$ von Medium 1 in
+        Medium 2 übergeht und entsprechend mit Winkel $\theta_{2}$
+        anhand $T$ gebrochen wird.}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
+    an~\cite{glassner_introduction_1989}[S. 135]}
 
 \textbf{Totale interne Reflexion}
 
@@ -231,7 +285,21 @@ Dies geschieht dann, wenn der Term $C_{2}$
 Ergebnis der Wurzel aus $C_{2}$ in~\ref{eq:ray_tracing:transm} eine
 imaginäre Zahl wird.~\cite{glassner_introduction_1989}[S. 137 bis 138]
 
-\todo[inline]{Add image of total internal reflection}
+\begin{figure}[H]\label{fig:ray_tracing_total_internal_reflection}
+    \centering
+    \includegraphics{img/total_internal_reflection.pdf}
+    \caption{Illustration der totalen internen
+        Reflexion.~\protect\footnotemark{}
+        Ist der kritische Winkel $\theta_{c}$ beim Übertritt eines
+        Strahles von einem Medium (hier Glas) zu einem anderen Medium (hier
+        Luft) nicht überschritten, so wird der Strahl bzw.\ Licht sowohl
+        gebrochen als auch reflektiert. Wird der kritische Winkel
+        überschritten, so findet nur noch eine Reflexion
+        statt.\protect\footnotemark}
+\end{figure}
+\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
+    an~\cite{glassner_introduction_1989}[S. 137]}
+\footnotetext{\cite{glassner_introduction_1989}[S. 137]}
 
 \subsubsection{Modelle zur Schattierung (shading models)}
 \label{ssubsec:ray_tracing:shading_models}
@@ -293,8 +361,22 @@ Der Strahlen-Baum kann so schliesslich von unten nach oben
 (depth-first traversal) entspricht. Die Farbe eines Knoten wird aufgrund
 der Farbe der Kindes-Knoten berechnet.
 
-\todo[inline]{Add image of scene and ray tree}
-
+\begin{table}[H]
+    \centering
+    \caption{Darstellung des Strahlen-Baumes anhand einer
+        Beispielszene}\label{table:ray_tracing:ray_tree}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+        \toprule
+            \includegraphics[width=0.3\textwidth]{img/ray_tracing_scene_ray_tree.pdf} &
+            \includegraphics[width=0.3\textwidth]{img/ray_tracing_tree.pdf} &
+            \includegraphics[width=0.3\textwidth]{img/ray_tracing_tree_schematic.pdf} \\
+            Beispielszene &
+            Gerichteter Strahlen-Baum &
+            Schematischer Strahlen-Baum
+            nach~\citeauthor{glassner_introduction_1989} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des
         Ray Tracings \protect\footnotemark.},
