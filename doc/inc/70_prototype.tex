@@ -107,6 +107,9 @@ und~\ref{table:sphere_tracing_steps}.
 
 \begin{lstlisting}[language=GLSL,caption={Umsetzung des Sphere Tracings in
         GLSL.},label={alg:glsl_sphere_tracing},captionpos=b,emph={castRay}]
+// Casts a ray from given origin i given direction. Stops at given
+// maximal distance and after given amount of steps. Maintains given
+// precision.
 vec2 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in float precision, in int steps)
 {
     float latest    = precision * 2.0;
@@ -200,20 +203,28 @@ Von den unter Kapitel~\ref{subsec:implicit_surfaces_ops} beschriebenen
 Operationen wurden die Operationen Vereinigung, Subtraktion sowie Intersektion
 umgesetzt.
 
-\begin{lstlisting}[language=GLSL,caption={Umsetzung von Operationen für implizite Oberflächen in GLSL.},label={alg:glsl_ops},captionpos=b,emph={subtract,union,intersect}]
+\begin{lstlisting}[language=GLSL,caption={Umsetzung von Operationen für
+        implizite Oberflächen in
+        GLSL.},label={alg:glsl_ops},captionpos=b,emph={subtract,merge,intersect}]
+// Returns the signed distance for a substraction of given signed
+// distance a to signed distance b.
 float subtract(float a, float b)
 {
     return max(-b, a);
 }
 
-vec2 union(vec2 a, vec2 b)
+// Returns the signed distance for a merge of given signed
+// distance a and signed distance b.
+vec2 merge(vec2 a, vec2 b)
 {
-    return (a.x < b.x) ? a : b;
+    return min(a, b);
 }
 
-vec2 intersect(vec2 a, vec2 b)
+// Returns the signed distance for a intersection  of given signed
+// distance a and signed distance b.
+float intersect(float a, float b)
 {
-    return (a.x > b.x) ? a : b;
+    return (a > b) ? a : b;
 }
 \end{lstlisting}
 
@@ -221,16 +232,21 @@ Von den unter Kapitel~\ref{subsec:implicit_surfaces_primitives} beschriebenen
 Primitiven wurden die Primitiven Ebene sowie Kugel umgesetzt.
 
 \begin{lstlisting}[language=GLSL,caption={Umsetzung von Primitiven in Form von impliziten Oberflächen in GLSL.},label={alg:glsl_primitives},captionpos=b,emph={plane,sphere,box}]
+// Returns the signed distance to a plane for the given position.
 float plane(vec3 position)
 {
     return position.y;
 }
 
+// Returns the signed distance to a sphere with given radius for the
+// given position.
 float sphere(vec3 position, float radius)
 {
     return length(position) - radius;
 }
 
+// Returns the signed distance to a box with given dimension for the
+// given position.
 float box(vec3 position, vec3 dimension)
 {
     position = abs(position) - dimension;
@@ -248,9 +264,19 @@ Phong-Beleuchtungsmodell umgesetzt.
 
 
 \begin{lstlisting}[language=GLSL,caption={Umsetzung des Phong-Beleuchtungsmodelles in GLSL.},label={alg:glsl_lighting},captionpos=b,emph={calcLighting}]
+// Calculates the lighting for the given position, normal and direction,
+// the given light (position and color) respecting the 'material'.
+//
+// This is mainly applying the phong lighting model inlcuding shadows.
+//
+// Returns the calculated color as three-dimensional vector.
 vec3 calcLighting(vec3 normal, vec3 rayDirection) {
 
     vec3 lightDirection     = normalize(vec3(0.0, 4.0, 5.0));
+
+     float kDirectLight      = 0.1;
+     float shadows           = calcShadows(position, lightDirection);
+     vec3  direct            = vec3(kDirectLight * shadows);
 
     vec3 ambientColor       = vec3(0.05, 0.15, 0.2);
     float kAmbient          = clamp(0.5 + 0.5 * normal.y, 0.0, 1.0);
@@ -267,9 +293,10 @@ vec3 calcLighting(vec3 normal, vec3 rayDirection) {
     float kSpecular         = pow(clamp(dot(h, normal), 0.0, 1.0), kSpecularExponent);
     vec3 specular           = nFacing * kSpecular * specularColor;
 
-    vec3 color              = ambient + diffuse + specular;
-
-    return color;
+     vec3 light              = ambient + diffuse + specular + direct;
+     vec3 color              = material * light;
+ 
+     return color;
 }
 \end{lstlisting}
 
@@ -287,13 +314,15 @@ berechnet.
 \begin{lstlisting}[language=GLSL,caption={Berechnung der Normalen einer
         impliziten Oberfläche in
         GLSL.},label={alg:glsl_normal},captionpos=b,emph={calcNormal}]
-vec3 calcNormal(in vec3 position, in float eps) {
+// Calculates the normal vector for given position with respect to a
+// certain offset given by epsilon.
+vec3 calcNormal(in vec3 position, in float epsilon) {
 
-    vec3 epsilon = vec3(eps, 0.0, 0.0);
+    vec3 eps = vec3(epsilon, 0.0, 0.0);
     vec3 normal  = vec3(
-        scene(position + epsilon.xyy).x - scene(position - epsilon.xyy).x,
-        scene(position + epsilon.yxy).x - scene(position - epsilon.yxy).x,
-        scene(position + epsilon.yyx).x - scene(position - epsilon.yyx).x
+        scene(position + eps.xyy).x - scene(position - eps.xyy).x,
+        scene(position + eps.yxy).x - scene(position - eps.yxy).x,
+        scene(position + eps.yyx).x - scene(position - eps.yyx).x
     );
 
     return normalize(normal);
@@ -313,16 +342,13 @@ schliesslich, was an einem gegebenen Punkt dargestellt wird.
 
 \begin{lstlisting}[language=GLSL,caption={Distanzfunktion $f$ in
         GLSL.},label={alg:glsl_distance_func},captionpos=b,emph={scene}]
-vec3 scene(in vec3 position) {
+// Defines the scene which will be drawn at given position.
+float scene(in vec3 position) {
 {
-    float sphereId     = 0.0;
     float sphereRadius = 1.0;
     vec3  sphereOffset = vec3(-2.0, 1.0, -2.0);
 
-    vec2 res = vec2(
-        sphere(position - sphereOffset, sphereRadius),
-        sphereId
-    );
+    float res = sphere(position - sphereOffset, sphereRadius);
 
     return res;
 }
@@ -339,6 +365,9 @@ beschrieben, wurden weiche Schatten implementiert.
 \begin{lstlisting}[language=GLSL,caption={Funktion zur Berechnung von
         weichen Schatten  in
         GLSL.},label={alg:glsl_soft_shadows},captionpos=b,emph={calcShadows}]
+// Calcuates soft shadows for the given ray origin and direction.
+//
+// Returns a shadow color for the given origin between 0.0 and 1.0.
 float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 {
     float shadow            = 1.0;
@@ -361,7 +390,7 @@ float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
         currentDistance += estimatedDistance;
     }
 
-    return shadow;
+    return clamp(shadow, 0.0, 1.0);
 
 }
 \end{lstlisting}
@@ -396,3 +425,71 @@ Verwendete Parameter sind dabei der Usprung eines Strahles
         \bottomrule
     \end{tabular}
 \end{table}
+
+Das eigentliche Rendering, also die Darstellung der Szene, geschieht in
+der Funktion \textit{render}.
+
+\begin{lstlisting}[language=GLSL,caption={Funktion zur Darstellung der
+        Szene in
+        GLSL. Die Szene bzw.\ der Farbwert wird nur dann zurückgegeben
+        bzw.\ berechnet, wenn eine minimale Distanz nicht unterschritten
+        wird.},label={alg:glsl_render},captionpos=b,emph={render}]
+// Performs rendering of a scene beginning at given origin in given ray
+// direction. This invokes calculating the normal vector, the material
+// as well as the lighting.
+vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
+{
+    vec3  color           = vec3(0.05, 0.08, 0.10);
+    vec3  res             = castRay(rayOrigin, rayDirection, 100.0, 0.00001, 100);
+    float currentDistance = res.x;
+    float renderedScene   = res.z;
+    float minimalDistance = -0.5;
+
+    // Perform further calculation only when the distance is not below
+    // the minimal distance (epsilon-factor).
+    if (currentDistance > minimalDistance) {
+        vec3 position = rayOrigin + currentDistance * rayDirection;
+        vec3 normal   = calcNormal(position, 0.000001);
+
+        vec3 lightColor    = vec3(0.7, 0.2, 0.3);
+        vec3 lightPosition = vec3(-0.6, 0.7, -0.5);
+        vec3 light         = calcLighting(position, normal, rayDirection, material, lightPosition, lightColor);
+
+        color = light;
+    }
+    color      = clamp(color, 0.0, 1.0);
+
+    return color;
+}
+\end{lstlisting}
+
+Die Hauptfunktion \textit{main} des Fragment-Shaders ruft schliesslich
+die Funktion zum Darstellen der Szene auf. Die zusätzlichen Methoden
+(wie z.B.~\textit{getRay} oder~\textit{squareFrame}) finden sich
+allesamt im Programmcode des Prototypen, welcher dieser Projektarbeit
+beiliegt.
+
+\begin{lstlisting}[language=GLSL,caption={Einstiegspunkt des
+        Fragment-Shaders.},
+    label={alg:glsl_main},captionpos=b,emph={main}]
+// Main method of the shader.
+void main()
+{
+    vec2 resolution      = globalResolution;
+    float time           = globalTime * 1.1;
+    float cameraAngle    = 1.0;
+    float cameraHeight   = 2.0;
+    float cameraPane     = 4.0;
+    float cameraDistance = 4.5;
+    vec3 rayOrigin      = vec3(cameraPane * sin(cameraAngle), cameraHeight, cameraDistance * cos(cameraAngle * time));
+    vec3 rayTarget      = vec3(0.0, 0.0, 0.0);
+    vec2 screenPosition = squareFrame(resolution);
+    vec3 rayDirection   = getRay(rayOrigin, rayTarget, screenPosition, 2.0);
+
+    vec3 color          = render(rayOrigin, rayDirection);
+    color               = calcPostFx(color, screenPosition);
+
+    gl_FragColor.rgb    = color;
+    gl_FragColor.a      = 1.0;
+}
+\end{lstlisting}
