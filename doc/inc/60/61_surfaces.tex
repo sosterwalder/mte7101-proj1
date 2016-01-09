@@ -71,13 +71,16 @@ Operationen.
 \subsection{Implizite Oberflächen}
 \label{subsec:implicit_surfaces}
 
-Wie in Gleichung~\ref{eq:surface_parametric} beschrieben, ist eine implizite
-Oberfläche gemäss~\cite{hart_ray_1993}[S. 1] als Funktion $ f(\bm{x}) =
-\mathbb{R}^{3} \to \mathbb{R} $ definiert.  Es wird also jedem Punkt einer
-Menge $ \bm{p} \in \mathbb{R}^{3} $ ein skalarer Wert $ s \in \mathbb{R} $
-zugewiesen. Dabei besteht die Oberfläche aus der Punktemenge $ \bm{x} \equiv
-(x, y, z) \in \mathbb{R}^{3} $.\\
-\\
+Wie in Gleichung~\ref{eq:surface_implicit} beschrieben, ist eine implizite
+Oberfläche gemäss~\citeauthor{division_introduction} typischerweise als
+Kontur einer Funktion mit Wert 0 definiert.
+Wobei~\citeauthor{hart_ray_1993}[S. 1] eine implizite Oberfläche als
+Funktion $ f(\bm{x}) = \mathbb{R}^{3} \to \mathbb{R} $ definiert.  Es
+wird also jedem Punkt einer Menge $ \bm{p} \in \mathbb{R}^{3} $ ein
+skalarer Wert $ s \in \mathbb{R} $ zugewiesen. Dabei besteht die
+Oberfläche aus der Punktemenge $ \bm{x} \equiv (x, y, z) \in
+\mathbb{R}^{3} $.
+
 Angenommen $ \bm{A} $ ist ein geschlossener Festkörper, welcher durch die
 Funktion $f$ beschrieben wird, dann kann gemäss~\cite{hart_ray_1993} Folgendes
 angenommen werden:
@@ -135,9 +138,9 @@ die Einheitskugel durch die implizite Gleichung
     \|\bm{x}\| - 1 = 0
 \end{gather}
 
-beschrieben werden kann, was unter Anwendung der allgemeinen
-Form~\ref{eq:surface_implicit} einer impliziten
-Gleichung~\ref{eq:surface_implicit} zu folgender Gleichung führt:
+beschrieben werden kann, was unter Anwendung der allgemeinen Form einer
+impliziten Gleichung~\ref{eq:surface_implicit} zu folgender Gleichung
+führt:
 
 \begin{gather}\label{eq:surface_implicit_sphere}
     f(\bm{x}) = \|\bm{x}\| - 1
