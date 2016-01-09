@@ -437,8 +437,11 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
     float currentDistance = res.x;
     bool  showRuler       = res.y == 1.0;
     float renderedScene   = res.z;
+    float minimalDistance = -0.5;
 
-    if (currentDistance > -0.5) {
+    // Perform further calculation only when the distance is not below
+    // the minimal distance (epsilon-factor).
+    if (currentDistance > minimalDistance) {
         vec3 position = rayOrigin + currentDistance * rayDirection;
         vec3 normal   = calcNormal(position, 0.000001);
 
