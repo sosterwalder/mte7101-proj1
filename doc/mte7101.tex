@@ -10,33 +10,34 @@
 %---------------------------------------------------------------------------
 
 \documentclass[
-    a4paper,                % paper format
-    10pt,                   % fontsize
-    %twoside,               % double-sided
-    openright,              % begin new chapter on right side
-    notitlepage,            % use no standard title page
-    parskip=half,           % set paragraph skip to half of a line
-]{scrreprt}                 % KOMA-script report
+    a4paper,      % paper format
+    10pt,         % fontsize
+    %twoside,     % double-sided
+    openright,    % begin new chapter on right side
+    notitlepage,  % use no standard title page
+    parskip=half, % set paragraph skip to half of a line
+]{scrreprt}       % KOMA-script report
 %---------------------------------------------------------------------------
 \raggedbottom{}
-\KOMAoptions{cleardoublepage=plain}         % Add header and footer on blank pages
+\KOMAoptions{cleardoublepage=plain} % Add header and footer on blank pages
 
 
 % Load Standard Packages:
 %---------------------------------------------------------------------------
-\usepackage{scrpage2}                                                   % Control of page headers and footers in LaTeX,
-                                                                        % needed for e.g. deftripstyle (to defined page styles)
-\usepackage[ngerman]{babel}                                             % german hyphenation
-\usepackage[utf8]{inputenc}                                             % UTF-8 input encoding
-\usepackage[T1]{fontenc}                                                % hyphenation of words with ä,ö and ü
-\usepackage{textcomp}                                                   % additional symbols
-\usepackage{float}                                                      % floating objects
-\usepackage{booktabs}                                                   % package for nicer tables
-\usepackage{tocvsec2}                                                   % provides means of controlling the sectional numbering
-\usepackage{pgfgantt}                                                   % Provides GANTT charts
-\usepackage[owncaptions]{vhistory}                                      % Provides framework for creating history outline
-\renewcommand{\vhhistoryname}{Versionen}                                % Rename version history to german name "Versionen"
-\usepackage{csquotes}
+\usepackage{scrpage2}                    % Control of page headers and footers in LaTeX,
+                                         % needed for e.g. deftripstyle (to defined page styles)
+\usepackage[ngerman]{babel}              % german hyphenation
+\usepackage[utf8]{inputenc}              % UTF-8 input encoding
+\usepackage[T1]{fontenc}                 % hyphenation of words with ä,ö and ü
+\usepackage{textcomp}                    % additional symbols
+\usepackage{float}                       % floating objects
+\usepackage{booktabs}                    % package for nicer tables
+\usepackage{tocvsec2}                    % provides means of controlling the sectional numbering
+\usepackage{pgfgantt}                    % Provides GANTT charts
+\usepackage[owncaptions]{vhistory}       % Provides framework for creating history outline
+\renewcommand{\vhhistoryname}{Versionen} % Rename version history to german name "Versionen"
+\usepackage{csquotes}                    % Quotes
+\usepackage{nameref}                     % Allows referencing of names
 %---------------------------------------------------------------------------
 
 % Bibliography
@@ -54,14 +55,14 @@
 
 % Load Math Packages
 %---------------------------------------------------------------------------
-\usepackage{mathtools}                                                  % Provide equation and gather environments
-\usepackage{amsthm}                                                     % Provide the possibility to define definitions
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\usepackage{bm}                                                         % bold font in math mode
-\usepackage{amssymb}                                                    % mathematical special characters, e.g. mathbb
-\usepackage{exscale}                                                    % mathematical size corresponds to textsize
-\usepackage{esvect}                                                     % Provides nicer vector display in math mode
+\usepackage{mathtools}                       % Provide equation and gather environments
+\usepackage{amsthm}                          % Provide the possibility to define definitions
+\theoremstyle{definition}                    % Add new theorem style
+\newtheorem{definition}{Definition}[section] % Add new theorem
+\usepackage{bm}                              % bold font in math mode
+\usepackage{amssymb}                         % mathematical special characters, e.g. mathbb
+\usepackage{exscale}                         % mathematical size corresponds to textsize
+\usepackage{esvect}                          % Provides nicer vector display in math mode
 %---------------------------------------------------------------------------
 
 % Definition of fonts
@@ -73,9 +74,9 @@
 % Definition of colors
 %---------------------------------------------------------------------------
 \RequirePackage{color}
-\definecolor{linkblue}{rgb}{0,0,0.8}            % Standard
-\definecolor{darkblue}{rgb}{0,0.08,0.45}        % Dark blue
-\definecolor{bfhgrey}{rgb}{0.41,0.49,0.57}      % BFH grey
+\definecolor{linkblue}{rgb}{0,0,0.8}       % Standard
+\definecolor{darkblue}{rgb}{0,0.08,0.45}   % Dark blue
+\definecolor{bfhgrey}{rgb}{0.41,0.49,0.57} % BFH grey
 \definecolor{linkcolor}{rgb}{0,0,0}
 \colorlet{Black}{black}
 \definecolor{keywords}{rgb}{255,0,0}
@@ -128,17 +129,17 @@
 %---------------------------------------------------------------------------
 \usepackage[
     pdftex,ngerman,bookmarks,plainpages=false,pdfpagelabels,
-    backref = {false},                                      % No index backreference
-    colorlinks = {true},                  % Color links in a PDF
-    hypertexnames = {true},               % no failures "same page(i)"
-    bookmarksopen = {true},               % opens the bar on the left side
-    bookmarksopenlevel = {0},             % depth of opened bookmarks
-    pdftitle = {Volume ray casting --- basics \& principles},      % PDF-property
+    backref = {false},                                        % No index backreference
+    colorlinks = {true},                                      % Color links in a PDF
+    hypertexnames = {true},                                   % no failures "same page(i)"
+    bookmarksopen = {true},                                   % opens the bar on the left side
+    bookmarksopenlevel = {0},                                 % depth of opened bookmarks
+    pdftitle = {Volume ray casting --- basics \& principles}, % PDF-property
     pdfauthor = {Sven Osterwalder},                           % PDF-property
-    pdfsubject = {Volume ray casting},        % PDF-property
-    linkcolor = {linkcolor},              % Color of Links
-    citecolor = {linkcolor},              % Color of Cite-Links
-    urlcolor = {linkcolor},               % Color of URLs
+    pdfsubject = {Volume ray casting},                        % PDF-property
+    linkcolor = {linkcolor},                                  % Color of Links
+    citecolor = {linkcolor},                                  % Color of Cite-Links
+    urlcolor = {linkcolor},                                   % Color of URLs
 ]{hyperref}
 %---------------------------------------------------------------------------
 
