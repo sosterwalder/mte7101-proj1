@@ -4,6 +4,9 @@ Place:            Prof. Claude Fuhrer's office
 Involved persons: Claude Fuhrer
                   Sven Osterwalder
 
+Meeting minutes 2015-09-21
+==========================
+
 * Project issues
   - Requirement document needed?
     * No, not directly

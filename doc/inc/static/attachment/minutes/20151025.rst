@@ -16,15 +16,15 @@ Presentation and discussion of the current state of the work (SO)
 
 * Citations
   * May not be at the beginning of a sentence (CF)
-  * Style is ok (CF)
-  * When referring to authors, use their name and not only the abbrevation
+  * Style is OK (CF)
+  * When referring to authors, use their name and not only the abbreviation
     provided by the citation (CF)
     (TODO)
 
 * Introduction
-  * May resp. will most likely need to be rewritten at end of the
+  * May resp.\ will most likely need to be rewritten at end of the
     project work (CF)
-    (TODO, added)
+    (DONE)
 
 * Project schedule
   * Adapt to current situation (CF)

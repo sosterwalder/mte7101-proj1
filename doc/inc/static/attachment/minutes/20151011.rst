@@ -18,7 +18,7 @@ Theoretical background
       * The notation of L_{j} and L_{j}^{'} is nearly not distinguishable due
         to the vector arrows. Use another notation to distinguish them.
         (DONE)
-      * k_d and k_s depend on the wave length resp. the color, this should
+      * k_d and k_s depend on the wave length resp.\ the color, this should
         be expressed as well
         (DONE)
       * The vectors L_{j} and L_{j}^{'} are normalized unit vectors
@@ -35,7 +35,7 @@ Theoretical background
     * Spell the letter 's', used for the integral as well as for the
       explanations, always the same case, either upper or lower
       (DONE)
-    * Use \varepsilon instead of \epsilon as this increases the readablity
+    * Use \varepsilon instead of \epsilon as this increases the readability
       (DONE)
     * Do not use tables for the explanation to an equation as LaTeX may break
       the layout then
@@ -45,7 +45,7 @@ Theoretical background
   * Is the description of ray casting developed enough? (SO)
     * No, the description should be further expanded, also formulas should be
       considered and added, as well as examples (CF)
-      (TODO, added)
+      (DONE)
   * Is the pseudo code of ray casting developed enough? (SO)
     * Yes, the pseudo code is developed enough, although the unnecessary
       spaces of the lstlisting environment could be removed using the columns
@@ -55,7 +55,7 @@ Theoretical background
 * Ray tracing
   * Is an explanation of transmission and refraction needed? (SO)
     * Yes, an explanation of those terms would be good (CF)
-    (TODO, added)
+    (DONE)
   * The reference when referring Whitted's publication is missing(CF)
     * Add reference (SO)
     (DONE)
@@ -93,7 +93,7 @@ Typography
 
 * Equation 5.1 (CF)
   * The notation of the word 'diffuse' is not nicely readable, as there is a
-    gap between the to f letters which sould not be there. \text might solve
+    gap between the to f letters which should not be there. \text might solve
     this problem
     (DONE)
 
@@ -103,7 +103,7 @@ Further steps/proceedings (CF, SO)
 * Further steps planned are the introduction of a lighting model for implicit
   surfaces, the definition of the rendering itself, the introduction of basic
   operations on implicit surfaces as well as shadows. If time allows it,
-  maybe a protoype is added. Is this alright? (SO)
+  maybe a prototype is added. Is this alright? (SO)
 
   * Yes, absolutely, it is up to you, how far you are developing this project
     (CF)

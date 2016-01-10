@@ -12,29 +12,29 @@ Presentation and discussion of the current state of the work (SO)
 
 * Illustration Phong model
   * illustration is too big, should be a bit scaled (CF)
-  (TODO, added)
+  (DONE)
   * Normalize vectors to same length, use polarcoordinates eventually (CF)
-  (TODO, added)
+  (DONE)
 
 * Illustration Ray Tracing
   * Use a better resolution (CF)
-  (TODO, added)
+  (DONE)
   * Make the fonts a bit bigger (CF)
-  (TODO, added)
+  (DONE)
   * Explain the image (CF)
-  (TODO, added)
+  (DONE)
   * Normalize vectors to same length, use polarcoordinates eventually (CF)
-  (TODO, added)
+  (DONE)
 
 * Listings
-  * Do listing in german also have a bullet in front or rather a dash? (CF)
+  * Do listing in German also have a bullet in front or rather a dash? (CF)
     * A bullet appears to be right, as the ngerman package with the babel
       option is used (CF)
 
 Further steps/proceedings (CF, SO)
 ----------------------------------
 
-* Finish writing on chapter about rendering implicit surfacs (SO, CF)
+* Finish writing on chapter about rendering implicit surfaces (SO, CF)
 * Add a chapter about an eventual prototype (SO, CF)
 * Process TODOs (SO, CF)
 

@@ -13,7 +13,7 @@ Presentation and discussion of the current state of the work (SO)
 * The progress is still slowed down a lot unfortunately. This is mostly
   due to an illness as well as work related issues. (SO)
 
-  * This is ok, it was originally planned to have some breaks in the first
+  * This is OK, it was originally planned to have some breaks in the first
     three weeks of December. Those weeks were so to say spent already during
     November, so the work needs to be kept up during December. (CF)
   * Currently there are no further aspects that need special attention. (CF)
@@ -25,11 +25,11 @@ Presentation and discussion of the current state of the work (SO)
     may be kept at a minimal level. (CF)
 
 * Effort has been but into re-generating the images as the currently used tool
-  (Geogebra) leads to quick results, but makes it difficult to generte accurate
+  (Geogebra) leads to quick results, but makes it difficult to generate accurate
   images (e.g. all vectors need to have the same length and so on). First, IPE
   was used as a replacement, but seems not to be suited as it seems to be
-  limited to basic operations. Second, Inkscape was which provde to be very
-  usedful/handy. But due to the fact, that most of the work was done during the
+  limited to basic operations. Second, Inkscape was which provide to be very
+  useful/handy. But due to the fact, that most of the work was done during the
   illness, the sources were unfortunately not saved, only the bitmap formats
   which prevents (re-) editing. Therefore the decision was made to generate the
   images using asymptote.

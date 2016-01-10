@@ -14,7 +14,7 @@ Presentation and discussion of the current state of the work (SO)
   due to work related issues as well as the focus was laid on the first
   specialization module of the studies during the last weeks. (SO)
 
-  * This is ok, there are still a lot of open points / TODOs remaining, the
+  * This is OK, there are still a lot of open points / TODOs remaining, the
     focus should now be set on finishing the document as well as on
     corrections. Currently there are no further aspects that need special
     attention. (CF)
