@@ -2,7 +2,7 @@
 \label{subsec:ray_tracing}
 
 Sofern nicht anders vermerkt, basiert der folgende Abschnitt
-auf~\cite{glassner_introduction_1989}[S. 1 bis 77].
+auf~\cite[S. 1 bis 77]{glassner_introduction_1989}.
 
 Bei dem heute als Ray Tracing bekannten Verfahren, handelt es sich um
 eine verbesserte Version des unter~\ref{subsec:ray_casting} genannten
@@ -11,50 +11,57 @@ das Verfahren~\citeyear{whitted_improved_1980} im Paper
 ``\citetitle{whitted_improved_1980}''.
 
 Ein möglicher Algorithmus, wie Ray Tracing umgesetzt werden kann,
-findet sich in~\ref{fig:ray_tracing:high_level}.
+findet sich in~\autoref{fig:ray_tracing:high_level}.
 
-Grundsätzlich ist die Idee, dass jeder Bildpunkt der gewählten Region
-Licht aus nur einer Richtung erhält --- der Richtung der Lichtstrahlen
-(\textit{light rays}), welche durch die gewählte Region und die
-sichtbare Bildfläche gehen. Somit trägt jedes Photon, welches aus dieser
-Richtung kommt, zum Farbwert bzw.\ der Intensität der Farbe eines
-Bildpunktes bei. Bei Strahlen, welche das Licht direkt zur sichtbaren
-Bildfläche transportieren, spricht man von \textit{Pixel}- bzw.\
-\textit{Augen-Strahlen}.~\cite{glassner_introduction_1989}[S. 10]
+Analog dem Ray Casting Verfahren wird wieder ein Projektionszentrum (das
+Auge eines Betrachters) sowie eine Region einer beliebigen Bildfläche
+gewählt.
 
-\begin{figure}[H]\label{fig:ray_tracing_scene}
+Jeder Bildpunkt der gewählten Region erhält Licht aus nur einer Richtung
+--- der Richtung der Lichtstrahlen (\textit{light rays}), welche durch
+die gewählte Region und die sichtbare Bildfläche gehen. Somit trägt
+jedes Photon, welches aus dieser Richtung kommt, zum Farbwert bzw.\ der
+Intensität der Farbe eines Bildpunktes bei. Bei Strahlen, welche das
+Licht direkt zur sichtbaren Bildfläche transportieren, spricht man von
+\textit{Pixel}- bzw.\ \textit{Augen-Strahlen}~\parencite[S.
+10]{glassner_introduction_1989}.
+
+\begin{figure}[H]
     \centering
     \includegraphics{img/ray_tracing_scene.pdf}
-    \caption{Illustration des Ray Tracing Verfahrens\protect\footnotemark}
+    \caption{Illustration des Prinzips des Ray Tracing
+        Verfahrens\protect\footnotemark}\label{fig:ray_tracing_scene}
 \end{figure}
 \footnotetext{Eigene Darstellung mittels Inkscape angelehnt
     an~\cite{glassner_introduction_1989}[S. 16]}
 
 Die Strahlen werden in dieser Richtung verfolgt, um festzustellen wie
-das Licht ``erzeugt'' wird. Trifft der Strahl auf nichts wird die
+das Licht ``erzeugt'' wird. Trifft der Strahl auf nichts, wird die
 Verfolgung des Strahles beendet und der Bildpunkt wird mit der Farbe des
 Hintergrundes eingefärbt. Trifft der Strahl direkt auf eine Lichtquelle
 wird die Verfolgung des Strahles beendet und der Bildpunkt wird mit der
 Farbe und Intensität der Lichtquelle eingefärbt.  Trifft der Lichtstrahl
 auf eine Oberfläche, wird der Prozess von diesem Punkt aus neu gestartet
-um festzustellen, wie das Licht dort ``erzeugt'' wurde. 
+um festzustellen, wie das Licht dort ``erzeugt'' wurde.
 
 Wie der letzte Punkt zeigt, handelt es sich um ein rekursives Verfahren
-und wird daher teilweise auch rekursives Ray Tracing genannt.
+und wird daher teilweise auch rekursives Ray Tracing genannt. Und genau
+dies ist der Unterschied zu Ray Casting, letzteres kennt keine
+Rekursion.
 
 Zur Berechnung des emittierten Lichtes an einem gewissen Punkt auf der
 Oberfläche eines Objektes, wird in einem ersten Schritt die Intensität
 des Lichtes dieses Punktes bestimmt. Man spricht dabei von \textit{Licht}- bzw.\
-\textit{Schatten-Strahlen}.~\cite{glassner_introduction_1989}[S. 10]
+\textit{Schatten-Strahlen}~\parencite[S. 10]{glassner_introduction_1989}.
 
 In einem weiteren Schritt wird berechnet, wie die Oberfläche an
 diesem Punkt Licht in eine spezifische Richtung weitergibt. Dies
 geschieht durch die Intensität des Lichtes des Punktes sowie dessen
 physikalischen Eigenschaften.
 
-Trifft ein Lichtstrahl auf eine Oberfläche, wird dieses zu gewissen
+Trifft ein Lichtstrahl auf eine Oberfläche, wird dieser zu gewissen
 Teilen~\textit{absorbiert}, \textit{reflektiert} und
-\textit{gebrochen}.Die jeweiligen Anteile hängen dabei vom Medium der
+\textit{gebrochen}. Die jeweiligen Anteile hängen dabei vom Medium der
 Oberfläche bzw.\ des Objektes, der Frequenz des Lichtes sowie zwischen
 dem eingehenden Winkel des Lichtstrahles und der Oberflächennormale ab.
 Licht kann je nach Medium auch gestreut werden.
@@ -62,7 +69,7 @@ Licht kann je nach Medium auch gestreut werden.
 Man unterscheidet zwischen vier verschiedenen Mechanismen wie Licht
 transportiert wird: Perfekt diffuse, perfekt spiegelnde, perfekt
 brechende und total interne
-Reflexion.~\cite{glassner_introduction_1989}[S. 130 bis 137]
+Reflexion~\parencite[S. 130 bis 137]{glassner_introduction_1989}.
 In der Realität bzw.\ der Natur kann es sein, dass mehrere der
 Mechanismen gemischt auftreten. So wird z.B.\ ein Teil des Lichtes
 reflektiert, wohingegen ein anderer Teil das Objekt durchdringt.
@@ -72,16 +79,16 @@ gemäss~\citeauthor{glassner_introduction_1989}
 in~\textit{Reflexion-Strahlen}, welche die perfekte diffuse und die
 perfekt spiegelnde Reflexion beschreiben,
 und~\textit{Transparenz-Strahlen}, welche die perfekt brechende und die
-totale interne Reflexion beschreiben,unterteilt
-werden.~\cite{glassner_introduction_1989}[S. 10]
+totale interne Reflexion beschreiben, unterteilt
+werden~\parencite[S. 10]{glassner_introduction_1989}.
 
 \begin{figure}[H]\label{fig:ray_tracing_scene_rays}
     \centering
     \includegraphics{img/ray_tracing_scene_rays.pdf}
     \caption{Illustration der einzelnen Strahlen und deren Verhalten
         ausgehend von der Szene in
-        Abbildung.~\ref{fig:ray_tracing_scene}\protect\footnotemark{}
-        Das im Bild ersichtliche, orange-farbige Dreieck hat eine
+        \autoref{fig:ray_tracing_scene}.\protect\footnotemark{} Das im
+        Bild ersichtliche, orange-farbige Dreieck hat eine
         undurchlässige, reflexive Oberfläche. Der türkis-farbige Würfel
         hat eine diffuse Oberfläche.  Bei der Kugel, rechts im Bild,
         handelt es sich um eine Kugel aus Glas, welche das Licht
@@ -89,7 +96,7 @@ werden.~\cite{glassner_introduction_1989}[S. 10]
 \end{figure}
 
 \footnotetext{Eigene Darstellung mittels Inkscape angelehnt
-    an~\cite{glassner_introduction_1989}[S. 16]}
+    an~\cite[S. 16]{glassner_introduction_1989}}
 
 Nachfolgend werden die oben genannten Strahlen im Einzelnen beschrieben.
 
@@ -141,17 +148,17 @@ dass ein Objekt lokal auf sich selbst Schatten wirft.
 
 Die Eigenschaften von Licht, welches auf ein Objekt trifft und dann an
 diesem gespiegelt wird, werden durch~\textit{Reflexion-Strahlen}
-bestimmt. Wie bereits vorhergehend beschrieben, gibt es zwei Arten der
-Reflexion: Perfekt diffuse und perfekt spiegelnde Reflexion.
+bestimmt. Wie bereits vorhergehend beschrieben, werden zwei Arten der
+Reflexion unterschieden: Perfekt diffuse und perfekt spiegelnde Reflexion.
 
 \textbf{Perfekt spiegelnde Reflexion}
 
 Bei der perfekt spiegelnden Reflexion verlässt der ausgehende Strahl die
-Oberfläche in demselben Winkel wie der eingehende Strahl hat. Der
+Oberfläche in demselben Winkel des eingehenden Strahles. Der
 Ausfallswinkel entspricht also dem Einfallswinkel.
 
-Die Gleichung eines von einer perfekt spiegelnden Reflexion ausgehenden
-Strahles lautet~\cite{glassner_introduction_1989}[S. 132]:
+Die Gleichung eines Strahles, welcher von einer perfekt spiegelnden
+Reflexion ausgeht, lautet~\parencite[S. 132]{glassner_introduction_1989}:
 
 \begin{align}
     r(t) &= p_{0} + t \cdot R \\
@@ -176,7 +183,7 @@ gespiegelt wird.
         Winkel des ausgehenden Strahles $\theta_{R}$.}
 \end{figure}
 \footnotetext{Eigene Darstellung mittels Inkscape angelehnt
-    an~\cite{glassner_introduction_1989}[S. 131]}
+    an~\cite[S. 131]{glassner_introduction_1989}}
 
 
 \textbf{Perfekt diffuse Reflexion}
@@ -210,7 +217,7 @@ Reflexion.
 \textbf{Perfekt brechende Reflexion}
 
 Tritt Licht von einem Medium (z.B.\ Luft) in ein anderes Medium (z.B.\
-Glas) ein, so wird das Licht umgelenkt. Die Umlenkung des Lichtes bei
+Glas), so wird das Licht umgelenkt. Die Umlenkung des Lichtes bei
 Eintritt in ein neues Medium wird auch Transmission oder Refraktion
 genannt. Jedes Medium hat dabei einen eignen Index der Refraktion,
 welcher Lichtgeschwindigkeit in dem Medium gegenüber
@@ -226,22 +233,22 @@ Die Beziehung zwischen dem Einfalls- und Ausfallswinkel sowie dem
     \frac{\sin(\theta_{1})}{\sin(\theta_{2})} = \eta_{21} = \frac{\eta_{2}}{\eta_{1}}
 \end{gather}
 
-Wobei $\theta_{1}$ der Einfallswinkel der Einfallswinkel, $\theta_{2}$
+Wobei $\theta_{1}$ der Einfallswinkel, $\theta_{2}$
 der Ausfallswinkel, $\eta_{1}$ der Refraktion-Index des ersten Mediums
-in Abhängigkeit zum Vakuum, $\eta_{2}$ der Refraktion-Index des zweiten
-Mediums in Abhängigkeit zum Vakuum und $\eta_{21}$ der Refraktion-Index
-des zweiten Mediums in Abhängigkeit zu dem ersten Medium
-ist.~\cite{glassner_introduction_1989}[S. 134 bis 135]
+in Abhängigkeit zu Vakuum, $\eta_{2}$ der Refraktion-Index des zweiten
+Mediums in Abhängigkeit zu Vakuum und $\eta_{21}$ der Refraktion-Index
+des zweiten Mediums in Abhängigkeit des ersten Mediums
+ist~\parencite[S. 134 bis 135]{glassner_introduction_1989}.
 
 Umgekehrt kann das Verhältnis des ausgehenden Strahles zum eingehenden
-Strahl beschreiben werden:
+Strahl beschreiben werden~\parencite[S. 137 bis 140]{glassner_introduction_1989}:
 
 \begin{gather}
     \eta_{12} = \frac{\eta_{1}}{\eta_{2}} = \frac{\sin(\eta_{2})}{\sin(\eta_{1})}
 \end{gather}
 
 Mithilfe dieses Verhältnisses kann der gebrochene Strahl wie folgt
-berechnet werden~\cite{glassner_introduction_1989}[S. 137 bis 140]:
+berechnet werden~\parencite[S. 137 bis 140]{glassner_introduction_1989}:
 
 \begin{align}
     r(t) &= p_{0} + t \cdot T \\
@@ -270,20 +277,20 @@ gespiegelt wird.
         anhand $T$ gebrochen wird.}
 \end{figure}
 \footnotetext{Eigene Darstellung mittels Inkscape angelehnt
-    an~\cite{glassner_introduction_1989}[S. 135]}
+    an~\cite[S.135]{glassner_introduction_1989}}
 
 \textbf{Totale interne Reflexion}
 
 Die totale interne Reflexion tritt dann auf, wenn Licht unter einem zu
 flachen Winkel versucht von einem dichten Medium in ein weniger dichtes
-Medium zu gelangen. Das Licht prallt am Übergang der beiden Medien ab
+Medium zu gelangen. Das Licht ``prallt'' am Übergang der beiden Medien ab
 und wird gespiegelt anstatt in das andere Medium
-einzutreten.~\cite{glassner_introduction_1989}[S. 136 bis 137]
+einzutreten~\parencite[S. 136 bis 137]{glassner_introduction_1989}.
 
 Dies geschieht dann, wenn der Term $C_{2}$
-(Gleichung~\ref{eq:ray_tracing:transm_c2}) negativ ist und somit das
+(siehe~\autoref{eq:ray_tracing:transm_c2}) negativ ist und somit das
 Ergebnis der Wurzel aus $C_{2}$ in~\ref{eq:ray_tracing:transm} eine
-imaginäre Zahl wird.~\cite{glassner_introduction_1989}[S. 137 bis 138]
+imaginäre Zahl wird~\parencite[S. 137 bis 138]{glassner_introduction_1989}.
 
 \begin{figure}[H]\label{fig:ray_tracing_total_internal_reflection}
     \centering
@@ -297,9 +304,10 @@ imaginäre Zahl wird.~\cite{glassner_introduction_1989}[S. 137 bis 138]
         überschritten, so findet nur noch eine Reflexion
         statt.\protect\footnotemark}
 \end{figure}
-\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
-    an~\cite{glassner_introduction_1989}[S. 137]}
-\footnotetext{\cite{glassner_introduction_1989}[S. 137]}
+\addtocounter{footnote}{-2}
+\stepcounter{footnote}\footnotetext{Eigene Darstellung mittels Inkscape angelehnt
+    an~\cite[S. 137]{glassner_introduction_1989}}
+\stepcounter{footnote}\footnotetext{\cite[S. 137]{glassner_introduction_1989}}
 
 \subsubsection{Modelle zur Schattierung (shading models)}
 \label{ssubsec:ray_tracing:shading_models}
@@ -309,14 +317,14 @@ basierende Modelle zur Schattierung (shading models, welche heute unter
 dem Begriff PBRT --- Physically Based Rendering bekannt sind). Diese
 hier aufzuführen würden den Rahmen dieser Projektarbeit sprengen, daher
 wird darauf verzichtet. Dem geneigten Leser sei
-auf~\citetitle{glassner_introduction_1989}[S. 143ff]
+auf~\citetitle[S. 143ff]{glassner_introduction_1989},
 sowie~\citetitle{pharr_physically_2010} empfohlen.
 
 \subsubsection{Rekursion und Strahlen-Baum}
 \label{ssubsec:ray_tracing:recursion}
 
 Sofern nicht anders vermerkt, basiert der folgende Abschnitt
-auf~\cite{glassner_introduction_1989}[S. 16 bis 17].
+auf~\cite[S. 16 bis 17]{glassner_introduction_1989}.
 
 Wie zu Beginn des Kapitels bereits angesprochen wurde, handelt es sich
 bei Ray Tracing um ein rekursives Verfahren. Es stellt sich somit die
@@ -333,13 +341,14 @@ folgenden Fällen vor:
                 Lichtes.}
 \end{itemize}
 
-Aus den genannten Abbruch-Kriterien ergibt sich folgende
+Aus den genannten Abbruch-Kriterien ergibt sich
 nach~\citeauthor{heckbert_adaptive_1990} folgende, auf einem regulären
-Ausdruck basierende Lichtweg-Notation: \textbf{LD?S*E}. Diese beschreibt den
-Weg, welchen ein Photon ausgehend von einer Lichtquelle (\textbf{L}) zum Auge eines
-Betrachters (\textbf{E}) nehmen kann. Es kann auf null oder genau eine diffuse
-Oberfläche (\textbf{D?}) so wie auf 0 oder theoretisch unendlich viele reflektierende
-Oberflächen (\textbf{S*}) treffen.~\cite{heckbert_adaptive_1990}[S. 148]
+Ausdruck basierende Lichtweg-Notation: \textbf{LD?S*E}.\\
+Diese beschreibt den Weg, welchen ein Photon ausgehend von einer
+Lichtquelle \textbf{L} zum Auge eines Betrachters \textbf{E} nehmen
+kann. Es kann auf null oder genau eine diffuse Oberfläche (\textbf{D?})
+so wie auf 0 oder theoretisch unendlich viele reflektierende Oberflächen
+(\textbf{S*}) treffen~\parencite[S. 148]{heckbert_adaptive_1990}.
 
 Ausgehend von der sichtbaren Bildfläche, also dem Auge des Betrachters
 der Szene, kann so ein Strahlen-Baum (\textit{ray tree}) aufgebaut
@@ -373,10 +382,11 @@ der Farbe der Kindes-Knoten berechnet.
             Beispielszene &
             Gerichteter Strahlen-Baum &
             Schematischer Strahlen-Baum
-            nach~\citeauthor{glassner_introduction_1989} \\
+            nach~\citeauthor{glassner_introduction_1989}\protect\footnotemark{} \\
         \bottomrule
     \end{tabular}
 \end{table}
+\footnotetext{\cite[S.  17]{glassner_introduction_1989}}
 
 \begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des
         Ray Tracings \protect\footnotemark.},
@@ -429,4 +439,4 @@ def ray_trace(current_point, direction):
 end
 \end{lstlisting}
 \footnotetext{Algorithmus in Pseudocode
-    gemäss~\cite{glassner_introduction_1989}[Seite 283]}
+    gemäss~\cite[Seite 283]{glassner_introduction_1989}}

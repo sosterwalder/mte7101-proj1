@@ -15,9 +15,11 @@ Regelmässige Besprechungen mit dem Betreuer der Arbeit halfen die
 gesteckten Ziele zu erreichen und Fehlentwicklungen zu vermeiden. Der
 Betreuer unterstützte den Autor dabei mit Vorschlägen. Die Treffen
 fanden mindestens alle zwei Wochen statt, sie wurden in Form eines
-Protokolles festgehalten.
+Protokolles festgehalten. Das Protokoll findet sich in
+Abschnitt~\ref{chap:10_meeting_minutes} im Anhang dieser Arbeit
+(\ref{chap:attachment}).
 
-\section{Projekphasen}
+\section{Projektphasen}
 \label{sec:project_schedule}
 
 \subsection{Meilensteine}
@@ -29,9 +31,13 @@ Um bei der Arbeit ein möglichst strukturiertes Vorgehen einzuhalten, wurden fol
     \item Erarbeitung und Festhalten der Anforderungen
     \item Erarbeitung der theoretischen Grundlagen
     \item Erstellung der abschliessenden Dokumentation
+    \item Erstellung eines Prototypen
 \end{itemize}
 
-Die Phasen der Erarbeitung der theoretischen Grundlagen sowie die Erstellung der abschliessenden Dokumentation liefen parallel ab.
+Die Phasen \textit{Erarbeitung der theoretischen Grundlagen}, \textit{Erstellung
+der abschliessenden Dokumentation} sowie \textit{Erstellung eines
+Prototypen} liefen parallel ab. Erkenntnisse einer Phase flossen jeweils in die
+anderen Phasen ein.
 
 \subsection{Zeitplan / Projektphasen}
 \label{subsec:timeschedule}
@@ -67,7 +73,7 @@ Die Phasen der Erarbeitung der theoretischen Grundlagen sowie die Erstellung der
 
 In der ersten Phase wurden die Meilensteine der Arbeit identifiziert und
 skizziert. Um Details der Aufgabe zu verstehen, wurde das notwendige
-Vorwissen über Algorithmen zur globale Beleuchtung erarbeitet. Weiter wurde
+Vorwissen über Algorithmen zur globalen Beleuchtung erarbeitet. Weiter wurde
 die Grundlage dieser Dokumentation erstellt.
 
 \subsubsection{Anforderungen}
@@ -81,7 +87,7 @@ ausgehend wurden die dazu erforderlichen Projektphasen festgelegt.
 
 In dieser Phase ging es darum, sich in die Materie einzulesen und sich
 diese anzueignen. Das Lesen und Bearbeiten von Publikationen führte zu
-vielen neuen Anstössen und immer wieder zu neuen Recherchen. Die
+vielen neuen Denkanstössen und immer wieder zu neuen Recherchen. Die
 Erkenntnisse dieser Phase flossen so stetig in die Dokumentation ein,
 ergänzten und beeinflussten diese.
 
@@ -98,22 +104,32 @@ fertiggestellten Teilen.
 \subsection{Tools und Software}
 \label{subsec:tools_software}
 
-\noindent\emph{Dokumentation}
+\noindent\emph{Dokumentation und Prototyp}
 \begin{description}
     \item[\LaTeX] Eine Makro-Sammlung für das \TeX-System. Wurde zur
         Erstellung dieser Dokumentation eingesetzt. Diese Dokumentation
         wurde mittels \LaTeX{} geschrieben.
     \item[Make] Build-Automations-Werkzeug, wurde zur Erstellung dieses Dokumentes eingesetzt.
+    \item[CMake] Build-Automations-Werkzeug, wurde zur Erstellung des
+        Prototypen eingesetzt.
     \item[zotero] Ein freies, quelloffenes Literaturverwaltungsprogramm
         zum Sammeln, Verwalten und Zitieren unterschiedlicher Online-
-        und Offline-Quellen~\cite{wikipedia_foundation_zotero_2015}.
-    \item[VIM] Vi IMproved. Ein freier, quelloffener Texteditor zur Textbearbeitung.
+        und Offline-Quellen~\parencite{wikipedia_foundation_zotero_2015}.
+    \item[VIM] Vi IMproved. Ein freier, quelloffener Texteditor zur
+        Textbearbeitung. Wurde zum Verfassen der Dokumentation sowie zur
+        Entwicklung des Prototypen eingesetzt.
+    \item[LLVM] Low Level Virtual Machine. Eine Compiler-Architektur zum
+        Kompilieren von Applikationen. Wurde zur Kompilation des
+        Prototypen eingesetzt.
+    \item[clang] Ein C-Sprachen-Frontend für LLVM.\ Wurde zur Kompilation
+        des Prototypen eingesetzt.
 \end{description}
+
 
 \noindent\emph{Arbeitsorganisation}
 \begin{description}
     \item[Git] Freie Software zur verteilten Versionsverwaltung, wurde
-        für die Entwicklung dieser Dokumentation verwendet. Die
+        für die Entwicklung dieser Dokumentation sowie des Prototypen verwendet. Die
         Projektarbeit findet sich
         unter~\href{https://www.github.com/sosterwalder/mte7101-project1}{GitHub}\footnote{
             \href{https://www.github.com/sosterwalder/mte7101-project1}{https://www.github.com/sosterwalder/mte7101-project1}
@@ -124,11 +140,34 @@ fertiggestellten Teilen.
 \subsection{Standards und Richtlinien}
 \label{subsec:standards_guidelines}
 
+\subsubsection{Programmcode}
+\label{ssubsec:standards_guidelines:code}
+
+Der Programmcode des Prototypen, welcher in C++ geschrieben wurde, folgt
+den offiziellen Richtlinien für C++ von Google~\footnote{
+    \href{https://google.github.io/styleguide/cppguide.html}{
+        https://google.github.io/styleguide/cppguide.html
+    }
+}.
+
 \subsubsection{Pseudecode}
 \label{ssubsec:standards_guidelines:psuedocode}
 
 Da der Autor dieser Arbeit bedingt durch seine tägliche Arbeit mit der
-Programmiersprache Python relativ bewandert ist, wird daher diese als
-Sprache zur Beschreibung von Pseudcode verwendet.  Dabei wird aber kein
+Programmiersprache \textit{Python} relativ bewandert ist, wird daher diese als
+Sprache zur Beschreibung von Pseudocode verwendet.  Dabei wird aber kein
 Augenmerk auf die formale Korrektheit, geschweige denn der Lauffähigkeit
 des Pseudocodes gelegt.
+
+\subsubsection{Projekt-Struktur}
+\label{ssubsec:standards_guidelines:project_structure}
+
+Um die Übersicht zu wahren und den Verwaltungsaufwand minimal zu halten,
+wurde eine entsprechende Projekt-Struktur gewählt. Diese ist in
+Auflistung~\ref{lst:project_structure} ersichtlich.
+
+% Change caption
+\begin{listing}
+	\VerbatimInput[label=Projekt-Struktur,frame=single,numbers=left,firstline=23,lastline=39]{../README.md}
+	\caption{Projekt-Struktur.}\label{lst:project_structure}
+\end{listing}

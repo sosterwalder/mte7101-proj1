@@ -10,52 +10,58 @@
 
 Seit der Entstehung der Computergrafik Ende der 1960-er Jahre möchte man
 möglichst realitätsnahe, echte Bilder generieren können. Angefangen mit
-\textit{Photon Tracing} 1968, über \textit{Ray Tracing} 1980, bis hin
-zum \textit{Photon Mapping} 1997/2001, haben sich immer realistischer
+\textit{Photon Tracing} (1968), über \textit{Ray Tracing} (1980), bis hin
+zu \textit{Photon Mapping} (1997/2001), haben sich immer realistischer
 wirkende Verfahren zur Darstellung von Bildern entwickelt.
 
 Da der Aufwand möglichst realistisch wirkende Bilder zu erzeugen jedoch
 relativ hoch ist, wurden diese Verfahren in der Regel nur für statische
-Bilder verwendet. Und auch dort war bzw.\ ist der Grad der Details
+Bilder verwendet. Und auch dort war und ist der Grad der Details
 begrenzt bzw.\ an Rechenzeit gebunden. Möchte man mehr Details, so wird
 mehr Rechenzeit benötigt. Daher wurde oder wird für eine Darstellung in
-Echtzeit --- also dynamische Bilder mit mindestens 25 Bildern pro
+Echtzeit --- also eine Anzeige von mindestens 25 Bildern pro
 Sekunde --- lange nur eine Näherung, basierend auf vereinfachten
 \textit{Beleuchtungsmodellen} genutzt.
 
 Durch die Weiterentwicklung der Computer und vor allem durch die
 Weiterentwicklung der Grafikkarten (GPUs), sind die komplexeren,
-realistischer wirkenden Verfahren, wie z.B.\ Ray Tracing jedoch
+realistischer wirkenden Verfahren, wie z.B.\ Ray Tracing, jedoch
 wieder in den Fokus der Darstellung von Szenen in Echtzeit gerückt.
 
-Diese Projektarbeit beschreibt die theoretischen Grundlagen
-anhand~\textit{Beleuchtungsmodellen}, Verfahren für eine möglichst
-realistische Erzeugung von Bildern, \textit{Modellen zur Schattierung}
-und stellt schliesslich eine effiziente Methode des \textit{Ray
-    Tracings}, das so genannte~\textit{Sphere Tracing} vor.
+Diese Projektarbeit beschreibt theoretische Grundlagen zur Erzeugung von
+möglichst realistisch wirkenden Bildern
+anhand~\textit{Beleuchtungsmodellen}, \textit{praktischen Verfahren}
+(wie z.B.\ Ray Marching oder Ray Tracing), \textit{Modellen zur
+    Schattierung} und stellt schliesslich eine effiziente Methode des
+Ray Tracings, das so genannte~\textit{Sphere Tracing} vor.
 
 Um die Hypothese zu stützen, dass die komplexen, realistischer wirkenden
 Verfahren wieder in den Fokus der Darstellung von Szenen in Echtzeit
-gerückt sind, wurde ein Protoyp entwickelt, der Sphere Tracing in
+gerückt sind, wurde ein Prototyp entwickelt, der Sphere Tracing in
 Echtzeit auf der Grafikkarte (GPU) umsetzt.
 
 \subsection{Demoszene}
 \label{subsec:demoscene}
 
 In den 1980er-Jahren entwickelte sich ``unter Anhängern der
-Computerszene in den \dots{} während der Blütezeit der
-8-Bit-Systeme''~\cite{wikipedia_foundation_demoszene_2015} eine Bewegung
+Computerszene \dots{} während der Blütezeit der
+8-Bit-Systeme''~\parencite{wikipedia_foundation_demoszene_2015} eine Bewegung
 namens Demoszene. ``Ihre Mitglieder, die häufig Demoszener oder einfach
 Szener genannt werden, erzeugen mit Computerprogrammen auf Rechnern so
 genannte Demos – Digitale Kunst, meist in Form von musikalisch
 unterlegten
-Echtzeit-Animationen.''~\cite{wikipedia_foundation_demoszene_2015}
+Echtzeit-Animationen.''~\parencite{wikipedia_foundation_demoszene_2015}
 
-Es handelt sich bei der Demoszene um ein sehr aktives Umfeld, in dem die
-Technologie ständig an die Grenzen des technisch machbaren gelangt. In
-diesem Umfeld entstehen regelmässig neue Ideen zur Erzeugung von noch
-realistischer wirkenden Bildern. Dabei findet eine wechselseitige
-Beeinflussung zwischen dem akademischen Umfeld und der Demoszene statt.
+Es handelt sich bei der Demoszene um ein sehr aktives und kreatives
+Umfeld, in dem die Technologie ständig an die Grenzen des technisch
+machbaren gelangt. In diesem Umfeld entstehen regelmässig neue Ideen zur
+Erzeugung von noch realistischer wirkenden Bildern. Dabei findet eine
+wechselseitige Beeinflussung zwischen dem akademischen Umfeld und der
+Demoszene statt.
+
+So wurde auch das hier vorgestellte \textit{Sphere Tracing} Verfahren
+relativ früh von in der Demoszene aktiven Personen aufgegriffen und
+behandelt.
 
 \section{Ziele und Abgrenzung}
 \label{sec:objectives}

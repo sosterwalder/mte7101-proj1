@@ -5,23 +5,19 @@
 \section{Modelle zur Schattierung (shading models)}
 \label{sec:shading}
 
-% * Lighting model at each vertex, e.g. Lambert
-% * Shading: Compute the color of interior points between vertices
-% * Example image of mesh (vertices)
-
 Sofern nicht anders vermerkt, basieren die nachfolgenden Abschnitte
-auf~\cite{foley_computer_1996}[S. 734–739] sowie~\cite{hughes_computer_2013}.
+auf~\cite[S. 734–739]{foley_computer_1996}, sowie~\cite{hughes_computer_2013}.
 
-Bei der Anwendung von Modellen zur Schattierung (shading models) geht es
-grundsätzlich darum die emitierte Lichtintensität bzw.\ die Farbe einer
-Oberfläche an einem bestimmten Punkt zu berechnen. Es wäre naheliegend
-dies für jeden sichtbaren Punkt der Oberfläche zu berechnen, dies ist
-jedoch häufig viel zu aufwändig. Viele Modelle zur Schattierung
-berechnen daher die Licht- bzw. Farbintensität nur an gewissen
-Schlüsselpunkten und wenden dann vereinfachte Modelle zur Berechnung an
-um so Rechenzeit zu sparen.
+Bei der Anwendung von Modellen zur Schattierung (\textit{shading
+    models}) geht es grundsätzlich darum die emittierte Intensität des
+Lichtes bzw.\ die Farbe einer Oberfläche an einem bestimmten Punkt zu
+berechnen. Es wäre naheliegend dies für jeden sichtbaren Punkt der
+Oberfläche zu berechnen, dies ist jedoch häufig viel zu aufwändig. Viele
+Modelle zur Schattierung berechnen daher die Intensität des Lichtes
+bzw.\ der Farbe nur an gewissen Schlüssel-Punkten und wenden dann
+vereinfachte Modelle zur Berechnung an, um so Rechenzeit zu sparen.
 
-Als Beispiel zur Anwendung der Schattierungsmodelle wird nachfolgend
+Als Beispiel zur Anwendung der Modelle zur Schattierung wird nachfolgend
 angenommen, dass mittels einem Beleuchtungsmodell an jedem Eckpunkt einer
 Oberfläche (Polygon) die Farbe berechnet wird. Als Beispiel dienen hier die
 Eckpunkte $\bm{V}_{1}$, $\bm{V}_{2}$, $\bm{V}_{3}$ und $\bm{V}_{4}$.
@@ -35,9 +31,10 @@ Eckpunkte $\bm{V}_{1}$, $\bm{V}_{2}$, $\bm{V}_{3}$ und $\bm{V}_{4}$.
 \footnotetext{Eigene Darstellung mittels Inkscape, angelehnt
     an~\cite{hughes_computer_2013}}
 
-Um einen Farbintensitätswert für einen Eckpunkt $\bm{V}_{1}$ zu berechnen, wird der
-Normalenvektor des Eckpunktes (vertex normal) benötigt. Es handelt sich dabei
-um den Normalenvektor der Oberfläche an der Position des Eckpunktes $\bm{V}_{1}$.
+Um die Intensität der Farbe für einen Eckpunkt $\bm{V}_{1}$ zu
+berechnen, wird der Normalenvektor des Eckpunktes (\textit{vertex
+    normal}) benötigt. Es handelt sich dabei um den Normalenvektor der
+Oberfläche $\bm{N}$ an der Position des Eckpunktes $\bm{V}_{1}$.
 
 Im Laufe der Zeit hat sich die Schattierung so weit entwickelt, dass
 diese praktisch ausschliesslich auf der Grafikkarte (GPU) statt findet.
@@ -47,10 +44,10 @@ die reine Berechnung von Schattierungen hinausgeht.  Man unterscheidet
 dabei zwischen Shadern für geometrische Berechnungen (\textit{geometry
     shaders} oder \textit{vertex shaders}) sowie Shader für Berechnungen
 bezüglich Pixeln  oder (Bild-) Fragmenten (\textit{pixel shaders} oder
-\textit{fragment shaders}).~\cite{hughes_computer_2013}[Kapitel 33]\\
-Der interessierte Leser sei für weitere Details
-auf~\cite{hughes_computer_2013}[Kapitel
-33],~\cite{opengl_foundation_rendering_2015},
+\textit{fragment shaders})~\parencite[Kapitel 33]{hughes_computer_2013}.
+
+Der interessierte Leser sei für weitere Details auf~\cite[Kapitel
+33]{hughes_computer_2013},~\cite{opengl_foundation_rendering_2015},
 sowie~\cite{fernando_cg_2003} verwiesen.
 
 \subsection{Flat-Shading --- per vertex lighting}
@@ -61,16 +58,18 @@ sowie~\cite{fernando_cg_2003} verwiesen.
 %   * Image of calculated normals: line-segment (given through mesh) and vertex
 % * One color per face determined by vertex' color
 
-Bei Flat-Shading wird pro Oberfläche (Polygon) ein Eckpunkt $\bm{V}_{1}$ dieser als
-farb- bzw.\ intensitätgebender Schlüsselpunkt bestimmt. Danach wird die Farbe
-des Punktes als Farbe für die Oberfläche genommen.
+Bei Flat-Shading wird pro Oberfläche (Polygon) ein Eckpunkt $\bm{V}_{1}$
+als Schlüssel-Punkt für die Farbe bzw.\ die Intensität bestimmt.  Danach
+wird die Farbe des Punktes als Farbe für die gesamte Oberfläche
+angenommen~\parencite[S. 734]{foley_computer_1996}.
 
-Diese Annahme ist unter den folgenden Voraussetzungen gültig:
+Diese Annahme ist unter den folgenden Voraussetzungen gültig~\parencite[S. 734]{foley_computer_1996}:
 \begin{enumerate}
     \item{Die zugrundeliegende Lichtquelle befindet sich unendlich weit
-            entfernt, so dass der Winkel zwischen dem
-            Normalenvektor der Oberfläche und der Lichtquelle
-            $\bm{n}\cdot{}\bm{l}$ für die gesamte Oberfläche konstant ist.}
+            entfernt, so dass der Winkel zwischen dem Normalenvektor der
+            Oberfläche $\bm{n}$ und der Lichtquelle $\bm{l}$, also
+            $\bm{n}\cdot{}\bm{l}$, für die gesamte Oberfläche konstant
+            ist.}
     \item{Der Betrachter sich unendlich weit entfernt von der Oberfläche
             befindet, so dass der Winkel zwischen dem Normalenvektor der
             Oberfläche und dem Betrachter $\bm{n}\cdot{}\bm{v}$ für die
@@ -92,13 +91,14 @@ Ist eine der ersten beiden Annahmen falsch, so muss für den Vektor der
 Lichtquelle $\bm{l}$ bzw.\ den Vektor des Betrachters $\bm{v}$ ein
 konstanter Wert berechnet werden.~\citeauthor{foley_computer_1996} gibt
 hier als Beispiele das Zentrum des Polygones oder den ersten Eckpunkt
-des Polygones an.
+des Polygones an~\parencite[S. 735]{foley_computer_1996}.
 
 \subsection{Gouraud-Shading --- face interpolated lighting}
 \label{subsec:gouraud_shading}
 
-Bei Gouraud-Shading handelt es sich um ein Shading-Verfahren, welches die
-Farbintensitätswerte der Eckpunkte von Oberflächen eines Meshes interpoliert.
+Bei Gouraud-Shading handelt es sich um ein Shading-Verfahren, welches
+die Intensität der Farbe der Eckpunkte von Oberflächen eines Meshes
+interpoliert.
 
 \begin{figure}[H]
     \centering
@@ -109,9 +109,12 @@ Farbintensitätswerte der Eckpunkte von Oberflächen eines Meshes interpoliert.
 \footnotetext{Eigene Darstellung mittels Inkscape, angelehnt
     an~\cite{hughes_computer_2013}}
 
-Um den Farbintensitätswert eines Eckpunktes von Oberflächen  zu berechnen,
-schlägt Gouraud die Berechnung des Durchschnittswertes der Oberflächennormalen
-zweier adjazenter Liniensegmente (im 2D-Raum) bzw.\  aller adjazenter Dreiecke
+Um die Farbe eines Eckpunktes von Oberflächen zu berechnen,
+schlägt~\citeauthor{gouraud_continous_1971} in seiner
+Arbeit~\citetitle{gouraud_continous_1971}
+von~\citeyear{gouraud_continous_1971} die Berechnung des
+Durchschnittswertes der Normalenvektoren der Oberflächen zweier
+adjazenter Liniensegmente (im 2D-Raum) bzw.\  aller adjazenter Dreiecke
 (im 3D-Raum) vor.
 
 \begin{figure}[H]
@@ -126,7 +129,7 @@ zweier adjazenter Liniensegmente (im 2D-Raum) bzw.\  aller adjazenter Dreiecke
     an~\cite{hughes_computer_2013}}
 
 Die Berechnung des Normalenvektors eines Eckpunktes via Durchschnittswert ist
-üblicherweise eine genügend gute Näherung der Oberflächennormale der
+üblicherweise eine genügend gute Näherung an die Oberflächennormale der
 eigentlichen Oberfläche. Die Präzision hängt dabei aber klar von der
 Granularität des Modelles (Mesh) ab.
 
@@ -136,18 +139,18 @@ Granularität des Modelles (Mesh) ab.
 Phong-Shading ist eine Verbesserung des Gouraud-Verfahrens und bietet eine
 bessere Annäherung an die Schattierung bzw. Darstellung von glatten
 Oberflächen. Das Verfahren eignet sich vor allem dann besser, wenn ein
-Beleuchtungsmodell verwendet wird, welches kleine spekuläre Refelektionen
+Beleuchtungsmodell verwendet wird, welches kleine spiegelnde Reflexionen
 bietet, wie z.B. das Phong-Beleuchtungsmodell.
 
-Bei Phong-Shading wird ein Normalenvektor linear an einer Oberfläche (eines
-Polygons) interpoliert, ausgehend von den Normalenvektoren der Kanten der
-Oberfläche (im obigen Beispiel wäre dies $\bm{n}_{v_{2}v_{3}}$). Die
-Oberflächennormale wird an jedem Pixel interpoliert und normalisiert und kommt
-dann für die Berechnung des Farbintnsitätswertes anhand eines
-Beleuchtungsmodelles, wie zum Beispiel das Phong-Beleuchtungsmodell, zum
-Einsatz. Daher ist Phong-Shading viel rechenaufwändiger als Gouraud-Shading, da
-das Beleuchtungsmodell für jeden Pixel anstatt für jede Kante berechnet werden
-muss.
+Bei Phong-Shading wird ein Normalenvektor linear an einer Oberfläche
+(eines Polygons) interpoliert, ausgehend von den Normalenvektoren der
+Kanten der Oberfläche (im obigen Beispiel wäre dies
+$\bm{n}_{v_{2}v_{3}}$). Die Oberflächennormale wird an jedem Pixel
+interpoliert und normalisiert und kommt dann für die Berechnung der
+Farbwerte anhand eines Beleuchtungsmodelles, wie zum Beispiel das
+Phong-Beleuchtungsmodell, zum Einsatz. Daher ist Phong-Shading viel
+rechenintensiver als Gouraud-Shading, da das Beleuchtungsmodell für
+jeden Pixel anstatt für jede Kante berechnet werden muss.
 
 \begin{figure}[H]
     \centering
@@ -158,7 +161,6 @@ muss.
 \end{figure}
 \footnotetext{Eigene Darstellung mittels Inkscape, angelehnt
     an~\cite{hughes_computer_2013}}
-
 
 \begin{table}[H]
     \centering
@@ -178,4 +180,4 @@ muss.
         \bottomrule
     \end{tabular}
 \end{table}
-\footnotetext{\cite{danchilla_beginning_webgl}}
+\footnotetext{\cite{brian_danchilla_beginning_2014}}

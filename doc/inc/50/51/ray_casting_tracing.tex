@@ -2,38 +2,39 @@
 \label{sec:ray_casting_tracing}
 
 Sofern nicht anders vermerkt, basiert der folgende Abschnitt
-auf~\cite{hughes_computer_2013}[Kapitel 15, S. 387ff].
+auf~\cite[Kapitel 15, S. 387ff]{hughes_computer_2013}.
 
 Um ein Bild möglichst realistisch darzustellen muss berechnet werden, wieviel
 Licht zu jedem Pixel der sichtbaren Bildfläche (also dem Betrachter)
-transportiert wird. Da Photonen die Energie des Lichtes transportieren, muss
-man also das physikalische Verhalten dieser simulieren.
+transportiert wird. Da Photonen die Energie des Lichtes transportieren,
+möchte man das physikalische Verhalten dieser simulieren.
 
 Es ist allerdings nicht möglich \textit{alle} Photonen zu simulieren, da
 der Aufwand schlicht zu gross wäre. Daher macht es Sinn nur einige
 Photonen (exemplarisch) zu betrachten und dann eine Abschätzung des
 gesamten Lichtes vorzunehmen.
 
-Jede Lichtquelle emitiert Photonen (als Welle und als Teilchen) in alle
-Richtungen. Man modeliert diese als Partikel, welche anhand
+Jede Lichtquelle emittiert Photonen (als Welle und als Teilchen) in alle
+Richtungen. Man modelliert diese als Partikel, welche anhand
 Lichtstrahlen (\textit{light rays}) auf Objekte einer
 Szene treffen.
 
-Jedes Photon hat dabei eine spezifische Wellenlänge ($\lambda{}$) welche
-die Farbe definiert, sowie eine Energie (Frequenz $f$) welche die
-Farbintensität des Photons definiert.
+Jedes Photon hat dabei eine spezifische Wellenlänge $\lambda{}$, welche
+die Farbe definiert, sowie eine Energie respektive Frequenz $f$, welche
+die Intensität der Farbe des Photons definiert.
 
 Trifft ein Photon auf ein Objekt, wird ein Teil der Energie absorbiert,
 ein Teil reflektiert und ein Teil durchdringt das Objekt (Transmission).
-Photonen treffen solange auf Objekte bis deren gesamte Energie
+Photonen treffen solange auf Objekte, bis deren gesamte Energie
 absorbiert, sie die Szene verlassen oder sie auf die sichtbare
-Bildfĺäche treffen und somit zum eigentlichen Bild beitragen.
+Bildfläche treffen und somit zum eigentlichen Bild beitragen.
 
-Bei Ray Casting bzw. Ray Tracing handelt es sich um eine relativ
-einfache Art um globale Beleuchtungsmodelle zu implementieren.
+Bei \textit{Ray Casting} bzw. \textit{Ray Tracing} handelt es sich um
+zwei relativ einfache Verfahren um globale Beleuchtungsmodelle zu
+implementieren.
 
-Die einfachste Art Lichtstrahlen zu modellieren ist das so
-genannte~\textit{Ray Casting}.
+Die einfachste Art das oben genannte Verhalten von Licht zu modellieren
+ist das so genannte~\textit{Ray Casting}.
 
 \input{inc/50/51/ray_casting}
 \input{inc/50/51/ray_tracing}
