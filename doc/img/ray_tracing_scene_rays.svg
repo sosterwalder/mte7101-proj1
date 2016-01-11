@@ -543,11 +543,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="141.97008"
-     inkscape:cy="104.15002"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="143.79784"
+     inkscape:cy="270.88303"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer4"
      showgrid="true"
      inkscape:window-width="1918"
      inkscape:window-height="1180"
@@ -998,5 +998,47 @@
          style="font-weight:bold;baseline-shift:baseline;fill:#2ca05a;fill-opacity:1;">S<tspan
    id="tspan6224"
    style="font-size:65.00000954%;baseline-shift:sub;fill:#2ca05a;fill-opacity:1;">2</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.00000095px;line-height:125%;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="319.79361"
+       y="207.33406"
+       id="text6087"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:11.25000095px"
+         sodipodi:role="line"
+         id="tspan6089"
+         x="319.79361"
+         y="207.33406">O<tspan
+   style="font-size:65.00000954%;baseline-shift:sub"
+   id="tspan6091">1</tspan></tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6189"
+       y="140.15891"
+       x="228.22328"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.00000095px;line-height:125%;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         y="140.15891"
+         x="228.22328"
+         id="tspan6191"
+         sodipodi:role="line"
+         style="font-size:11.25000095px">O<tspan
+   id="tspan6193"
+   style="font-size:65.00000954%;baseline-shift:sub">2</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.00000095px;line-height:125%;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="11.848596"
+       y="153.59393"
+       id="text6195"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:11.25000095px"
+         sodipodi:role="line"
+         id="tspan6197"
+         x="11.848596"
+         y="153.59393">O<tspan
+   style="font-size:65.00000954%;baseline-shift:sub"
+   id="tspan6199">3</tspan></tspan></text>
   </g>
 </svg>
