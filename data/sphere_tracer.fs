@@ -261,46 +261,86 @@ float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 
 }
 
+float calcAO( in vec3 pos, in vec3 nor )
+{
+    float occ = 0.0;
+    float sca = 1.0;
+    for( int i=0; i<5; i++ )
+    {
+        float hr = 0.01 + 0.12*float(i)/4.0;
+        vec3 aopos =  nor * hr + pos;
+        float dd = scene1( aopos );
+        occ += -(dd-hr)*sca;
+        sca *= 0.95;
+    }
+    return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );    
+}
+
 // Calculates the lighting for the given position, normal and direction,
 // the given light (position and color) respecting the 'material'.
 //
 // This is mainly applying the phong lighting model inlcuding shadows.
 //
 // Returns the calculated color as three-dimensional vector.
-vec3 calcLighting(in vec3 position, in vec3 normal, in vec3 rayDirection, in vec3 material, in vec3 lightPosition, in vec3 lightColor)
- {
-     vec3 lightDirection     = normalize(lightPosition);
- 
-     float kDirectLight      = 0.1;
-     float shadows           = calcShadows(position, lightDirection);
-     vec3  direct            = vec3(kDirectLight * shadows);
- 
-     vec3  ambientColor      = vec3(0.3, 0.3, 0.3);
-     float kAmbient          = clamp(0.5 + 0.5 * normal.y, 0.0, 1.0);
-     vec3  ambient           = kAmbient * ambientColor;
- 
-     vec3  diffuseColor      = vec3(lightColor);
-     float kDiffuse          = clamp(dot(lightDirection, normal), 0.0, 1.0);
-     vec3  diffuse           = kDiffuse * diffuseColor;
- 
-     vec3  specularColor     = vec3(1.0);
-     float kSpecularExponent = 24.0;
-     vec3  h                 = normalize(-rayDirection + lightDirection);
-     float nFacing           = clamp(dot(lightDirection, normal), 0.0, 1.0);
-     float kSpecular         = pow(clamp(dot(h, normal), 0.0, 1.0), kSpecularExponent);
-     vec3  specular          = nFacing * kSpecular * specularColor;
- 
-     vec3 light              = ambient + diffuse + specular + direct;
-     vec3 color              = material * light;
- 
-     return color;
- }
+vec3 calcLighting(in vec3 position, in vec3 normal, in vec3 rayDirection, in vec3 material, in vec3 lightPosition, in vec3 lightColor, in float currentDistance)
+{
+    vec3 color              = material;
+
+    vec3 lightDirection     = normalize(lightPosition);
+    vec3 reflection         = reflect(rayDirection, normal);
+
+    float kOcclusion        = 1.0;
+    float occlusion         = calcAO(position, normal);
+
+    float kDirectLight      = 0.1;
+    float shadows           = calcShadows(position, lightDirection);
+    vec3  direct            = vec3(kDirectLight * shadows);
+
+    vec3  ambientColor      = vec3(0.5, 0.7, 1.0);
+    float kAmbient          = 1.2;
+    float ambientExponent   = clamp(0.5 + 0.5 * normal.y, 0.0, 1.0);
+    vec3  ambient           = kAmbient * ambientExponent * ambientColor * occlusion;
+
+    vec3  diffuseColor      = vec3(1.0, 0.85, 0.55);
+    float kDiffuse          = 1.20;
+    float diffuseExponent   = clamp(dot(lightDirection, normal), 0.0, 1.0);
+    vec3  diffuse           = kDiffuse * diffuseExponent * diffuseColor;
+    diffuse                 *= shadows;
+
+    vec3  backgroundColor    = vec3(0.25, 0.25, 0.25);
+    float kBackground        = 0.3;
+    float backgroundExponent = clamp(dot(normal, normalize(vec3(-lightDirection.x, 0.0, -lightDirection.z))), 0.0, 1.0 ) * clamp(1.0-position.y, 0.0, 1.0);
+    vec3  background         = kBackground * backgroundExponent * backgroundColor * occlusion;
+
+    vec3  domainColor        = vec3(0.5, 0.7, 1.0);
+    float kExponent          = 0.3;
+    float domainExponent     = smoothstep(-0.1, 0.1, reflection.y);
+    vec3  domain             = kExponent * domainExponent * domainColor * occlusion;
+    domain                   *= shadows;
+
+    vec3 fresnelColor        = vec3(1.0, 1.0, 1.0);
+    float kFresnel           = 0.4;
+    float fresnelExponent    = pow(clamp(1.0 + dot(normal, rayDirection), 0.0, 1.0), 2.0);
+    vec3 fresnel             = kFresnel * fresnelExponent * fresnelColor * occlusion;
+
+    vec3  specularColor     = vec3(1.0, 0.85, 0.55);
+    float kSpecular         = 1.2;
+    float specularFactor    = 160.0;
+    float specularExponent  = pow(clamp(dot(reflection, normal), 0.0, 1.0), specularFactor);
+    vec3  specular          = kSpecular * specularExponent * specularColor * diffuseExponent;
+
+    vec3 light              = diffuse + specular + ambient + domain + background + fresnel; // + direct;
+    color                   = color * light;
+    color                   = mix(color, vec3(0.8, 0.9, 1.0), 1.0 - exp(-0.002 * currentDistance * currentDistance));
+
+    return color;
+}
 
 // Calculates the material for the given position and normal.
 // Not implemented yet.
-vec3 calcMaterial(in vec3 position, in vec3 normal)
+vec3 calcMaterial(in vec3 position, in vec3 normal, in float currentDistance)
 {
-    return vec3(1.0);
+    return 0.45 + 0.3 * sin(vec3(0.05, 0.08, 0.10) * (currentDistance - 10.0));
 }
 
 // Calculates the normal vector for given position with respect to a
@@ -436,7 +476,9 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
 // as well as the lighting.
 vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
 {
-    vec3  color           = vec3(0.05, 0.08, 0.10);
+    // Set background color depending on ray's Y-direction
+    vec3  color           = vec3(0.7, 0.9, 1.0) + rayDirection.y * 0.8;
+
     vec3  res             = castRay(rayOrigin, rayDirection, 100.0, 0.00001, 100);
     float currentDistance = res.x;
     bool  showRuler       = res.y == 1.0;
@@ -449,29 +491,29 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
         vec3 position = rayOrigin + currentDistance * rayDirection;
         vec3 normal   = calcNormal(position, 0.000001);
 
-        vec3 material = vec3(0.8);
+        vec3 material = vec3(0.0);
 
         if (SHOW_DISTANCE) {
             if (showRuler) {
                 material = calcRulerMaterial(renderedScene, currentDistance);
             }
             else {
-                material = calcMaterial(position, normal);
+                material = calcMaterial(position, normal, currentDistance);
             }
         }
         else {
-            material = calcMaterial(position, normal);
+            material = calcMaterial(position, normal, currentDistance);
         }
 
-        vec3 light1Color = vec3(0.7, 0.2, 0.3);
-        vec3 light1Position = vec3(-0.6, 0.7, -0.5);
-        vec3 light1 = calcLighting(position, normal, rayDirection, material, light1Position, light1Color);
+        vec3 light1Color = vec3(0.9, 0.49, 0.83);
+        vec3 light1Position = vec3(0.6, 0.7, 1.5);
+        color = calcLighting(position, normal, rayDirection, material, light1Position, light1Color, currentDistance);
 
-        vec3 light2Color = vec3(0.3, 0.2, 0.8);
-        vec3 light2Position = vec3(1.3, 0.2, 0.8);
-        vec3 light2 = calcLighting(position, normal, rayDirection, material, light2Position, light2Color);
+        vec3 light2Color = vec3(0.43, 0.74, 0.111);
+        vec3 light2Position = vec3(10.3, 0.2, 1.8);
+        vec3 light2 = calcLighting(position, normal, rayDirection, material, light2Position, light2Color, currentDistance);
 
-        color = light1 + light2;
+        //color = light1 + light2;
     }
     color      = clamp(color, 0.0, 1.0);
 
