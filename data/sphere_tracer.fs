@@ -161,11 +161,11 @@ float scene1(in vec3 position)
     vec3  boxDimension   = vec3(0.8);
 
     // Define offsets/translations.
-    vec3 sphereOffset  = vec3(-2.0, 0.8, -2.0);
-    vec3 boxOffset     = vec3(-3.0, 0.8,  0.0);
-    vec3 box2Offset    = vec3(-2.0, 0.8, -2.0);
+    vec3 sphereOffset  = vec3(-2.0, 0.78, -2.0);
+    vec3 boxOffset     = vec3(-3.0, 0.78,  0.0);
+    vec3 box2Offset    = vec3(-2.0, 0.78, -2.0);
 
-    float plane = plane(position - vec3(-1.0));
+    float plane = plane(position - vec3(0.0));
 
     float intersection = intersect(
         box(position - boxOffset, vec3(0.8)),
