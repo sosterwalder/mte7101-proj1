@@ -10,7 +10,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_C_COMPILER "/usr/bin/gcc")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 # Use C++11
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 # Do not show deprecated warnings
 # add_definitions("-Wno-deprecated")
@@ -68,12 +68,12 @@ target_link_libraries(mte7101
     ${GLU_LIBRARY}
     ${EXTRA_LIBS}
     ${GLEW_LIBRARY}
-    # boost_system
-    # boost_filesystem
-    # boost_regex
-    libboost_system.a
-    libboost_filesystem.a
-    ${CMAKE_SOURCE_DIR}/../lib/libboost_regex.a
+    boost_system
+    boost_filesystem
+    boost_regex
+    # libboost_system.a
+    # libboost_filesystem.a
+    # libboost_regex.a
 )
 
 # Set output directory of executable
