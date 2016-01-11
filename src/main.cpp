@@ -38,6 +38,11 @@ static long timeGetTime()
     return (long)((now.tv_sec*1000) + (now.tv_usec/1000));
 }
 
+static void handleCursorMovement(GLFWwindow* window, double xPosition, double yPosition) 
+{
+    cout << "Mouse movement: " << xPosition << ":" << yPosition << endl;
+}
+
 // Main entry point for the application.
 //
 // Retrurns 0 upon successful exceution, 1 upon an error.
@@ -47,6 +52,8 @@ int main(int argc, char *argv[])
     int   returnCode    = 0;
     float resolution[2] = {1024, 768};
     long  currentTime   = 0.0;
+    double xPosition    = 0.0;
+    double yPosition    = 0.0;
 
     if (!glfwInit()) {
         auto message = "Error initializing GLFW";
@@ -95,6 +102,9 @@ int main(int argc, char *argv[])
             glUniform2fv(vec2Resolution, 1, resolution);
             int floatGlobalTime = glGetUniformLocation(programId, "globalTime");
             glUniform1f(floatGlobalTime, 0.001f * (timeGetTime() - currentTime));
+            int vec2MousePosition = glGetUniformLocation(programId, "globalMousePosition");
+            float mousePosition[2] = {(float)xPosition, (float)yPosition};
+            glUniform2fv(vec2MousePosition, 1, mousePosition);
 
             glRects(-1, -1, 1, 1);
             ShaderFactory::instance().unbindShader();
@@ -102,12 +112,27 @@ int main(int argc, char *argv[])
             glfwSwapBuffers(window);
             glfwPollEvents();
 
+            // glfwSetCursorPosCallback(window, handleCursorMovement);
+
             // Handle pressed keys
             int keyState = glfwGetKey(window, GLFW_KEY_ESCAPE);
             if (keyState == GLFW_PRESS) {
                 cout << "Escape pressed.." << endl;
                 done = true;
             }
+
+            // Handle mouse movement
+            glfwGetCursorPos(window, &xPosition, &yPosition);
+            if (xPosition < 0.0 || yPosition < 0.0) {
+                xPosition = 0.0;
+                yPosition = 0.0;
+            }
+            if (xPosition > (double)resolution[0] || yPosition > (double)resolution[1]) {
+                xPosition = 0.0;
+                yPosition = 0.0;
+            }
+
+            cout << "Mouse movement: " << xPosition << ":" << yPosition << endl;
         }
 
     }

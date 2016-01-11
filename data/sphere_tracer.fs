@@ -34,6 +34,10 @@ uniform vec2 globalResolution;
 // in time.
 uniform float globalTime;
 
+// Global uniform two dimensional vector containing the current coordinates of
+// the mouse cursor.
+uniform vec2 globalMousePosition;
+
 // Switch to turn the visualisation of the distance field on or off.
 #define SHOW_DISTANCE false
 
@@ -477,20 +481,21 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
 // Main method of the shader.
 void main()
 {
-    vec2 resolution      = globalResolution;
-    float time           = 1.0; // globalTime * 1.1;
-    float cameraAngle    = 1.0;
-    float cameraHeight   = 2.0;
-    float cameraPane     = 4.0;
-    float cameraDistance = 4.5;
-    vec3 rayOrigin      = vec3(cameraPane * sin(cameraAngle), cameraHeight, cameraDistance * cos(cameraAngle * time));
-    vec3 rayTarget      = vec3(0.0, 0.0, 0.0);
-    vec2 screenPosition = squareFrame(resolution);
-    vec3 rayDirection   = getRay(rayOrigin, rayTarget, screenPosition, 2.0);
+    vec2  mousePosition  = globalMousePosition.xy / globalResolution.xy;
+    float cameraAngle    = 0.1 * 1.0 + 12.0 * mousePosition.x;
+    float cameraHeight   = 2.0 * mousePosition.y ;
+    float cameraPane     = 3.5;
+    float cameraDistance = 3.5;
 
-    vec3 color          = render(rayOrigin, rayDirection);
-    color               = calcPostFx(color, screenPosition);
+    vec3 rayOrigin       = vec3(-1.5 + cameraPane * cos(cameraAngle), 1.0 + cameraHeight, 0.5 + cameraDistance * sin(cameraAngle));
+    vec3 rayTarget       = vec3(0.0, 1.0, 0.0);
 
-    gl_FragColor.rgb    = color;
-    gl_FragColor.a      = 1.0;
+    vec2 screenPosition  = squareFrame(globalResolution);
+    vec3 rayDirection    = getRay(rayOrigin, rayTarget, screenPosition, 2.0);
+
+    vec3 color           = render(rayOrigin, rayDirection);
+    color                = calcPostFx(color, screenPosition);
+
+    gl_FragColor.rgb     = color;
+    gl_FragColor.a       = 1.0;
 }
