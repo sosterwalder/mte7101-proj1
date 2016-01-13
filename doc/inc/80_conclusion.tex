@@ -24,120 +24,28 @@ sowie \textit{Phong-Shading} vorgestellt.
 Um die eigentliche Szene darstellen zu können,
 wurden~\textit{Oberflächen} im Allgemeinen eingeführt. Dabei wurde
 gezeigt, dass zur Modellierung von Oberflächen hauptsächlich zwei
-Techniken verwendet werden: Die parametrische und die
-implizite Modellierung bzw.\ Darstellung. Es wurden dann
-\textit{implizite Oberflächen} im Speziellen behandelt. Mittels
+Techniken verwendet werden: Die parametrische und die implizite
+Modellierung bzw.\ Darstellung. Es wurden dann \textit{implizite
+    Oberflächen} im Speziellen behandelt. Mittels
 \textit{Distanzfunktionen} wurde eine Grundlage zur Berechnung von
-Distanzen gezeigt, welche der späteren Modellierung und Darstellung dient.
-
-Ausgehend von den Distanzfunktionen wurden schliesslich
+Distanzen gezeigt, welche der späteren Modellierung und Darstellung
+dient. Ausgehend von den Distanzfunktionen wurden schliesslich
 \textit{Distanzfelder} vorgestellt, eine Art Datenstruktur basierend auf
 den Distanzfunktionen.
 
-Mit \textit{Ray Marching} und \textit{Sphere Tracing} wurden zwei Methoden
-zur Darstellung von impliziten Oberflächen aufgezeigt. Weiter wurden
-\textit{Operationen für implizite Oberflächen}, wie beispielsweise die
-Vereinigung oder Subtraktion, vorgestellt, sowie eine Menge von
+Mit \textit{Ray Marching} und \textit{Sphere Tracing} wurden zwei
+Methoden zur Darstellung von impliziten Oberflächen aufgezeigt. Weiter
+wurden \textit{Operationen für implizite Oberflächen}, wie
+beispielsweise die Vereinigung oder Subtraktion, vorgestellt sowie
 Funktionen zur Modellierung von \textit{geometrischen Primitiven}.
 
-Es wurde schliesslich gezeigt, wie die vorgestellten Grundalgen für das
+Es wurde schliesslich gezeigt, wie die vorgestellten Grundlagen für das
 Rendering von impliziten Oberflächen genutzt werden können.
 
 Im letzten Abschnitt wurde der umgesetzte \textit{Prototyp} vorgestellt,
-wobei die Parameter \textit{Distanz}, \textit{Präzision}, die
-\textit{Anzahl Schritte} und der \textit{Skalierungsfaktor für Scahtten}
-anhand einer Beispielszene verglichen wurden.
+wobei einzelne Parameter des Prototyps (\textit{Distanz},
+\textit{Präzision}, die \textit{Anzahl Schritte} und der
+\textit{Skalierungsfaktor für Schatten}) anhand einer Beispielszene
+verglichen wurden.
 
-\section{Erweiterungsmöglichkeiten}
-\label{sec:further_work}
-
-Da diese Projektarbeit einen begrenzten Zeitrahmen von einem Semester
-hat, konnten nicht alle gewünschten Thematiken bearbeitet werden.
-
-Zudem handelt es sich bei Sphere Tracing um ein relativ junges
-Verfahren, welches noch über viel Potential für Forschung und
-Entwicklung verfügt. Da es sich zudem um ein grosses Themengebiet
-handelt, kann hier auch entsprechend viel Zeit investiert werden.
-
-Einige der während der Recherche aufgekommenen, aber nicht bearbeiteten
-Thematik werden nachfolgend aufgezeigt.
-
-\subsection{Umgebungs-Beleuchtung bzw.\ -Verdeckung (Ambient Occlusion)}
-\label{subsec:further_work:ambient_occlusion}
-
-``Umgebungsverdeckung (englisch Ambient Occlusion, AO) ist eine
-Shading-Methode, die in der 3D-Computergrafik verwendet wird, um mit
-relativ kurzer Renderzeit eine realistische Verschattung von Szenen zu
-erreichen. Das Ergebnis ist zwar nicht physikalisch korrekt, reicht
-jedoch in seinem Realismus oft aus, um auf rechenintensive globale
-Beleuchtung verzichten zu
-können.''~\parencite{wikipedia_the_free_encyclopedia_umgebungsverdeckung_2015}
-
-\citeauthor{evans_fast_2006} liefert in seiner
-Arbeit~\citetitle{evans_fast_2006} interessante Ansätze, wie die
-Umgebungsverdeckung auf Distanzfelder angewendet werden kann. Dies kann
-so wohl mit relativ wenig Aufwand auch für Sphere Tracing angewendet
-werden~\parencite{evans_fast_2006}.
-
-\subsection{Kantenglättung}
-\label{subsec:further_work:antialiasing}
-
-Bei der Darstellung von Szenen mittels Sphere Tracing kommt es an Kanten
-zu harten Übergängen und Artefakten --- es tritt das so genannte
-``Aliasing'' auf.
-
-\citeauthor{hart_sphere_1994} schlägt in~\citetitle{hart_sphere_1994}
-bereits Verfahren zur Kantenglättung vor. Diese verkomplizieren jedoch
-den Rendering-Prozess und haben schwächen im Umgang mit angenäherten
-Obergrenzen von impliziten Oberflächen
-
-\citeauthor{lottes_fxaa_2009} schlägt in seiner
-Arbeit~\citetitle{lottes_fxaa_2009} eine einfache Lösung dieser
-Problematiken vor. Es handelt sich dabei um ein Einpass
-Filter, welcher typischerweise in der Nachbearbeitung zum Einsatz kommt.
-Der Filter wird auf das gerenderte Bild (bzw.\ auf einen Bildpuffer)
-angewendet. Es handelt sich dabei um ein Verfahren, welches auf der
-Detektion von Kanten basiert~\parencite{lottes_fxaa_2009}.
-
-\subsection{Realistische Materialien}
-\label{subsec:further_work:brdf}
-
-In~\autoref{subsec:ray_tracing} werden Verfahren zur Berechnung der
-physikalischen Eigenschaften von Oberflächen und damit Materialien
-aufgezeigt. Dabei handelt es sich aber nur um Näherungen unter Annahme
-der perfekten Bedingungen.
-
-Eine allgemeinere und daher realistischerer Form ist die so genannte
-BRDF:\ ``Eine bidirektionale Reflektanzverteilungsfunktion (engl.
-Bidirectional Reflectance Distribution Function, BRDF) stellt eine
-Funktion für das Reflexionsverhalten von Oberflächen eines Materials
-unter beliebigen Einfallswinkeln dar. Sie liefert für jeden auf dem
-Material auftreffenden Lichtstrahl mit gegebenem Eintrittswinkel den
-Quotienten aus Strahlungsdichte und Bestrahlungsstärke für jeden
-austretenden Lichtstrahl. BRDFs werden unter anderem in der
-realistischen 3D-Computergrafik verwendet, wo sie einen Teil der
-fundamentalen Rendergleichung darstellen und dazu dienen, Oberflächen
-möglichst realistisch und physikalisch korrekt darzustellen. Eine
-Verallgemeinerung der BRDF auf Texturen stellt die BTF (Bidirectional
-Texturing Function)
-dar.''~\parencite{wikipedia_the_free_encyclopedia_bidirektionale_2014}
-
-\citeauthor{burley_physicall-based_2012} liefert
-mit~\citetitle{burley_physicall-based_2012} eine gute Übersicht,
-wie solche Verfahren umgesetzt werden
-können~\parencite{burley_physicall-based_2012}.
-\citeauthor{bagher_accurate_2012} bietet
-in~\citetitle{bagher_accurate_2012} eine Fülle an Materialien und
-Eigenschaften~\parencite{bagher_accurate_2012}.
-
-\subsection{Optimierungsverfahren}
-\label{subsec:further_work:optimisation}
-
-Zur Beschleunigung das Sphere Tracing Verfahrens existieren diverse
-Verfahren. So stellen z.B.~\citeauthor{keinert_enhanced_2014}
-in~\citetitle{keinert_enhanced_2014} diverse Methoden zur
-Optimierung und Beschleunigung des Renderings sowie Methoden zum Finden
-von Schnittpunkten vor~\parencite{keinert_enhanced_2014}.~\citeauthor{seven_rendering_2012} stellt
-in~\citetitle{seven_rendering_2012} eine Methode vor, wie Sphere Tracing
-mittels Aussenden von Kegelförmigen (Primär-) Strahlen optimiert werden
-kann~\parencite{seven_rendering_2012}.
+\input{inc/80/further_work.tex}
