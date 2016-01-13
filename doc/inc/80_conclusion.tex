@@ -51,4 +51,93 @@ anhand einer Beispielszene verglichen wurden.
 \section{Erweiterungsmöglichkeiten}
 \label{sec:further_work}
 
-Enhanced Sphere Tracing, Cone Tracing, FXAA.\
+Da diese Projektarbeit einen begrenzten Zeitrahmen von einem Semester
+hat, konnten nicht alle gewünschten Thematiken bearbeitet werden.
+
+Zudem handelt es sich bei Sphere Tracing um ein relativ junges
+Verfahren, welches noch über viel Potential für Forschung und
+Entwicklung verfügt. Da es sich zudem um ein grosses Themengebiet
+handelt, kann hier auch entsprechend viel Zeit investiert werden.
+
+Einige der während der Recherche aufgekommenen, aber nicht bearbeiteten
+Thematik werden nachfolgend aufgezeigt.
+
+\subsection{Umgebungs-Beleuchtung bzw.\ -Verdeckung (Ambient Occlusion)}
+\label{subsec:further_work:ambient_occlusion}
+
+``Umgebungsverdeckung (englisch Ambient Occlusion, AO) ist eine
+Shading-Methode, die in der 3D-Computergrafik verwendet wird, um mit
+relativ kurzer Renderzeit eine realistische Verschattung von Szenen zu
+erreichen. Das Ergebnis ist zwar nicht physikalisch korrekt, reicht
+jedoch in seinem Realismus oft aus, um auf rechenintensive globale
+Beleuchtung verzichten zu
+können.''~\parencite{wikipedia_the_free_encyclopedia_umgebungsverdeckung_2015}
+
+\citeauthor{evans_fast_2006} liefert in seiner
+Arbeit~\citetitle{evans_fast_2006} interessante Ansätze, wie die
+Umgebungsverdeckung auf Distanzfelder angewendet werden kann. Dies kann
+so wohl mit relativ wenig Aufwand auch für Sphere Tracing angewendet
+werden.
+
+\subsection{Kantenglättung}
+\label{subsec:further_work:antialiasing}
+
+Bei der Darstellung von Szenen mittels Sphere Tracing kommt es an Kanten
+zu harten Übergängen und Artefakten --- es tritt das so genannte
+``Aliasing'' auf.
+
+\citeauthor{hart_sphere_1994} schlägt in~\citetitle{hart_sphere_1994}
+bereits Verfahren zur Kantenglättung vor. Diese verkomplizieren jedoch
+den Rendering-Prozess und haben schwächen im Umgang mit angenäherten
+Obergrenzen von impliziten Oberflächen
+
+\citeauthor{timothy_lottes_fxaa_2009} schlägt in seiner
+Arbeit~\citetitle{timothy_lottes_fxaa_2009} eine einfache Lösung dieser
+Problematiken vor. Es handelt sich dabei um ein Einpass
+Filter, welcher typischerweise in der Nachbearbeitung zum Einsatz kommt.
+Der Filter wird auf das gerenderte Bild (bzw.\ auf einen Bildpuffer)
+angewendet. Es handelt sich dabei um ein Verfahren, welches auf der
+Detektion von Kanten basiert.
+
+\subsection{Realistische Materialien}
+\label{subsec:further_work:brdf}
+
+In~\autoref{subsec:ray_tracing} werden Verfahren zur Berechnung der
+physikalischen Eigenschaften von Oberflächen und damit Materialien
+aufgezeigt. Dabei handelt es sich aber nur um Näherungen unter Annahme
+der perfekten Bedingungen.
+
+Eine allgemeinere und daher realistischerer Form ist die so genannte
+BRDF:\ ``Eine bidirektionale Reflektanzverteilungsfunktion (engl.
+Bidirectional Reflectance Distribution Function, BRDF) stellt eine
+Funktion für das Reflexionsverhalten von Oberflächen eines Materials
+unter beliebigen Einfallswinkeln dar. Sie liefert für jeden auf dem
+Material auftreffenden Lichtstrahl mit gegebenem Eintrittswinkel den
+Quotienten aus Strahlungsdichte und Bestrahlungsstärke für jeden
+austretenden Lichtstrahl. BRDFs werden unter anderem in der
+realistischen 3D-Computergrafik verwendet, wo sie einen Teil der
+fundamentalen Rendergleichung darstellen und dazu dienen, Oberflächen
+möglichst realistisch und physikalisch korrekt darzustellen. Eine
+Verallgemeinerung der BRDF auf Texturen stellt die BTF (Bidirectional
+Texturing Function)
+dar.''~\parencite{wikipedia_the_free_encyclopedia_bidirektionale_2014}
+
+\citeauthor{brent_burley_physicall-based_2012} liefert
+mit~\citetitle{brent_burley_physicall-based_2012} eine gute Übersicht,
+wie solche Verfahren umgesetzt werden können.
+\citeauthor{bagher_accurate_2012} bietet
+in~\citetitle{bagher_accurate_2012} eine Fülle an Materialien und
+Eigenschaften.
+
+\subsection{Optimierungsverfahren}
+\label{subsec:further_work:optimisation}
+
+Um das Sphere Tracing Verfahren noch zu beschleunigen, existieren
+diverse Verfahren. So stellen
+z.B.~\citeauthor{benjamin_keiner_enhanced_2014}
+in~\citetitle{benjamin_keiner_enhanced_2014} diverse Methoden zur
+Optimierung und Beschleunigung des Renderings sowie Methoden zum Finden
+von Schnittpunkten vor.~\citeauthor{seven_rendering_2012} stellt
+in~\citetitle{seven_rendering_2012} eine Methode vor, wie Sphere Tracing
+mittels Aussenden von Kegelförmigen (Primär-) Strahlen optimiert werden
+kann.

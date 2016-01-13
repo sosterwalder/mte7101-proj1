@@ -1,0 +1,72 @@
+\subsection{Primitive}
+\label{subsec:implicit_surfaces_primitives}
+
+\citeauthor{hart_sphere_1994} führt in seiner Arbeit einige
+(geometrische) Primitive auf, welche nachfolgend erläutert
+werden~\parencite[S. 540ff]{hart_sphere_1994}.
+
+\subsubsection{Ebene}
+\label{ssubsec:implicit_surfaces_primitives_plane}
+
+Die von dem Vorzeichen abhängige Distanz zu einer Ebene $P$ mit einer
+Einheitsnormalen $\bm{n}$, welche sich mit dem Punkt $\bm{n} \cdot r$
+schneidet ist wie folgt definiert:
+
+\begin{gather}
+    d(\bm{x}, P) = \bm{x} \cdot \bm{n} - r
+\end{gather}
+
+wobei $r$ die relative Positionierung der Ebene --- unter Einbezug der
+Normalen der Ebene im Verhältnis zur Einheitsnormalen $\bm{n}$ --- im
+Raum darstellt.
+
+\subsubsection{Kugel}
+\label{ssubsec:implicit_surfaces_primitives_sphere}
+
+Eine Kugel ist als eine Menge von Punkten (Locus) in fixem Abstand eines
+gegebenen Punktes. Die von dem Vorzeichen abhängige Distanz zu einer
+Kugel $S$, ausgehend vom Ursprung, ist wie folgt:
+
+\begin{gather}
+    d(\bm{x}, S) = \|\bm{x}\| - r
+\end{gather}
+
+wobei $r$ den Radius der Kugel darstellt.
+
+\subsubsection{Zylinder}
+\label{ssubsec:implicit_surfaces_primitives_cylinder}
+
+Die Distanz zu einem um die Z-Achse zentrierten Zylinder mit
+Einheitsradius wird durch Projektion auf die XY-Ebene und Messung der
+Distanz zum Einheitskreis berechnet:
+
+\begin{gather}
+    d(\bm{x}, Cyl) = \|(x, y)\| - r
+\end{gather}
+
+wobei $r$ den Radius des Zylinders und $\bm{x}$ den Punkt $(x,y,z)$ im
+Raum darstellt.
+
+\subsubsection{Kegel}
+\label{ssubsec:implicit_surfaces_primitives_cone}
+
+Die Distanz zu einem Kegel, welcher am Ursprung zentriert und entlang
+der Z-Achse orientiert ist, wird wie folgt berechnet:
+
+\begin{gather}
+    d(\bm{x}, Cone) = \|(x, y)\| \cdot \cos(\phi) - |z| \cdot \sin(\phi)
+\end{gather}
+
+wobei $\phi$ den Winkel zur Z-Achse darstellt.
+
+\subsubsection{Torus}
+\label{ssubsec:implicit_surfaces_primitives_torus}
+
+Beim Torus handelt es sich um das Produkt zweier Kreise, sowie den Abstand der Kreise:
+
+\begin{gather}
+    d(\bm{x}, T) = \|(\|(x, y)\| - R, z)\| - r
+\end{gather}
+
+wobei $R$ den äusseren Radius und $r$ den innerern Radius des Torus darstellt.
+Der Torus ist am Ursprung zentriert und dreht sich um die Z-Achse.

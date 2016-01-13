@@ -1,0 +1,53 @@
+Details der einzelnen Komponenten finden sich in der nachfolgenden Tabelle.
+
+% Sigh..
+% FYI:  Tabular and a fixed text-width of 79 sucks!
+% FYI2: set cursorcolumn with a lot of text sucks too!
+
+\begin{tabular}{llp{10cm}l}
+    \toprule
+    \textbf{Komponente} & \textbf{Version} & \textbf{Beschreibung} & \textbf{Verweise} \\
+    \midrule
+    C++        & 11      & Objektorientierte Programmiersprache
+                           &\protect\footnotemark\\
+
+    OpenGL     & 4.5     & Plattformunabhängige Programmierschnittstelle zur
+                           Entwicklung von 2D- und 3D-Computergrafikanwendungen
+                           \parencite{wikipedia_the_free_encyclopedia_opengl_2015}.
+                           &\protect\footnotemark\\
+
+    GLFW       & 3.1.2   & OpenGL-Bibliothek, welche die Erstellung und
+                           Verwaltung von Fenstern sowie OpenGL-Kontexte
+                           vereinfacht
+                           \parencite{wikipedia_the_free_encyclopedia_glfw_2015}.
+                           &\protect\footnotemark\\
+
+    GLEW       & 1.13    & OpenGL Extension Wrangler. Bibliothek zum Abfragen
+                           und Laden von OpenGL-Erweiterungen (Extensions)
+                           \parencite{wikipedia_the_free_encyclopedia_opengl_2015-1}.
+                           &\protect\footnotemark\\
+
+    CMake      & 3.3.2   & Software zur Verwaltung von Build-Prozessen von 
+                           Software
+                           &\protect\footnotemark\\
+
+    GCC        & 5.2     & GNU Compiler Collection. Compiler-System des
+                           GNU-Projektes
+                           &\protect\footnotemark\\
+
+    Boost      & 1.59.0  & Freie Bibliothek bestehend aus einer Vielzahl von
+                           Bibliotheken, die den unterschiedlichsten
+                           Aufgaben von Algorithmen auf Graphen über 
+                           Metaprogrammierung bis hin zu Speicherverwaltung
+                           dienen
+                           \parencite{wikipedia_the_free_encyclopedia_boost_2015}.
+                           &\protect\footnotemark\\
+    \bottomrule
+\end{tabular}
+\footnotetext{\url{http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=50372}}
+\footnotetext{\url{https://www.opengl.org/registry/doc/glspec45.core.pdf}}
+\footnotetext{\url{http://www.glfw.org}}
+\footnotetext{\url{http://glew.sourceforge.net}}
+\footnotetext{\url{https://www.cmake.org}}
+\footnotetext{\url{http://gcc.gnu.org}}
+\footnotetext{\url{http://www.boost.org}}
