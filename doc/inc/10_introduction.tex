@@ -1,50 +1,52 @@
 % -*- coding: UTF-8 -*-
 % vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de
 % chktex-file 27 - disable warning about missing include files
 
 \chapter{Einleitung}
 \label{chap:10_introduction}
 
-Seit dem Bestehen moderner Computer existiert auch die Computergrafik.
-Ziel der Computergrafik ist es unter Anderem den dreidimensionalen Raum
-auf eine zweidimensionale Fläche abzubilden, da die Ausgabe meist auf
-den zweidimensionalen Raum limitiert ist.
+Seit Bestehen moderner Computer existiert auch die Computergrafik.
+Eines ihrer Ziele ist die Projektion des dreidimensionalen Raumes auf
+eine zweidimensionale Fläche. In der Regel ist die Ausgabe auf einen
+zweidimensionalen Raum beschränkt.
 
-Dabei wird zwischen statischen Bildern und dynamischen Bildern
-unterschieden. Statische Bilder werden bei Bedarf dargestellt und ändern
-sich in der Regel nicht. Dynamische Bilder können sich hingegen ständig
-ändern und müssen --- bedingt durch das menschliche Auge --- mit 25
-Bildern pro Sekunde ausgegeben werden. Es bestand bereits früh das
-Bestreben eine möglichst realistische Darstellung zu erhalten. Eine
-Darstellung also, die möglichst nahe an der menschlichen Wahrnehmung
-liegt.
+Bei der Ausgabe wird zwischen statischen und dynamischen Bildern
+unterschieden. Während statische Bilder sich nicht ändern, können sich
+dynamische Bilder ständig ändern. Aus anatomischen Begebenheiten des
+menschlichen Auges muss die Bildfolge mindestens 25 Bilder pro Sekunde
+betragen.
+Das Fachgebiet ``Computergrafik'' war schon immer bestrebt eine
+möglichst realitätsnahe Darstellung zu erhalten. Eine Darstellung, die
+möglichst nahe an der menschlichen Wahrnehmung liegt.
 
-Im Laufe der Zeit entstanden verschiedene Ansätze um eine solche
-Darstellung zu erreichen. Ein Teilgebiet davon sind Beleuchtungsmodelle,
+Im Laufe der Zeit entstanden verschiedene Ansätze um eine naturgetreue
+Darstellung zu erreichen. Einer der Ansätze sind Beleuchtungsmodelle,
 welche die Beleuchtung einer Darstellung bzw.\ einer Szene berechnen.
 Dabei wird zwischen lokalen und globalen Beleuchtungsmodellen
 unterschieden.
 
-Ein globales Beleuchtungsmodell ist Ray Tracing (zu Deutsch
-Strahlenverfolgung), welches seine Urpsrünge in
-der~\citeyear{appel_techniques_1968}
-von~\citeauthor{appel_techniques_1968} vorgestellten
-Arbeit~\citetitle{appel_techniques_1968} hat
-und~\citeyear{whitted_improved_1980} in der
-Arbeit~\citetitle{whitted_improved_1980}
-von~\citeauthor{whitted_improved_1980} verbessert wurde.  Das Verfahren
-besticht durch seine Einfachheit und bietet dabei
-eine hohe Bildqualität mit perfekten Spiegelungen und Transparenzen. Mit
-entsprechenden Optimierungen ist das Verfahren auch relativ schnell.
+Ein globales Beleuchtungsmodell ist Ray Tracing (zu Deutsch etwa
+``Strahlenverfolgung''), welches seinen Ursprung in der
+von~\citeauthor{appel_techniques_1968}~\citeyear{appel_techniques_1968}
+vorgestellten Arbeit~\citetitle{appel_techniques_1968} hat.
+\citeyear{whitted_improved_1980} wurde das Verfahren
+von~\citeauthor{whitted_improved_1980}
+in~\citetitle{whitted_improved_1980} verbessert.
 
-Mit schnell ist dabei die Zeit gemeint, die benötigt wird um ein
-einzelnes Bild darzustellen. Möchte man jedoch eine Darstellung in
-Echtzeit erreichen, so war das Verfahren lange zu langsam.
+Das Verfahren besticht durch Einfachheit und bietet eine hohe
+Bildqualität mit perfekten Spiegelungen und Transparenzen. Mit
+entsprechenden Optimierungen ist das Verfahren schneller geworden, aber
+nicht ausreichend.
 
-Im Rahmen der Weiterentwicklung der Computer und vor allem durch die
-Weiterentwicklung der Grafikkarten (GPUs), ist Ray Tracing jedoch wieder
-in den Fokus der Darstellung von Szenen in Echtzeit gerückt.
+Mit ``schnell'' ist die Zeitdauer für die Darstellung eines einzelnen
+Bildes gemeint. Für eine Darstellung in Echtzeit ist auch das
+verbesserte Verfahren noch zu langsam.
+
+Dank Weiterentwicklung der Computer, vor allem der Grafikkarten (GPUs),
+ist Ray Tracing wieder in den Fokus der Darstellung von Szenen in
+Echtzeit gerückt.
 
 Diese Projektarbeit stellt ein spezielles Ray Tracing Verfahren zur
-Darstellung von Bildern in Echtzeit vor: Volume Ray Casting bzw. Sphere
-Tracing.
+Darstellung von Bildern in Echtzeit vor: \textit{Volume Ray Casting}
+bzw.~\textit{Sphere Tracing} genannt.
