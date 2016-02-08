@@ -1,3 +1,8 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \section{Umsetzung}
 \label{sec:realization}
 
@@ -81,7 +86,7 @@ vec2 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
             \textbf{Präzision: \textit{1.0}}     \\
         \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(l){3-3}
             \includegraphics[width=0.3\textwidth]{img/sphere_tracing_precision_full.pdf} \newline
-            Die Kugel ist weist keinerlei sichtbare Abstufungen auf. &
+            Die Kugel weist keinerlei sichtbare Abstufungen auf. &
             \includegraphics[width=0.3\textwidth]{img/sphere_tracing_precision_min.pdf} \newline
             Die Kugel weist am unteren linken Rand sichtbare Farbabstufungen auf. &
             \includegraphics[width=0.3\textwidth]{img/sphere_tracing_precision_pos.pdf} \newline
@@ -107,7 +112,7 @@ vec2 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
             ist bereits nicht mehr eindeutig. &
             \includegraphics[width=0.3\textwidth]{img/sphere_tracing_steps_min.pdf} \newline
             Die Szene ist als solche nicht mehr erkennbar, es erfolgt
-            keine klare Trennung zwischen den einzelnen Objekten mehr.  \\
+            keine klare Trennung zwischen den einzelnen Objekten.  \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -171,7 +176,7 @@ float box(vec3 position, vec3 dimension)
 }
 \end{lstlisting}
 
-Verwendete Parameter sind dabei jeweils die (gewünschte) Position des Objektes
+Verwendete Parameter sind jeweils die (gewünschte) Position des Objektes
 (\textit{vec3 position}) sowie der Radius bzw.\ die Dimension
 (\textit{float radius} bzw. \textit{vec3 dimension}).
 
@@ -219,9 +224,9 @@ vec3 calcLighting(vec3 normal, vec3 rayDirection) {
 \end{lstlisting}
 
 Als Parameter werden hier ein Normalvektor einer Oberfläche ($\bm{n}$)
-sowie die Richtung eines eingehenden Strahles (also die Blichrichtung
+sowie die Richtung eines eingehenden Strahles (also die Blickrichtung
 des Betrachters bzw.\ der Kamera, $\vv{V}$) benötigt.
-Wie oben ersichtlich ist, wird zuerst die Richtung der Lichtquelle definiert,
+Wie oben ersichtlich, wird zuerst die Richtung der Lichtquelle definiert,
 danach werden die einzelnen Anteile des Lichtes $I_{\text{ambient}}$,
 $I_{\text{diffuse}}$ sowie $I_{\text{sepcular}}$ berechnet.
 
@@ -248,11 +253,11 @@ vec3 calcNormal(in vec3 position, in float epsilon) {
 }
 \end{lstlisting}
 
-Verwendete Parameter sind dabei ein Punkt der Oberfläche eines Objektes
+Verwendete Parameter sind ein Punkt der Oberfläche eines Objektes
 (\textit{vec3 position}) sowie die minimale Inkrementation eines
 (Licht-) Strahles ($\varepsilon$). Wie zuvor erwähnt, sollte
-für $\varepsilon$ ein möglichst kleiner Wert gewählt werden, daher wird
-standardmässig der Wert \textit{0.1} verwendet.
+für $\varepsilon$ ein möglichst kleiner Wert gewählt werden. Daher wird
+standardmässig der Wert \textit{0.1} eingesetzt.
 
 Bei der Funktion \textit{scene} handelt es sich um eine Distanzfunktion
 $f$ gemäss~\autoref{ssubsec:distance_functions}. Diese definiert
@@ -313,9 +318,8 @@ float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 }
 \end{lstlisting}
 
-Verwendete Parameter sind dabei der Ursprung eines Strahles
-(\textit{vec3 rayOrigin}), sowie die Richtung eines Strahles
-(\textit{vec3 rayDirection}). 
+Verwendete Parameter sind der Ursprung (\textit{vec3 rayOrigin}) sowie
+die Richtung (\textit{vec3 rayDirection}) eines Strahles.
 
 \begin{table}[H]
     \centering
@@ -383,11 +387,10 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
 }
 \end{lstlisting}
 
-Die Hauptfunktion \textit{main} des Fragment-Shaders ruft schliesslich
-die Funktion zum Darstellen der Szene auf. Die zusätzlichen Methoden
-(wie z.B.~\textit{getRay} oder~\textit{squareFrame}) finden sich
-allesamt im Programmcode des Prototypen, welcher dieser Projektarbeit
-beiliegt.
+Die Hauptfunktion \textit{main} des Fragment-Shaders ruft die Funktion
+zur Darstellung der Szene auf. Alle Methoden (wie z.B.~\textit{getRay}
+oder~\textit{squareFrame}) finden sich im Programmcode des Prototypen,
+welcher dieser Projektarbeit beiliegt.
 
 \begin{lstlisting}[language=GLSL,caption={Einstiegspunkt des
         Fragment-Shaders.},

@@ -1,7 +1,12 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \section{Architektur}
 \label{sec:architecture}
 
-Die Architektur des Prototypen wurde bewusst simpel gehalten und ist
+Die Architektur des Prototypen wurde bewusst einfach gehalten und ist
 in~\autoref{fig:prototype_architecture} ersichtlich.
 
 \begin{figure}[H]
@@ -14,24 +19,26 @@ in~\autoref{fig:prototype_architecture} ersichtlich.
 \subsection{Programmablauf}
 \label{subsec:program_sequence}
 
-Wie in~\autoref{fig:prototype_architecture} ersichtlich ist, besteht die
-Applikation hauptsächlich aus der Hautpklasse \textit{main}. Diese
-initialisiert mittels GLEW OpenGL und erstellt mittels GLFW ein Fenster sowie
-einen OpenGL-Kontext. Danach wird eine Instanz der Klasse
-\textit{ShaderFactory} erstellt, welche ihrerseits alle verfügbaren GLSL-Shader
-in einem gegebenen Verzeichnis lädt. Bei diesem Prototypen kommt jedoch nur ein
-Shader zum Einsatz --- bestehend aus einem Vertex- sowie einem Fragment-Teil.
+Wie aus~\autoref{fig:prototype_architecture} ersichtlich, besteht die
+Applikation hauptsächlich aus der Hauptfunktion \textit{``Main''}. Diese
+benützt GLEW um OpenGL zu initialisieren. Mittels GLFW erstellt sie ein
+Fenster sowie einen OpenGL-Kontext. Danach wird eine Instanz der Klasse
+\textit{ShaderFactory} erstellt, welche ihrerseits alle verfügbaren
+GLSL-Shader aus einem gegebenen Verzeichnis lädt. Bei diesem Prototypen
+kommt jedoch nur ein einziger Shader zum Einsatz. Er bestehent aus einem
+\textit{Vertex}- und einem \textit{Fragment}-Teil.
 
 Die Applikation läuft danach in einer Endlosschleife, hört dabei aber
-auf Events in Form von Keyboard-Eingaben. So kann die Applikation
+auf Events in Form von Keyboard-Eingaben. Dadurch kann die Applikation
 jederzeit mit der Abbruch-Taste (ESC, Escape) beendet werden.
 
-Die hauptsächliche Idee der Applikation ist die, dass diese im Rendering-Teil einen
-Vertex- sowie einen Fragment-Shader lädt und ausführt. Dazu wird via OpenGL ein
-Rechteck über die verfügbare Fläche des Fensters ausgegeben.  Der Vertex-Shader
-adressiert schliesslich das von OpenGL gezeichnete Rechteck.  Das eigentliche
-Rendering von impliziten Oberflächen geschieht dann im Fragment-Shader. Dies
-ist in der untenstehenden Abbildung~\ref{fig:prototype_shaders} verdeutlicht.
+Die hauptsächliche Aufgabe der Applikation besteht aus dem Laden und
+Ausführen eines Vertex- sowie Fragment-Shaders im Rendering-Teil.  Dazu
+wird via OpenGL ein Rechteck über die verfügbare Fläche des Fensters
+ausgegeben.  Der Vertex-Shader adressiert schliesslich das von OpenGL
+gezeichnete Rechteck.  Das eigentliche Rendering von impliziten
+Oberflächen geschieht schliesslich im Fragment-Shader. Dies ist in der
+untenstehenden~\autoref{fig:prototype_shaders} verdeutlicht.
 
 \begin{figure}[H]
     \centering

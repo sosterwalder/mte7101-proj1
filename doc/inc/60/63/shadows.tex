@@ -1,7 +1,12 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \subsection{Schatten}
 \label{sec:rendering_implicit_surfaces_shadows}
 
-Sofern nicht anders vermerkt, basiert folgender Abschnitt
+Sofern im Text nicht anders vermerkt, basiert folgender Abschnitt
 auf~\cite[S. 7]{reiner_smi_2011}.
 
 Mittels Sphere Tracing können Schatten analog den vom Ray Tracing
@@ -27,10 +32,10 @@ Strahles ist.
 
 Der Algorithmus in~\autoref{alg:sphere_tracing_shadows} ist dem des
 Sphere Tracings (siehe~\autoref{alg:sphere_tracing}) sehr ähnlich, der
-Rückgabewert ist jedoch komplett verschieden. Der Algorithmus gibt den
-Wert 1 zurück, wenn keine Intersektion zwischen dem Schatten-Fühler und
-einer Oberfläche statt fand, nachdem die maximale Distanz erreicht
-wurde. Der Wert 0 wird zurückgegeben, wenn der Schatten-Fühler auf eine
+Rückgabewert ist jedoch völlig verschieden. Der Algorithmus gibt den
+Wert 1 zurück, wenn nach Erreichung der maximalen Distanz keine
+Intersektion zwischen dem Schatten-Fühler und einer Oberfläche statt
+fand.  Der Wert 0 wird zurückgegeben, wenn der Schatten-Fühler auf eine
 Oberfläche getroffen ist und der Punkt $\bm{x}$ einer impliziten
 Oberfläche sich daher im Schatten befindet.
 
@@ -84,14 +89,14 @@ $\text{shadow} = {d_{\text{min}} \over d}$, wobei $\text{shadow} \in (0,
 1)$. Mit wachsender Distanz $d$ wächst auch die so genannte
 Penumbra-Region.
 
-Durch Speichern der minimalen, evaluierten Distanz ist es möglich die
+Durch Speicherung der minimalen, evaluierten Distanz ist es möglich, die
 Distanz des Schatten-Fühlers zu der ihn umgebenden Geometrie zu
-untersuchen und somit die Penumbra-Region sowie weiche Schatten zu
-bestimmen. Befindet sich der Schatten-Fühler in der Nähe einer
-Oberfläche, schneidet diese aber nicht, ist die minimale Distanz
-$d_{\text{min}}$ sehr gering. Ist dies der Fall, so kann angenommen
+untersuchen. Damit werden die Penumbra-Region sowie weiche Schatten
+bestimmt. Befindet sich der Schatten-Fühler in der Nähe einer
+Oberfläche ohne diese zu scheiden, ist die minimale Distanz
+$d_{\text{min}}$ sehr gering. In diesem Fall, kann angenommen
 werden, dass sich der Ursprungspunkt $\bm{x}$ in einer Penumbra-Region
-befindet, was sich auf die Schattierung des Punktes auswirkt: Je
+befindet. Dies wiederum wirkt sich auf die Schattierung des Punktes aus: Je
 knapper der Schatten-Fühler eine Oberfläche nicht geschnitten hat, desto
 stärker wird der Punkt schattiert. Zusätzlich wird die Distanz des
 Ursprungspunktes einbezogen. Je geringer diese ist, desto stärker wird

@@ -1,8 +1,14 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \subsection{Operationen für implizite Oberflächen}
 \label{subsec:implicit_surfaces_ops}
 
-Um mit impliziten Oberflächen nicht nur einfache Objekte, wie zum Beispiel eine
-Kugel, darstellen zu können, möchte man diese auch transformieren können.
+Um mit impliziten Oberflächen nicht nur einfache Objekte wie
+beispielsweise eine Kugel darstellen zu können muss man diese auch
+transformieren können.
 
 Wie~\citeauthor{hart_sphere_1994} beschreibt, werden implizite
 Oberflächen durch die Invertierung des Raumes, in welchem sich eine
@@ -32,7 +38,7 @@ unterschieden~\parencite[S. 14]{hart_ray_1993}:
         Zum Beispiel Versatz (displacement) und Vermengung/Vermischung.
         (\textit{blend})
     \item{Domänen-Deformationen}\\
-        Zum Beispiel ``Verdrehung'' (\textit{twist}) und Biegung
+        Zum Beispiel ``Verwindung'' (\textit{twist}) und Biegung
         (\textit{bend}).
 \end{itemize}
 
@@ -62,9 +68,8 @@ Wobei $\bm{I}$ eine Isometrie und $f^{-1}(0)$ eine implizite Oberfläche ist.
 \subsubsection{Uniforme Skalierung}
 \label{ssubsec:implicit_surfaces_ops_scaling}
 
-Eine Skalierung erhält die Distanz, welche die Distanzfunktion der
-skalierten Oberfläche zurückgeben würde, \textit{nicht}.  Somit muss die
-zurückgegebene Distanz entsprechend angepasst werden.
+Eine Skalierung bewahrt keine Distanzen. Somit muss die zurückgegebene
+Distanz einer Distanzfunktion entsprechend angepasst werden.
 
 \citeauthor{hart_sphere_1994} gibt die uniforme Skalierung als
 Transformation $\bm{S(x)}$  der Form~\parencite[S. 534]{hart_sphere_1994}:
@@ -92,13 +97,13 @@ zurückgegebene Distanz mit dem Skalierungsfaktor $s$ multipliziert, was die
 eigentliche Information der Distanz erhält und die Skalierung somit isometrisch
 macht.
 
-\subsubsection{``Verdrehung'' (Twist)}
+\subsubsection{``Verwindung'' (\textit{Twist})}
 \label{ssubsec:implicit_surfaces_ops_twist}
 
-Gemäss~\citeauthor{hart_sphere_1994} werden bei der ``Verdrehung'' (Twist)
-einer impliziten Oberfläche zwei Achsen (z.B. $x$ und $y$) anhand einer
-linearen Funktion $a(\cdot)$ in Abhängigkeit der dritten Achse (z.B. $z$)
-rotiert~\parencite[S. 543]{hart_sphere_1994}:
+Gemäss~\citeauthor{hart_sphere_1994} werden bei der ``Verwindung''
+(\textit{Twist}) einer impliziten Oberfläche zwei Achsen (z.B. $x$ und
+$y$) anhand einer linearen Funktion $a(\cdot)$ in Abhängigkeit der
+dritten Achse (z.B. $z$) rotiert~\parencite[S. 543]{hart_sphere_1994}:
 
 \begin{gather}
     twist(\bm{x}) = \begin{pmatrix} 
@@ -120,22 +125,27 @@ definiert~\parencite[S. 531 bis 532]{hart_sphere_1994}:
     d(\bm{x}, A \cup B) = \min(f_{A}(\bm{x}), f_{B}(\bm{x}))
 \end{gather}
 
-wobei $\bm{x}$ den abzutastenden Punkt im Raum darstellt.
+Dabei $\bm{x}$ den abzutastenden Punkt im Raum darstellt.
 
-Wie~\citeauthor{hart_sphere_1994} schreibt, ist die Distanz zu einer Liste von
-impliziten Oberflächen die kleinste Distanz der jeweiligen Distanzfunktion.
-Somit erlaubt es die Vereinigung --- neben der eigentlichen Vereinigung von
-Objekten --- mehrere implizite Oberflächen zu kombinieren, ohne dass diese
-miteinander in Kontakt stehen müssen. So kann beispielsweise eine komplexe
-Szene modelliert werden.
+\todo[inline]{Redigieren}
+Wie~\citeauthor{hart_sphere_1994} schreibt, ist die Distanz zu einer
+Menge von Objekten die kürzeste der Distanzen zu jedem der
+zusammengesetzten Objekte.
+\todo[inline]{/Redigieren}
+
+Somit erlaubt die Vereinigung die Kombination von mehreren impliziten
+Oberflächen, ohne dass diese miteinander in Kontakt stehen. So kann
+beispielsweise eine komplexe Szene modelliert werden.
+
+\todo[inline]{Bild von Vereinigung}
 
 \subsubsection{Subtraktion}
 \label{ssubsec:implicit_surfaces_ops_subtraction}
 
-Um die Operation der Subtraktion zu definieren, wird die Distanz zum
-Komplement eines Objektes $\bm{A}$ verwendet. Dabei wird die Eigenschaft
-der Abhängigkeit von dem Vorzeichen von entsprechenden Distanzfunktionen
-genutzt~\parencite[S. 532]{hart_sphere_1994}:
+Für die Subtraktion wird die Distanz zum Komplement eines Objektes
+$\bm{A}$ verwendet. Dabei wird die Eigenschaft der Abhängigkeit vom 
+Vorzeichen der entsprechenden Distanzfunktionen genutzt~\parencite[S.
+532]{hart_sphere_1994}:
 
 \begin{gather}
     d(\bm{x}, \mathbb{R}^{3} \setminus A) = -f_{A}(\bm{x})
@@ -151,7 +161,9 @@ daher folgt~\parencite[S. 532]{hart_sphere_1994}:
                      &\geq \max(f_{A}(\bm{x}), -f_{B}(\bm{x}))
 \end{align}
 
-wobei $\bm{x}$ den abzutastenden Punkt im Raum darstellt.
+Dabei stellt $\bm{x}$ den abzutastenden Punkt im Raum dar.
+
+\todo[inline]{Bild von Subtraktion}
 
 \subsubsection{Intersektion}
 \label{ssubsec:implicit_surfaces_ops_intersection}

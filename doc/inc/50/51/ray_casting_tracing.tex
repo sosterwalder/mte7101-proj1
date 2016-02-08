@@ -1,23 +1,31 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: tw=72
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \section{Ray Casting und Ray Tracing}
 \label{sec:ray_casting_tracing}
 
-Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+Sofern im Text nicht anders vermerkt, basiert der folgende Abschnitt
 auf~\cite[Kapitel 15, S. 387ff]{hughes_computer_2013}.
 
-Um ein Bild möglichst realistisch darzustellen muss berechnet werden, wieviel
-Licht zu jedem Pixel der sichtbaren Bildfläche (also dem Betrachter)
-transportiert wird. Da Photonen die Energie des Lichtes transportieren,
-möchte man das physikalische Verhalten dieser simulieren.
+Für die realistische Darstellung eines Bildes, muss berechnet werden,
+wieviel Licht ausgehend von einer Lichtquelle zu jedem Pixel der
+sichtbaren Bildfläche (also dem Betrachter) transportiert wird. Da
+Photonen die Energie des Lichtes ($E_{\text{photon}} = h\nu$ wobei $h =
+{E \over f}$ und $\nu$ die [Licht-] Frequenz respektive die Wellenlänge
+ist) transportieren, möchte man das physikalische Verhalten dieser
+simulieren.
 
-Es ist allerdings nicht möglich \textit{alle} Photonen zu simulieren, da
-der Aufwand schlicht zu gross wäre. Daher macht es Sinn nur einige
-Photonen (exemplarisch) zu betrachten und dann eine Abschätzung des
-gesamten Lichtes vorzunehmen.
+Es ist allerdings nicht möglich~\textit{alle} Photonen einer Szene oder
+eines Bildes zu simulieren, da der Aufwand dafür schlicht zu gross wäre.
+Daher ist es sinnvoll, exemplarisch nur einige Photonen zu betrachten
+und danach eine Abschätzung des gesamten Lichtes vorzunehmen.
 
 Jede Lichtquelle emittiert Photonen (als Welle und als Teilchen) in alle
 Richtungen. Man modelliert diese als Partikel, welche anhand
-Lichtstrahlen (\textit{light rays}) auf Objekte einer
-Szene treffen.
+Lichtstrahlen (\textit{light rays}) auf Objekte einer Szene treffen.
 
 Jedes Photon hat dabei eine spezifische Wellenlänge $\lambda{}$, welche
 die Farbe definiert, sowie eine Energie respektive Frequenz $f$, welche
@@ -25,12 +33,12 @@ die Intensität der Farbe des Photons definiert.
 
 Trifft ein Photon auf ein Objekt, wird ein Teil der Energie absorbiert,
 ein Teil reflektiert und ein Teil durchdringt das Objekt (Transmission).
-Photonen treffen solange auf Objekte, bis deren gesamte Energie
-absorbiert, sie die Szene verlassen oder sie auf die sichtbare
+Photonen treffen solange auf Objekte, bis ihre gesamte Energie
+absorbiert ist, bis sie die Szene verlassen oder sie auf die sichtbare
 Bildfläche treffen und somit zum eigentlichen Bild beitragen.
 
 Bei \textit{Ray Casting} bzw. \textit{Ray Tracing} handelt es sich um
-zwei relativ einfache Verfahren um globale Beleuchtungsmodelle zu
+zwei relativ einfache Verfahrens-Strategie um globale Beleuchtungsmodelle zu
 implementieren.
 
 Die einfachste Art das oben genannte Verhalten von Licht zu modellieren

@@ -1,74 +1,90 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \subsection{Sphere Tracing}
 \label{subsec:sphere_tracing}
 
 Das von~\citeauthor{hart_sphere_1994} vorgeschlagene Sphere Tracing
 Verfahren ist ein~\hyperref[subsec:ray_tracing]{Ray Tracing} Verfahren
-für~\hyperref[subsec:implicit_surfaces]{implizite Oberflächen}. Es
-handelt sich nach wie vor um~\hyperref[subsec:ray_marching]{Ray
-    Marching}, die Distanz der Schritte zum Abtasten eines (Licht-)
-Strahles wird jedoch aufgrund
-einer~\hyperref[ssubsec:distance_functions]{Distanzfunktion} bestimmt.
+für~\hyperref[subsec:implicit_surfaces]{implizite Oberflächen}. Es ist
+ebenfalls ein~\hyperref[subsec:ray_marching]{Ray Marching} Verfahren.
+Jedoch wird die Distanz der Abtastungsschritte eines (Licht-) Strahles
+aufgrund einer~\hyperref[ssubsec:distance_functions]{Distanzfunktion}
+bestimmt.
 Das Verfahren wurde erstmalig~\citeyear{hart_ray_1989}
-in~\citetitle{hart_ray_1989} von~\citeauthor{hart_ray_1989} vorgestellt.
+in~\citetitle{hart_ray_1989} von~\citeauthor{hart_ray_1989}
+vorgestellt~\parencite{hart_ray_1989}.
 
 Ein möglicher Algorithmus, wie Sphere Tracing umgesetzt werden kann,
 findet sich in~\autoref{alg:sphere_tracing}.
 
-\citeauthor{hart_sphere_1994} verweist auf den Term \textit{``unbounding
-    volumes''}, welcher in~\citetitle{hart_ray_1989}
-von~\cite{hart_ray_1989} eingeführt wurde.  ``Unbounding volumes'' (zu
-Deutsch etwa ``negativer Hüllkörper'') wird
-von~\citeauthor{hart_ray_1989} genutzt, um das Sphere Tracing Verfahren
-zu beschreiben und darzustellen. Der Term steht im Gegensatz zu dem
-gängigen Konzept des Hüllkörpers (``bounding volumes'') --- ein Volumen,
-welches einen Körper umschliesst: Ein ``negativer Hüllkörper''
-(``unbounding volume'') umschliesst eine Fläche im Raum, welche den
-Körper \textit{nicht} beinhaltet~\parencite[S. 291]{hart_ray_1989}.
+Bei Sphere Tracing werden die Schnittpunkte eines (Licht-) Strahles
+durch eine Folge von negativen Hüllkörpern (``unbounding volumes'') ---
+bzw.\ in diesem Fall Kugeln (``unbounding spheres'') --- beschrieben.
+Davon kommt die Bezeichnung Sphere Tracing~\parencite[S.
+530]{hart_sphere_1994}.
 
-Man möchte für einen abzutastenden Punkt im Raum ein Volumen finden,
-dessen Zentrum im abzutastenden Punkt liegt. Ist der Abstand des Punktes
-zum nächsten Punkt der Oberfläche eines Objektes bekannt, kann dieser
-Abstand als Radius einer Kugel angenommen werden. Diese Kugel dient als
-negativer Hüllkörper (``unbounding Volume'') und ist \textit{garantiert
-    nicht} Teil des Objektes und schneidet dieses auch nicht (ist also
-nicht $\overset{\circ}{\bm{A}}$) --- nur der äusserste Punkt des
-Abstandes (also des Radius der Kugel) liegt genau auf der Oberfläche des
-Objektes ($\partial \bm{A}$). Der Radius solch einer Kugel wird durch
-Evaluation der Distanzfunktion eines abzutastenden Punktes im Raum
-bestimmt.
+``Unbounding volumes'' (zu Deutsch etwa ``negativer Hüllkörper'') wird
+von den Autoren~\citeauthor{hart_ray_1989} benutzt, um das Sphere
+Tracing Verfahren zu beschreiben und darzustellen. Der Term steht im
+Gegensatz zu dem gängigen Konzept des Hüllkörpers (``bounding volume'').
+Bei einem Hüllkörper wird ein Körper umschlossen. Der ``negative
+Hüllkörper'' umschliesst ein Stück des Raumes ohne dabei ein Objekt zu
+umschliessen (dass heisst ohne ein gesuchtes Objekt zu
+``berühren'')~\parencite[S. 291]{hart_ray_1989}. Die ``negativen
+Hüllkörper'' sind in~\autoref{fig:sphere_tracing_1} als Kreisflächen
+dargestellt.
 
-Gemäss~\citeauthor{hart_sphere_1994} kommt daher auch der Name Sphere Tracing: Die
-Schnittpunkte eines (Licht-) Strahles werden durch eine Folge von negativen
-Hüllkörpern (``unbounding volumes'') --- bzw.\ in diesem Fall Kugeln
-(``unbounding spheres'') --- beschrieben~\parencite[S. 530]{hart_sphere_1994}.
+Für die Berechnung eines negativen Hüllkörpers sucht man
+den Abstand eines Objektes von einem Ausgangspunkt.
+Ist die kürzeste Distanz zwischen Ausgangspunkt und
+Objekt bekannt, kann diese als Radius einer Kugel angenommen werden. 
 
-Da~\citeauthor{hart_ray_1989} die Darstellung von Fraktalen im
-dreidimensionalen Raum beschreiben, wird dort von einer Abschätzung der
-Distanz gesprochen. Dies ist dadurch bedingt, dass die Distanz für
-Fraktale nicht effizient berechnet werden kann~\parencite[S.
-291]{hart_ray_1989}. Betrachtet man jedoch die Darstellung von
-``regulären'' Objekten, wie zum Beispiel eine Kugel, kann der zur
+Objekte sind bei dem genannten Verfahren durch Distanzfunktionen
+definiert. So ist z.B. eine Kugel als Punkt im Raum minus deren Radius
+definiert (siehe~\autoref{eq:surface_immplicit_geometric}). Der
+Betrachter kann dabei auch als Punkt im Raum angenommen werden. Somit
+sind alle Distanzen bekannt (siehe auch
+Distanzfelder,~\autoref{ssubsec:distance_fields}).
+
+Eine Kugel dient als negativer Hüllkörper (``unbounding Volume''). Sie
+ist aber \textit{nicht} Teil des Objektes und schneidet dieses
+auch nicht (ist also nicht $\overset{\circ}{\bm{A}}$).\\
+Nur der äusserste Punkt des Abstandes  liegt genau
+auf der Oberfläche des Objektes ($\partial \bm{A}$). Der Radius einer
+solchen Kugel wird durch Evaluation der Distanzfunktion eines
+abzutastenden Punktes im Raum bestimmt.
+
+\citeauthor{hart_ray_1989} beschreiben in ihrer
+Arbeit~\citetitle{hart_ray_1989} die Darstellung von Fraktalen im
+dreidimensionalen Raum. Es wird von einer Abschätzung der Distanz
+gesprochen, da diese für Fraktale nicht effizient berechnet werden
+kann~\parencite[S.  291]{hart_ray_1989}.\\
+Bei ``regulären'' Objekten, wie z.B. einer Kugel, kann der zur
 Oberfläche am nächsten gelegene Punkt von einem beliebigen Punkt
 derselben Domäne exakt berechnet werden~\parencite[S.
 530]{hart_sphere_1994}. Dies ist durch die
 implizite~\autoref{eq:surface_implicit_sphere} gegeben.
 
-Gemäss~\cite[S. 291 - 292]{hart_ray_1989} verläuft die Verfolgung der
+Gemäss~\cite[S. 291 - 292]{hart_ray_1989} geschieht die Verfolgung der
 Strahlen bei Sphere Tracing wie folgt: Ein Strahl wird vom Betrachter
 (Auge bzw.  Lochkamera) durch die Bildebene zu einem Objekt geschossen.
 Dabei wird bei dem initialen Ausgangspunkt der Radius eines negativen
-Hüllkörpers in Form einer Kugel --- so wie oben beschrieben ---
-berechnet. Dies ist die Distanz, welche der Strahl in einem ersten
-Schritt effektiv zurücklegen wird. Bei jedem Schnittpunkt der Kugel mit
-dem Strahl wird dasselbe Verfahren wiederholt.\\
+Hüllkörpers in Form einer ersten Kugel berechnet, so wie oben beschrieben.
+Dies ist die Distanz, welche der Strahl in einem ersten
+Schritt effektiv zurücklegen wird. Von diesem Schnittpunkt aus wird
+erneut der Radius einer Kugel berechnet usw.
+
 Dies geschieht so lange, bis der Strahl schliesslich von einem
 Schnittpunkt des negativen Hüllkörpers aus auf die Oberfläche eines
-Objektes trifft.  Ein weiteres Kriterium für den Abbruch ist eine definierte
-maximale Distanz des Strahles. Ist diese erreicht und der Strahl
-erreicht die Oberfläche des Objektes nicht --- weil der Strahl das
-Objekt nicht schneidet oder das Objekt zu weit weg ist --- wird
-abgebrochen. Somit ist auch ersichtlich, dass Sphere Tracing nicht die
-unter~\ref{subsec:ray_marching} genannten Problematiken aufweist.
+Objektes trifft.\\
+Ein weiteres Kriterium für den Abbruch ist eine vordefinierte maximale
+Distanz des Strahles ($d_{\text{max}}$). Ist diese erreicht und der
+Strahl verfehlt die Oberfläche des Objektes, wird abgebrochen. Somit ist
+auch ersichtlich, dass Sphere Tracing nicht die genannten Problematiken
+von Ray Marching aufweist (siehe~\autoref{subsec:ray_marching}).
 
 Die folgenden Abbildungen~\ref{fig:sphere_tracing_1}
 und~\ref{fig:sphere_tracing_2} veranschaulichen das Sphere Tracing

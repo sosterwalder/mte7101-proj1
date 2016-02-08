@@ -1,3 +1,8 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \subsection{Ray Marching}
 \label{subsec:ray_marching}
 
@@ -9,7 +14,7 @@ Strahles mit fixen Abständen $\Delta \mu$ vor~\parencite[S.
     x = x_{\mu_{0}} + k \cdot \Delta x_{\mu}
 \end{gather}
 
-wobei $k = 0,1,2,\dots$ und $\mu_{0} + k \Delta \mu \leq \mu_{1}$ ist.
+Dabei ist $k = 0,1,2,\dots$ und $\mu_{0} + k \Delta \mu \leq \mu_{1}$.
 
 Auf die parametrische Darstellung eines (Licht-) Strahles,
 ~\autoref{eq:ray_param_cond}, angewendet, ergibt dies folgende Gleichung:
@@ -18,8 +23,8 @@ Auf die parametrische Darstellung eines (Licht-) Strahles,
     r(k) = r_{0} + \Delta t \cdot k \cdot r_{d}
 \end{gather}
 
-wobei $\Delta t$ die Grösse der Abstände und $k = 0,1,2,\dots$ die Nummer der
-Schritte darstellt. Wie~\citeauthor{hart_ray_1989} schreiben, bildet das Abtasten des
+Dabei stellt $\Delta t$ die Grösse der Abstände und $k = 0,1,2,\dots$ die Nummer der
+Schritte dar. Wie~\citeauthor{hart_ray_1989} schreiben, bildet das Abtasten des
 (Licht-) Strahles mit fixen Abständen die Basis für gewisse Verfahren des
 volumetrischen Renderings~\parencite[S. 291]{hart_ray_1989}.
 
@@ -51,17 +56,16 @@ def ray_march():
 \footnotetext{Algorithmus in Pseudocode
     gemäss~\cite{perlin_hypertexture_1989}[S. 259, Abschnitt 3.1]}
 
-Dabei ist jedoch zu beachten, dass der Abstand zur Abtastung eines Strahles
-$\Delta t$ so gering als möglich sein sollte um eine Menge von Punkten bzw.\ ein
-Objekt --- definiert durch implizite Oberflächen --- $A$ möglichst gut
-abschätzen zu können. Ist der gewählte Abstand zu gross gewählt, so findet ggf.
-eine Abtastung weit im Inneren des Objektes statt und somit geht Präzision
-verloren.  Es ist auch möglich dass der erste eigentliche Punkt gar nicht
+Dabei ist zu beachten, dass der Abstand der Abtastung eines Strahles
+$\Delta{t}$ so gering als möglich sein sollte um eine Menge von Punkten bzw.\ ein
+Objekt $A$ --- definiert durch implizite Oberflächen --- möglichst gut
+abschätzen zu können. Ist der Abstand zu gross gewählt, so findet ggf.
+eine Abtastung weit im Inneren des Objektes statt. Damit geht Präzision
+verloren. Es ist weiter möglich, dass der erste eigentliche Punkt gar nicht
 abgetastet wird und erst der zweite abgetastete Punkt das Objekt ``erkennt''.
 
 \begin{figure}[H]
-    \centering
-    \includegraphics{img/ray_marching_problems.pdf}
+    \includegraphics[width=0.8\textwidth]{img/ray_marching_problems.pdf}
     \caption{Illustration des Ray Marching Verfahrens und dessen
         Problematiken.\protect\footnotemark}\label{fig:ray_marching_problems}
 \end{figure}
@@ -73,21 +77,21 @@ Problematiken. Zu sehen sind vier Primärstrahlen, \textit{e},
 \textit{poly1} und \textit{poly2}.
 
 Bei den Strahlen \textit{e} und \textit{f} handelt es sich um
-``normale'' Fälle: Der Strahl \textit{e} geht komplett an den Objekten
-vorbei, das Ray Marching wird also nach erreichen der maximalen Distanz
-\textit{d\textsubscript{max}} abgebrochen, der Strahl \textit{f} trifft
-das Objekt \textit{poly1} nach 12 Schritten.
+``normale'' Fälle: Der Strahl \textit{e} verfehlt beide Objekte;
+das Ray Marching wird also nach Erreichen der maximalen Distanz
+\textit{d\textsubscript{max}} abgebrochen.\\
+Der Strahl \textit{f} trifft das Objekt \textit{poly1} nach 12
+Schritten.
 
-Bei den Strahlen \textit{g} und \textit{h} handelt es sich um
-Spezialfälle: Der Strahl \textit{g} trifft das Objekt \textit{poly1}
-nicht, obwohl der Strahl durch das Objekt hindurch geht. Dies geschieht
-aufgrund der gewählten Distanz zum Abtasten der Strahlen ($\Delta t$).
+Die Strahlen \textit{g} und \textit{h} sind Spezialfälle: Der Strahl
+\textit{g} geht durch das Objekt \textit{poly1}, erfasst dieses wegen
+des gewählten fixen Abstandes der Abtastungspunkte ($\Delta{t}$) nicht.
 
-Der Strahl \textit{h} trifft das Objekt \textit{poly2}, obwohl er
-eigentlich das Objekt \textit{poly1} treffen müsste. Das getroffene
+Der Strahl \textit{h} liefert das Objekt \textit{poly2}, obwohl er
+eigentlich das Objekt \textit{poly1} liefern müsste. Das getroffene
 Objekt \textit{poly2} dürfte so gar nicht zu sehen sein. Dieser Fehler
-tritt wiederum aufgrund der gewählten Distanz zur Abtastung der
-Strahlen ($\Delta t$) auf.
+tritt wiederum aufgrund des gewählten fixen Abstandes der Abtastpunkte
+($\Delta{t}$) auf.
 
 \citeauthor{hart_sphere_1994} weist darauf hin, dass Ray Marching durch
 den möglichst geringen Abstand zwischen den Abtastungen entsprechend

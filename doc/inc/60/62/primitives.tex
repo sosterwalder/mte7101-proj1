@@ -1,3 +1,8 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \subsection{Primitive}
 \label{subsec:implicit_surfaces_primitives}
 
@@ -8,17 +13,15 @@ werden~\parencite[S. 540ff]{hart_sphere_1994}.
 \subsubsection{Ebene}
 \label{ssubsec:implicit_surfaces_primitives_plane}
 
-Die von dem Vorzeichen abhängige Distanz zu einer Ebene $P$ mit einer
-Einheitsnormalen $\bm{n}$, welche sich mit dem Punkt $\bm{n} \cdot r$
-schneidet ist wie folgt definiert:
+Die vorzeichenabhängige Distanz zur einer Ebene $P$ mit einer
+Einheitsnormalen $\bm{n}$ und Schnittpunkt $\bm{n} \cdot r$
+wird folgend definiert:
 
 \begin{gather}
     d(\bm{x}, P) = \bm{x} \cdot \bm{n} - r
 \end{gather}
 
-wobei $r$ die relative Positionierung der Ebene --- unter Einbezug der
-Normalen der Ebene im Verhältnis zur Einheitsnormalen $\bm{n}$ --- im
-Raum darstellt.
+Dabei ist $r$ die relative Positionierung der Ebene  im Raum. 
 
 \subsubsection{Kugel}
 \label{ssubsec:implicit_surfaces_primitives_sphere}
@@ -31,21 +34,21 @@ Kugel $S$, ausgehend vom Ursprung, ist wie folgt:
     d(\bm{x}, S) = \|\bm{x}\| - r
 \end{gather}
 
-wobei $r$ den Radius der Kugel darstellt.
+Dabei stellt $r$ den Radius der Kugel dar.
 
 \subsubsection{Zylinder}
 \label{ssubsec:implicit_surfaces_primitives_cylinder}
 
 Die Distanz zu einem um die Z-Achse zentrierten Zylinder mit
-Einheitsradius wird durch Projektion auf die XY-Ebene und Messung der
-Distanz zum Einheitskreis berechnet:
+Einheitsradius wird durch Projektion auf die XY-Ebene und durch Messung
+der Distanz zum Einheitskreis berechnet:
 
 \begin{gather}
     d(\bm{x}, Cyl) = \|(x, y)\| - r
 \end{gather}
 
-wobei $r$ den Radius des Zylinders und $\bm{x}$ den Punkt $(x,y,z)$ im
-Raum darstellt.
+Dabei stellt $r$ den Radius des Zylinders und $\bm{x}$ den Punkt $(x,y,z)$ im
+Raum dar.
 
 \subsubsection{Kegel}
 \label{ssubsec:implicit_surfaces_primitives_cone}
@@ -57,7 +60,7 @@ der Z-Achse orientiert ist, wird wie folgt berechnet:
     d(\bm{x}, Cone) = \|(x, y)\| \cdot \cos(\phi) - |z| \cdot \sin(\phi)
 \end{gather}
 
-wobei $\phi$ den Winkel zur Z-Achse darstellt.
+Dabei stellt $\phi$ den Winkel zur Z-Achse dar.
 
 \subsubsection{Torus}
 \label{ssubsec:implicit_surfaces_primitives_torus}
@@ -68,5 +71,6 @@ Beim Torus handelt es sich um das Produkt zweier Kreise, sowie den Abstand der K
     d(\bm{x}, T) = \|(\|(x, y)\| - R, z)\| - r
 \end{gather}
 
-wobei $R$ den äusseren Radius und $r$ den innerern Radius des Torus darstellt.
+Dabei stellt $R$ den äusseren Radius und $r$ den innerern Radius des
+Torus dar.
 Der Torus ist am Ursprung zentriert und dreht sich um die Z-Achse.

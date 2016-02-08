@@ -1,21 +1,24 @@
 % -*- coding: UTF-8 -*-
 % vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
 % chktex-file 27 - disable warning about missing include files
 
 \section{Modelle zur Schattierung (shading models)}
 \label{sec:shading}
 
-Sofern nicht anders vermerkt, basieren die nachfolgenden Abschnitte
-auf~\cite[S. 734–739]{foley_computer_1996}, sowie~\cite{hughes_computer_2013}.
+Sofern im Text nicht anders vermerkt, basieren die nachfolgenden
+Abschnitte auf~\cite[S. 734–739]{foley_computer_1996},
+sowie~\cite{hughes_computer_2013}.
 
 Bei der Anwendung von Modellen zur Schattierung (\textit{shading
-    models}) geht es grundsätzlich darum die emittierte Intensität des
+models}) geht es grundsätzlich darum die emittierte Intensität des
 Lichtes bzw.\ die Farbe einer Oberfläche an einem bestimmten Punkt zu
-berechnen. Es wäre naheliegend dies für jeden sichtbaren Punkt der
-Oberfläche zu berechnen, dies ist jedoch häufig viel zu aufwändig. Viele
-Modelle zur Schattierung berechnen daher die Intensität des Lichtes
-bzw.\ der Farbe nur an gewissen Schlüssel-Punkten und wenden dann
-vereinfachte Modelle zur Berechnung an, um so Rechenzeit zu sparen.
+berechnen. Naheliegend wäre, dies für jeden sichtbaren Punkt der
+Oberfläche zu berechnen. Jedoch ist dies häufig meist zu aufwändig.
+Daher berechnen viele Modelle zur Schattierung die Intensität des
+Lichtes bzw.\ der Farbe nur an gewissen Schlüssel-Punkten. Und wenden
+zusätzlich vereinfachte Modelle zur Berechnung der Schattierung an.
+Dadurch wird Rechenzeit gespart, aber die Plastizität erleidet Einbussen.
 
 Als Beispiel zur Anwendung der Modelle zur Schattierung wird nachfolgend
 angenommen, dass mittels einem Beleuchtungsmodell an jedem Eckpunkt einer
@@ -36,19 +39,23 @@ berechnen, wird der Normalenvektor des Eckpunktes (\textit{vertex
     normal}) benötigt. Es handelt sich dabei um den Normalenvektor der
 Oberfläche $\bm{N}$ an der Position des Eckpunktes $\bm{V}_{1}$.
 
-Im Laufe der Zeit hat sich die Schattierung so weit entwickelt, dass
-diese praktisch ausschliesslich auf der Grafikkarte (GPU) statt findet.
-Man spricht hier vom Begriff ``Shader''. Es handelt sich dabei
-mittlerweile um eigene (Grafik-) Applikationen, deren Zweck weit über
-die reine Berechnung von Schattierungen hinausgeht.  Man unterscheidet
-dabei zwischen Shadern für geometrische Berechnungen (\textit{geometry
-    shaders} oder \textit{vertex shaders}) sowie Shader für Berechnungen
-bezüglich Pixeln  oder (Bild-) Fragmenten (\textit{pixel shaders} oder
-\textit{fragment shaders})~\parencite[Kapitel 33]{hughes_computer_2013}.
+Im Laufe der Zeit wurde die Berechnung der Schattierung so weit
+entwickelt, dass sie praktisch ausschliesslich durch Grafikkarte (GPU)
+gemacht werden kann.  Man spricht hier vom Begriff ``Shader''. Es
+handelt sich dabei mittlerweile um eigene (Grafik-) Applikationen, deren
+Zweck weit über die reine Berechnung von Schattierungen hinausgeht. Man
+unterscheidet zwischen Shadern für geometrische Berechnungen
+(\textit{geometry shaders} oder \textit{vertex shaders}) sowie Shader
+für Berechnungen bezüglich Pixeln  oder (Bild-) Fragmenten
+(\textit{pixel shaders} oder \textit{fragment
+shaders})~\parencite[Kapitel 33]{hughes_computer_2013}.
 
-Der interessierte Leser sei für weitere Details auf~\cite[Kapitel
-33]{hughes_computer_2013},~\cite{opengl_foundation_rendering_2015},
-sowie~\cite{fernando_cg_2003} verwiesen.
+Der interessierte Leser sei für weitere Details auf~\citetitle[Kapitel
+33]{hughes_computer_2013} von~\cite{hughes_computer_2013},
+auf~\citetitle{opengl_foundation_rendering_2015}
+von~\cite{opengl_foundation_rendering_2015}
+sowie~\citetitle{fernando_cg_2003} von~\cite{fernando_cg_2003}
+verwiesen.
 
 \subsection{Flat-Shading --- per vertex lighting}
 \label{subsec:flat_shading}
@@ -59,21 +66,21 @@ sowie~\cite{fernando_cg_2003} verwiesen.
 % * One color per face determined by vertex' color
 
 Bei Flat-Shading wird pro Oberfläche (Polygon) ein Eckpunkt $\bm{V}_{1}$
-als Schlüssel-Punkt für die Farbe bzw.\ die Intensität bestimmt.  Danach
-wird die Farbe des Punktes als Farbe für die gesamte Oberfläche
-angenommen~\parencite[S. 734]{foley_computer_1996}.
+als Schlüssel-Punkt für die Farbe bzw.\ die Intensität bestimmt.
+Daraufhin wird die Farbe des Punktes als Farbe für die gesamte
+Oberfläche angenommen~\parencite[S. 734]{foley_computer_1996}.
 
-Diese Annahme ist unter den folgenden Voraussetzungen gültig~\parencite[S. 734]{foley_computer_1996}:
+Diese Annahme ist nur unter den folgenden Voraussetzungen gültig~\parencite[S. 734]{foley_computer_1996}:
 \begin{enumerate}
     \item{Die zugrundeliegende Lichtquelle befindet sich unendlich weit
             entfernt, so dass der Winkel zwischen dem Normalenvektor der
             Oberfläche $\bm{n}$ und der Lichtquelle $\bm{l}$, also
             $\bm{n}\cdot{}\bm{l}$, für die gesamte Oberfläche konstant
             ist.}
-    \item{Der Betrachter sich unendlich weit entfernt von der Oberfläche
-            befindet, so dass der Winkel zwischen dem Normalenvektor der
-            Oberfläche und dem Betrachter $\bm{n}\cdot{}\bm{v}$ für die
-            gesamte Oberfläche konstant ist.}
+    \item{Der Betrachter befindet sich ebenfalls unendlich weit von der
+        Oberfläche entfernt, so dass der Winkel zwischen dem
+        Normalenvektor der Oberfläche und dem Betrachter
+        $\bm{n}\cdot{}\bm{v}$ für die gesamte Oberfläche konstant ist.}
     \item{Das Polygon ist eine effektive Repräsentation der Oberfläche
             und nicht nur eine Näherung einer runden Oberfläche.}
 \end{enumerate}
@@ -87,18 +94,19 @@ Diese Annahme ist unter den folgenden Voraussetzungen gültig~\parencite[S. 734]
 \footnotetext{Eigene Darstellung mittels Inkscape, angelehnt
     an~\cite{hughes_computer_2013}}
 
-Ist eine der ersten beiden Annahmen falsch, so muss für den Vektor der
-Lichtquelle $\bm{l}$ bzw.\ den Vektor des Betrachters $\bm{v}$ ein
-konstanter Wert berechnet werden.~\citeauthor{foley_computer_1996} gibt
-hier als Beispiele das Zentrum des Polygones oder den ersten Eckpunkt
-des Polygones an~\parencite[S. 735]{foley_computer_1996}.
+Ist eine der ersten beiden Voraussetzungen nicht gegeben, so muss für
+den Vektor der Lichtquelle $\bm{l}$ bzw.\ den Vektor des Betrachters
+$\bm{v}$ ein konstanter Wert berechnet
+werden.~\citeauthor{foley_computer_1996} gibt hier als Beispiele das
+Zentrum des Polygones oder den ersten Eckpunkt des Polygones
+an~\parencite[S. 735]{foley_computer_1996}.
 
 \subsection{Gouraud-Shading --- face interpolated lighting}
 \label{subsec:gouraud_shading}
 
 Bei Gouraud-Shading handelt es sich um ein Shading-Verfahren, welches
-die Intensität der Farbe der Eckpunkte von Oberflächen eines Meshes
-interpoliert.
+die Intensität der Farbe der Eckpunkte von Oberflächen eines
+Polygon-Netzes (\textit{Mesh}) interpoliert.
 
 \begin{figure}[H]
     \centering
@@ -110,12 +118,12 @@ interpoliert.
     an~\cite{hughes_computer_2013}}
 
 Um die Farbe eines Eckpunktes von Oberflächen zu berechnen,
-schlägt~\citeauthor{gouraud_continous_1971} in seiner
-Arbeit~\citetitle{gouraud_continous_1971}
-von~\citeyear{gouraud_continous_1971} die Berechnung des
+schlägt~\citeauthor{gouraud_continuous_1971} in seiner
+Arbeit~\citetitle{gouraud_continuous_1971}
+von~\citeyear{gouraud_continuous_1971} die Berechnung des
 Durchschnittswertes der Normalenvektoren der Oberflächen zweier
 adjazenter Liniensegmente (im 2D-Raum) bzw.\  aller adjazenter Dreiecke
-(im 3D-Raum) vor.
+(im 3D-Raum) vor~\parencite[S. 92]{gouraud_continuous_1971}.
 
 \begin{figure}[H]
     \centering
@@ -130,17 +138,17 @@ adjazenter Liniensegmente (im 2D-Raum) bzw.\  aller adjazenter Dreiecke
 
 Die Berechnung des Normalenvektors eines Eckpunktes via Durchschnittswert ist
 üblicherweise eine genügend gute Näherung an die Oberflächennormale der
-eigentlichen Oberfläche. Die Präzision hängt dabei aber klar von der
-Granularität des Modelles (Mesh) ab.
+eigentlichen Oberfläche. Die Präzision hängt dabei aber eindeutig von der
+Granularität des Modelles (\textit{Mesh}) ab.
 
 \subsection{Phong-Shading --- normal interpolated lighting}
 \label{subsec:phong_shading}
 
-Phong-Shading ist eine Verbesserung des Gouraud-Verfahrens und bietet eine
-bessere Annäherung an die Schattierung bzw. Darstellung von glatten
-Oberflächen. Das Verfahren eignet sich vor allem dann besser, wenn ein
-Beleuchtungsmodell verwendet wird, welches kleine spiegelnde Reflexionen
-bietet, wie z.B. das Phong-Beleuchtungsmodell.
+Phong-Shading ist eine Verbesserung des Gouraud-Verfahrens. Es bietet
+eine bessere Annäherung an die Schattierung bzw. Darstellung von glatten
+Oberflächen. Das Verfahren ist geeigneter für ein Beleuchtungsmodell,
+welches kleine spiegelnde Reflexionen bietet, wie z.B. das
+Phong-Beleuchtungsmodell.
 
 Bei Phong-Shading wird ein Normalenvektor linear an einer Oberfläche
 (eines Polygons) interpoliert, ausgehend von den Normalenvektoren der
@@ -166,17 +174,19 @@ jeden Pixel anstatt für jede Kante berechnet werden muss.
     \centering
     \caption{Vergleich der genannten Shading-Verfahren anhand einer
     Beispielszene\protect\footnotemark.}\label{table:shading_comparision}
-    \begin{tabular}{p{0.2\textwidth}p{0.2\textwidth}p{0.2\textwidth}p{0.2\textwidth}}
+    \begin{tabular}{p{0.5\textwidth}p{0.5\textwidth}}
         \toprule
             \textbf{Flat-Shading} &
-            \textbf{Gouraud-Shading} &
-            \textbf{Gouraud-Shading mit Phong-Beleuchtungsmodell} &
-            \textbf{Phong-Shading mit Phong-Beleuchtungsmodell} \\
-            \cmidrule(r){1-1}\cmidrule(lr){2-2}\cmidrule(lr){3-3}\cmidrule(l){4-4}
-            \includegraphics[width=0.2\textwidth]{img/flat_shading_example.pdf} \newline &
-            \includegraphics[width=0.2\textwidth]{img/gouraud_shading_example.pdf} \newline &
-            \includegraphics[width=0.2\textwidth]{img/phong_gouraud_shading_example.pdf} \newline &
-            \includegraphics[width=0.2\textwidth]{img/phong_phong_shading_example.pdf} \newline \\
+            \textbf{Gouraud-Shading} \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}
+            \includegraphics[width=0.4\textwidth]{img/flat_shading_example.pdf} \newline &
+            \includegraphics[width=0.4\textwidth]{img/gouraud_shading_example.pdf} \newline \\
+        \toprule
+            \textbf{Gouraud-Shading} \par \textbf{mit Phong-Beleuchtungsmodell} &
+            \textbf{Phong-Shading} \par \textbf{mit Phong-Beleuchtungsmodell} \\
+        \cmidrule(r){1-1}\cmidrule(lr){2-2}
+            \includegraphics[width=0.4\textwidth]{img/phong_gouraud_shading_example.pdf} \newline &
+            \includegraphics[width=0.4\textwidth]{img/phong_phong_shading_example.pdf} \newline \\
         \bottomrule
     \end{tabular}
 \end{table}

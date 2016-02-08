@@ -1,23 +1,23 @@
 % -*- coding: UTF-8 -*-
 % vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
 % chktex-file 27 - disable warning about missing include files
 
 \section{Oberflächen}
 \label{sec:surfaces}
 
-Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+Sofern im Text nicht anders vermerkt, basiert der folgende Abschnitt
 auf~\cite[S. 1ff]{menon_introduction_1996}, sowie
 auf~\cite[S. 79 bis 115]{glassner_introduction_1989}.
 
-Um mittels Computergrafiken überhaupt etwas darstellen zu können, muss
-erst einmal definiert werden, was dargestellt werden soll. Häufig
-orientiert sich die Computergrafik dabei an der realen Welt.  In der
-realen Welt haben Oberflächen von Objekten häufig keine starken
-Übergänge (Kanten) sondern sind eher glatter Natur~\parencite[S.
-471]{foley_computer_1996}.
+Für die Darstellung eines Bildes mittels Computergrafik, muss zunächst
+definiert werden, was dargestellt werden soll. Dabei orientiert sich die
+Computergrafik dabei an der realen Welt.  In dieser haben Oberflächen
+von Objekten häufig keine starken Übergänge (Kanten) sondern sind eher
+glatter Natur~\parencite[S.  471]{foley_computer_1996}.
 
-Die Darstellung von Kurven und Oberflächen führt zu zwei Fällen: Modellierung
-von bestehenden Objekten und Modellierung von Grund auf.
+Die Darstellung von Kurven und Oberflächen führt zu zwei Möglichkeiten:
+Modellierung von bestehenden Objekten und Modellierung von Grund auf.
 
 Zur Modellierung von Oberflächen werden hauptsächlich zwei Techniken verwendet:
 Parametrische Modellierung und implizite Modellierung.
@@ -33,8 +33,8 @@ Beispiel:
     \bm{p}(s, t) = (x(s, t), y(s, t), z(s, t))
 \end{gather}
 
-So kann eine Kugel mittels sphärischen Koordinaten wie
-folgt parametrisch dargestellt werden:
+So kann eine Kugel mittels sphärischen Koordinaten parametrisch
+dargestellt werden wie folgt:
 
 \begin{align}\label{eq:sphere_parametric}
     x(s, t) &= r \cdot \cos(s) \cdot \sin(t) \\
@@ -42,11 +42,11 @@ folgt parametrisch dargestellt werden:
     z(s, t) &= r \cdot \cos(t)
 \end{align}
 
-Wobei $r$ der Radius der Kugel, $s$ der Azimutwinkel $\in [0, 2\pi]$ und
-$t$ der Polarwinkel $\in [0, \pi]$ ist.
+Dabei ist $r$ der Radius der Kugel, $s$ der Azimutwinkel $\in [0, 2\pi]$ und
+$t$ der Polarwinkel $\in [0, \pi]$.
 
-Die parametrische Darstellung bringt Vorteile wie die Unabhängigkeit von
-einem Koordinatensystem oder eine effiziente Berechnung von Punkten auf
+Die parametrische Darstellung bringt Vorteile wie Unabhängigkeit von
+einem Koordinatensystem oder effiziente Berechnung von Punkten auf
 einer Oberfläche.
 
 \subsection{Implizite Darstellung von Oberflächen}
@@ -60,8 +60,8 @@ einer Funktion mit Wert 0 definiert~\parencite[S.
     f(\bm{p}) = f(x, y, z) = 0
 \end{gather}
 
-Wobei $\bm{p}$ ein Punkt $(x, y, z)$ auf der Oberfläche, welche durch die Funktion
-$f$ beschrieben wird, ist.
+Dabei ist $\bm{p}$ ein Punkt $(x, y, z)$ auf der Oberfläche, welche durch die Funktion
+$f$ beschrieben wird.
 
 Am Beispiel einer Kugel:
 
@@ -86,12 +86,12 @@ nützlich für Operationen wie Biegung, Vermischung, Schnitte
 Wie in Gleichung~\ref{eq:surface_implicit} beschrieben, ist eine implizite
 Oberfläche gemäss~\citeauthor{menon_introduction_1996} typischerweise als
 Kontur einer Funktion mit Wert 0 definiert.
-Wobei~\citeauthor{hart_ray_1993} eine implizite Oberfläche als
-Funktion $ f(\bm{x}) = \mathbb{R}^{3} \to \mathbb{R} $ definiert.  Es
-wird also jedem Punkt einer Menge $ \bm{p} \in \mathbb{R}^{3} $ ein
-skalarer Wert $ s \in \mathbb{R} $ zugewiesen. Dabei besteht die
-Oberfläche aus der Menge von Punkten $ \bm{x} \equiv (x, y, z) \in
-\mathbb{R}^{3} $~\parencite[S. 527]{hart_sphere_1994}.
+\citeauthor{hart_ray_1993} hingegen definiert eine implizite Oberfläche
+als Funktion $ f(\bm{x}) = \mathbb{R}^{3} \to \mathbb{R} $. Jedem
+Punkt einer Menge $ \bm{p} \in \mathbb{R}^{3} $ wird ein skalarer
+Wert $ s \in \mathbb{R} $ zugewiesen. Dabei besteht die Oberfläche aus
+der Menge von Punkten $ \bm{x} \equiv (x, y, z) \in \mathbb{R}^{3}
+$~\parencite[S. 527]{hart_sphere_1994}.
 
 Angenommen $ \bm{A} $ ist ein geschlossener Festkörper, welcher durch die
 Funktion $f$ beschrieben wird, dann kann gemäss~\citeauthor{hart_ray_1993} Folgendes
@@ -118,7 +118,7 @@ Dies bedeutet, dass sich ein Punkt $\bm{x}$:
         die implizite Funktion $f(\bm{x})$ \textit{positiv} ist.
 \end{itemize}
 
-Dies gilt, da es sich bei $ \bm{x} $ um eine Menge von Punkten mit topologischer
+Obige Annahmen sind gültig, da es sich bei $ \bm{x} $ um eine Menge von Punkten mit topologischer
 Struktur handelt~\parencite[S. 1]{hart_ray_1993}.
 
 Gemäss~\citeauthor{menon_introduction_1996} finden hauptsächlich drei
@@ -126,9 +126,9 @@ Methoden zur Beschreibung impliziter Oberflächen Anwendung: Algebraische
 Oberflächen, Blobby-Objekte sowie die funktionale
 Repräsentation~\parencite[S.  1]{menon_introduction_1996}.\\
 \citeauthor{hart_sphere_1994} gibt jedoch an, dass die gebräuchlichste
-Form von impliziten Oberflächen die algebraischen Oberflächen
-sind~\parencite[S. 527]{hart_sphere_1994}. Diese werden implizit durch
-polynomiale Funktionen definiert.
+Form zur Darstellung von impliziten Oberflächen die algebraischen
+Oberflächen sind~\parencite[S. 527]{hart_sphere_1994}. Diese werden
+implizit durch polynomiale Funktionen definiert.
 
 \subsubsection{Algebraische und geometrische implizite Oberflächen}
 \label{ssubsec:implicit_surfaces_algebraic_geometric}
@@ -137,21 +137,22 @@ Ein Beispiel für eine algebraische Oberfläche ist die Beschreibung der
 Einheitskugel anhand einer impliziten algebraischen Gleichung zweiten Grades:
 
 \begin{gather} \label{eq:surface_immplicit_algebraic}
+    x^{2} + y^{2} + z^{2} - r = 0\\
     x^{2} + y^{2} + z^{2} - 1 = 0
 \end{gather}
 
-Wobei es sich bei dem letzten Parameter um den Radius $r$ handelt, welcher ---
-bedingt durch die Einheitskugel --- den Wert 1 hat.
+Dabei hat Radius $r$ den Wert $1$, da es sich um die Einheitskugel
+handelt.
 
 \citeauthor{menon_introduction_1996} gibt an, dass algebraische Methoden
-Oberflächen als implizite Polynome beschreiben, so ist $F(x, y, y)$
-beispielsweise ein Polynom in $x$, $y$ und $z$~\parencite[S.
-2]{menon_introduction_1996}. Üblicherweise handelt es sich dabei um
-Polynome tiefen Grades (2, 3 oder 4)~\parencite[S.
-2]{menon_introduction_1996}. Bei den gebräuchlichsten Oberflächen
-handelt es sich um quadratisch implizite Oberflächen (vom Grad 2),
-welche häufig als ``Quadrik'' (\textit{quadrics}) bezeichnet
-werden~\parencite[S.  2]{menon_introduction_1996}.
+Oberflächen als implizite Polynome beschreiben.\\
+So ist $F(x, y, y)$ beispielsweise ein Polynom in $x$, $y$ und
+$z$~\parencite[S.  2]{menon_introduction_1996}.\\
+Üblicherweise handelt es sich dabei um Polynome tiefen Grades (2, 3 oder
+4)~\parencite[S.  2]{menon_introduction_1996}.\\
+Die gebräuchlichsten Oberflächen sind quadratisch implizite Oberflächen
+(vom Grad 2). Diese werden häufig als ``Quadrik'' (\textit{quadrics})
+bezeichnet werden~\parencite[S.  2]{menon_introduction_1996}.
 
 \citeauthor{hart_sphere_1994} gibt an, dass --- unter Nutzung einer Metrik ---
 die Einheitskugel durch die implizite Gleichung geometrisch beschrieben
@@ -238,18 +239,18 @@ gilt, dann ist $f$ eine \textit{Vorzeichen abhängige Distanzfunktion
 \subsubsection{Distanzfelder (distance fields)}
 \label{ssubsec:distance_fields}
 
-Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+Sofern im Text nicht anders vermerkt, basiert der folgende Abschnitt
 auf~\cite{jones_3d_2006}.
 
-Bei einem Distanzfeld handelt es sich um eine Repräsentation respektive eine
-Datenstruktur, bei welcher von jedem Punkt aus die geringste Distanz zu
-einem beliebigen Objekt der Domäne bekannt ist.
+Bei einem Distanzfeld handelt es sich um eine Repräsentation respektive
+um eine Datenstruktur, bei welcher von jedem Punkt aus die geringste
+Distanz zu einem beliebigen Objekt der Domäne bekannt ist.
 
 Zusätzlich zu der Distanz können aus einem Distanzfeld andere Parameter,
 wie beispielsweise die Richtung einer Oberfläche, abgeleitet werden.
 
-Handelt es sich bei einem Distanzfeld um ein Vorzeichen behaftetes
-Distanzfeld, so kann bei jedem Punkt bestimmt werden, ob sich dieser
+Handelt es sich bei einem Distanzfeld um ein mit Vorzeichen behaftetes
+Distanzfeld, so kann bei jedem Punkt bestimmt werden, ob er sich
 innerhalb, ausserhalb oder genau auf einem Objekt befindet. Dies verhält
 sich analog zu~\autoref{subsec:implicit_surfaces}.
 

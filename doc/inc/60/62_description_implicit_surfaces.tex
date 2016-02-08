@@ -1,19 +1,20 @@
 % -*- coding: UTF-8 -*-
 % vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
 % chktex-file 27 - disable warning about missing include files
 
 \section{Darstellung von impliziten Oberflächen}
 \label{sec:description_implicit_surfaces}
 
-Wie~\citeauthor{hart_sphere_1994} angibt, existieren verschiedene Möglichkeiten
-zur Darstellung (zum Rendering) von impliziten Oberflächen. So wandeln
-indirekte Methoden implizite Oberflächen in Polygon-Modelle um, was die Nutzung
-bestehender Techniken und Hardware zur Darstellung von polygonalen Modellen
-erlaubt. Obwohl die Umwandlung der impliziten Oberflächen mit gängigen Systemen
-zur Darstellung problemlos dargestellt werden kann, ist die Umwandlung jedoch nicht
-in jedem Fall gegeben und kann zu nicht zusammenhängenden Flächen oder einer
-Verminderung des Detaillierungsgrades führen~\parencite[S.
-528]{hart_sphere_1994}.
+Nach~\citeauthor{hart_sphere_1994}, existieren verschiedene
+Möglichkeiten zur Darstellung (zum Rendering) von impliziten
+Oberflächen. So wandeln indirekte Methoden implizite Oberflächen in
+Polygon-Modelle um, was die Nutzung bestehender Techniken und Hardware
+zur Darstellung von polygonalen Modellen erlaubt. Die Umwandlung in
+Polygon-Modelle ist jedoch nicht in jedem Falle gegeben. Sie kann zu
+unzusammenhängenden Flächen oder zu einer Verminderung des
+Detaillierungsgrades führen. Speicherbedarf und Zeitaufwand können zudem
+sehr gross sein~\parencite[S.  528]{hart_sphere_1994}.
 
 Eine andere Methode zur Darstellung von impliziten Oberflächen ist das
 in~\autoref{subsec:ray_tracing} vorgestellte Ray Tracing Verfahren.
@@ -25,10 +26,10 @@ Ein (Licht-) Strahl wird dabei parametrisch als
 \end{gather}
 
 beschrieben. Der Strahl startet dabei bei Punkt $r_{0}$ in Richtung des
-Einheitsvektors $r_{d}$, wobei $t$ die zurückgelegte Distanz des Strahles ist.
-Dabei ist $r(t)$ der Punkt im Raum, welchen der Strahl nach dem Zurücklegen der
-Distanz $t$ --- ausgehend von seinem Ursprung $r_{0}$ ---
-erreicht~\parencite[S. 528]{hart_sphere_1994}.
+Einheitsvektors $r_{d}$, wobei $t$ die zurückgelegte Distanz des
+Strahles ist.  Dabei ist $r(t)$ derjenige Punkt im Raum, welchen der
+Strahl nach dem Zurücklegen der Distanz $t$ --- ausgehend von seinem
+Ursprung $r_{0}$ --- erreicht~\parencite[S. 528]{hart_sphere_1994}.
 
 Um nun die Schnittpunkte eines Strahles mit einer impliziten Oberfläche
 zu finden, wird die Gleichung des Lichtstrahles $r$ (\ref{eq:ray_param})
@@ -38,7 +39,7 @@ in die Funktion einer impliziten Oberfläche $f$
 zusammengesetzte Funktion $F = f \circ r$ wobei $F : \mathbb{R} \to
 \mathbb{R}$~\parencite[S. 528]{hart_sphere_1994}.
 
-Die Lösungen dieser Gleichung sind alle Distanzen $t$, welche ein
+Die Lösungen dieser Gleichung ergibt alle Distanzen $t$, welche ein
 gegebener Strahl zurücklegt und welche die folgende Bedingung
 erfüllen~\parencite[S. 528]{hart_sphere_1994}:
 
@@ -46,23 +47,30 @@ erfüllen~\parencite[S. 528]{hart_sphere_1994}:
     F(t) = f \circ r = f(r(t)) = 0
 \end{gather}
 
-Um~\autoref{eq:ray_param_cond} zu lösen, können numerische
-Verfahren zur Suche von Nullstellen angewendet werden, wobei die Verfahren
-vom Typ der Funktion $F(t)$ abhängig sind. Bei polynomialen Funktionen
-bis zum vierten Grad existieren analytische Lösungen, für eine beliebige
-Funktion muss jedoch ein generisches, robustes Verfahren zur
-Suche von Nullstellen verwendet werden. Dies bedingt jedoch meist, dass mehr
-Informationen über die Funktion zur Verfügung stehen, was beispielsweise
-durch Ableiten dieser gelöst werden kann~\parencite[S.
-528]{hart_sphere_1994}.
+Für die Lösung der~\autoref{eq:ray_param_cond}, können numerische
+Verfahren zur Suche von Nullstellen angewendet werden. Dabei sind die
+Verfahren vom Typen der Funktion $F(t)$ abhängig. Bei polynomialen
+Funktionen bis zum vierten Grad existieren analytische Lösungen.
+Idealerweise genügt für das Finden der Nullstellen die Auswertung der
+Funktion $F$ am Punkt $t$. Dabei können jedoch Nullstellen verloren
+gehen~\parencite[S. 528]{hart_sphere_1994}.
 
-Die erwähnten Verfahren zur Suche von Nullstellen haben jedoch häufig den
-Nachteil, dass sie mehrere Schnittpunkte eines Strahles mit einer
-impliziten Oberfläche liefern. Um diese Problematik zu umgehen, wird nur
-der kleinste Wert von $t$ berücksichtigt. Die Ray Marching und Sphere
-Tracing Algorithmen gehen hier sogar noch einen Schritt weiter, in dem
-sie nur die kleinste positive Nullstelle der~\autoref{eq:ray_param_cond}
-betrachten~\parencite[S. 528]{hart_sphere_1994}.
+Für eine beliebige Funktion $F(t)$ muss daher ein generisches, robustes
+Verfahren zur Suche von Nullstellen verwendet werden. Eine solches
+Verfahren benötigt jedoch zusätzliche Informationen und geht somit über
+eine einfache Auswertung der Funktion hinaus. Die zusätzlichen
+Informationen können zumeist aus der Ableitung der Funktion gewonnen
+werden~\parencite[S. 528]{hart_sphere_1994}.
+
+Ein häufiger Nachteil der erwähnten Verfahren Nullstellen-Suche ist,
+dass sie mehrere Schnittpunkte eines Strahles mit einer impliziten
+Oberfläche liefern. Zur Umgehung dieser Problematik, wird nur der
+kleinste Wert von $t$ --- also der geringste Abstand ---
+berücksichtigt~\parencite[S. 531]{hart_sphere_1994}.
+
+Die Ray Marching und Sphere Tracing Algorithmen gehen hier sogar noch
+einen Schritt weiter. Sie betrachten nur die kleinste positive Nullstelle
+der~\autoref{eq:ray_param_cond}~\parencite[S. 531]{hart_sphere_1994}.
 
 \input{inc/60/62/ray_marching.tex}
 \input{inc/60/62/sphere_tracing.tex}

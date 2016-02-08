@@ -1,48 +1,58 @@
+% -*- coding: UTF-8 -*-
+% vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
+% chktex-file 27 - disable warning about missing include files
+
 \subsection{Globale Beleuchtungsmodelle}
 \label{subsec:global_illumination_models}
 
-Sofern nicht anders vermerkt, basiert der folgende Abschnitt
+Sofern im Text nicht anders vermerkt, basiert der folgende Abschnitt
 auf~\cite[S. 775ff]{foley_computer_1996}.
 
-Globale Beleuchtungsmodelle beschreiben die reflektierte (Licht-) Intensität
-eines Punktes aufgrund direkter Einstrahlung des Lichtes durch Lichtquellen sowie
-durch alles Licht, welches diesen Punkt nach Reflexion von bzw. Durchdringen
-der eigenen oder anderer Oberflächen erreicht.
+Globale Beleuchtungsmodelle beschreiben die (Licht-) Intensität eines
+Punktes. Die Intensität setzt sich aus direkter und indirekter
+Einstrahlung des Lichtes zusammen.
 
-Bei globalen Beleuchtungsmodellen unterscheidet man zwischen
-Blickwinkel abhängigen Algorithmen, wie etwa Ray Tracing, und zwischen
-Blickwinkel unabhängigen Algorithmen, wie etwa Photon Mapping.
+Direktes Licht kommt unbeeinflusst aus einer Lichtquelle direkt zum
+Betrachter bzw.~zu einem Bildpunkt. Indirektes Licht entsteht durch
+Diffusion, Reflexion und Transmission, je nach Beschaffenheit der Körper
+sowie deren Oberfläche.
 
-Blickwinkel abhängige Algorithmen verwenden eine Diskretisierung der sichtbaren
-Fläche bzw.\ Bildfläche um zu entscheiden, an welchen Punkten, in Blickrichtung
-des Betrachters, die Berechnung der Beleuchtung durchgeführt werden soll.
+Bei globalen Beleuchtungsmodellen unterscheidet man zwischen Blickwinkel
+abhängigen, z.B.~Ray Tracing, und zwischen Blickwinkel
+unabhängigen Algorithmen, z.B.~Photon Mapping.
 
-Blickwinkel unabhängige Algorithmen hingegen, nehmen eine
-Diskretisierung vor und verarbeiten die Umgebung um genügend
-Informationen für die Berechnung der Beleuchtung zu haben.  Dies erlaubt
-ihnen die Berechnung der Beleuchtung an einem beliebigen Punkt aus einer
-beliebigen Blickrichtung.
+Blickwinkel abhängige Algorithmen verwenden eine Diskretisierung der
+sichtbaren Fläche bzw.\ Bildfläche (Zerlegung in kleine Abschnitte, also
+Bildpunkte). Dadurch kann entscheiden werden, von welchen Punkten, in
+Blickrichtung des Betrachters gesehen, die Berechnung der Beleuchtung
+durchgeführt werden soll.
 
-Beide Arten von Algorithmen haben Vor- und Nachteile. So sind
-Blickwinkel abhängige Algorithmen gut geeignet um Spiegelungen,
-basierend auf der Blickrichtung des Betrachters, zu berechnen, eignen
-sich aber weniger um gleichbleibende diffuse Anteile über weite Flächen
-eines Bildes zu berechnen.  Bei Blickwinkel abhängigen Algorithmen
-verhält es sich genau umgekehrt.
+Blickwinkel unabhängige Algorithmen hingegen diskretisieren die
+Umgebung. Sie stellen so genügend Informationen zur Verfügung, um die
+Berechnung der Beleuchtung an einem beliebigen Punkt unabhängig von der
+Blickrichtung des Betrachters zu berechnen.
+
+Beide Arten von Algorithmen haben Vor- und Nachteile.  Blickwinkel
+abhängige Algorithmen eignen sich gut für die Berechnung von
+Spiegelungen, welche auf der Blickrichtung des Betrachters basieren.
+Sie eignen sich aber weniger um gleichbleibende diffuse Anteile über
+weite Flächen eines Bildes zu berechnen.\\
+Bei Blickwinkel abhängigen Algorithmen ist genau das Gegenteil der Fall.
 
 \subsubsection{Renderinggleichung}
 \label{ssubsec:rendering_equation}
 
-Die unter~\ref{subsec:global_illumination_models} genannten Verfahren versuchen
-auszudrücken, wie sich Licht von einem Punkt im Raum zu einem anderen bewegt.
-Dabei beschreiben sie die Intensität des Lichtes, ausgehend vom ersten Punkt
-zum zweiten Punkt. Zusätzlich wird die Intensität des Lichtes, ausgehend von
-allen anderen Punkten, welche den ersten Punkt erreichen, und zum zweiten Punkt
-emittiert werden, beschrieben.
+Die unter~\ref{subsec:global_illumination_models} genannten Verfahren
+berechnen, wie sich Licht von einem Punkt $A$ zu einem anderen Punkt $B$
+im Raum bewegt. Dabei beschreiben sie die Intensität des Lichtes von $A$
+nach $B$. Zusätzlich werden alle Intensitäten von beliebigen Punkten im
+Raum, die den Punkt $A$ erreichen und zu Punkt $B$ reflektiert werden,
+mit einberechnet.
 
-James (Jim) Kajiya stellte 1986 die so genannte Renderinggleichung auf,
-welche genau dieses Verhalten
-beschreibt~\parencite{kajiya_rendering_1986}~\parencite{foley_computer_1996}:
+James Kajiya stellte 1986 die so genannte Renderinggleichung auf, welche
+dieses Verhalten
+beschreibt~\parencites{kajiya_rendering_1986}{foley_computer_1996}:
 
 \begin{equation}
     I(x, x') = g(x, x')[\varepsilon(x, x') + \int\limits_{S}\rho(x, x', x'')I(x', x'')dx'']
@@ -52,9 +62,9 @@ Wobei gilt:
 
 \begin{itemize}
     \item $x, x' \text{und } x''$\\
-        Punkte in der Umgebung.
+        Punkte im Raum.
     \item $ I(x, x')$\\
-        Intensität des Lichtes von Punkt $x'$ nach Punkt $x$.
+        Intensität des Lichtes, die von Punkt $x'$ zu Punkt $x$ gelangt.
     \item $ g(x, x')$\\
         Ein auf die Geometrie bezogener Term\\
         \hspace*{4mm} $0$:     \hspace*{6mm} $x$ und $x'$ verdecken
@@ -62,7 +72,7 @@ Wobei gilt:
         \hspace*{4mm} $1/r^2$: \hspace*{1mm} $x$ und $x'$ sehen sich,
                                wobei $r$ die Distanz zwischen $x$ und
                                $x'$ ist.
-    \item $\epsilon(x, x')$\\
+    \item $\varepsilon(x, x')$\\
         Intensität des Lichtes, welches von $x'$ nach $x$ emittiert
         wird.
     \item $\rho(x, x', x'')$\\

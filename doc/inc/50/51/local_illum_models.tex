@@ -1,18 +1,18 @@
 \subsection{Lokale Beleuchtungsmodelle}
 \label{subsec:local_illumination_models}
 
-Lokale Beleuchtungsmodelle aggregieren Daten von benachbarten, eben
-lokalen, Oberflächen. Diese Modelle sind in deren Umfang allerdings
+Lokale Beleuchtungsmodelle aggregieren Daten lokal, also von
+benachbarten Oberflächen. Diese Modelle sind in ihrem Umfang allerdings
 limitiert, da sie normalerweise nur Lichtquellen sowie die Orientierung
 einer Oberfläche einbeziehen. Sie ignorieren dabei aber die globale
-Umgebung, in welcher sich eine Oberfläche befindet.  Dies ist dadurch
-bedingt, dass die traditionell verwendeten Algorithmen zur Berechnung
-der Sichtbarkeit von Oberflächen über keine globalen Daten verfügen.\\
+Umgebung, in welcher sich eine Oberfläche befindet.  Die traditionell
+verwendeten Algorithmen zur Berechnung der Sichtbarkeit von Oberflächen
+verfügen über keine globalen Daten.\\
 Das bekannteste lokale Beleuchtungsmodell ist das
 \textit{Phong-Beleuchtungsmodell}, welches 1975 von Phong Bui-Tong
 entwickelt wurde\parencite{phong_illumination_1975}. Es beschreibt
-nicht-perfekte Reflektoren wie zum Beispiel einen
-Apfel~\parencite[Kapitel 16, Seite 729]{foley_computer_1996}.
+nicht-perfekte Reflektoren wie sie zum Beispiel ein
+Apfel darstellt~\parencite[Kapitel 16, Seite 729]{foley_computer_1996}.
 
 \begin{figure}[H]
     \centering
@@ -36,6 +36,11 @@ Oder mathematisch ausgedrückt:
                 k_{d} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot (\vv{S_{i}} \cdot \vv{N}) +
                 k_{s} \displaystyle\sum_{i=0}^{n - 1} L_{i} \cdot {(\vv{R_{i}} \cdot \vv{V})}^{k_{e}}
 \end{gather}
+
+In der obigen Gleichung~\ref{eq:phong_equation} wurde der emissive Term
+$I_{\text{emissive}}$ bewusst weggelassen, da er meistens für
+Spezialeffekte statt für die Beleuchtung ``normaler'' Objekte benutzt
+wird~\parencite{hughes_computer_2013}.
 
 Wobei gilt:
 
@@ -69,7 +74,7 @@ Wobei gilt:
         Wellenlänge bzw. Frequenz.
 
     \item $\vv{R_{i}} = \vv{S_{i}} + 2(\vv{S_{i}} \cdot \vv{N})\vv{N}$\\
-        Richtung, in welcher das Licht der $i$-ten Lichtquelle
+        Richtung, in welche das Licht der $i$-ten Lichtquelle
         reflektiert wird, normalisierter Einheitsvektor.
 
     \item $\vv{V}$\\
@@ -91,7 +96,3 @@ Der reflektive Vektor $\vv{R_{i}}$ ist gegeben durch
 Damit die Energieerhaltung gewährleistet ist, muss weiter $k_{d} + k_{s}
 < 1$ gelten. Der Winkel zwischen $\vv{R}$ und $\vv{V}$ wird mittels
 $\cos(\alpha)$ ermittelt.
-
-In Gleichung~\ref{eq:phong_equation} wurde der emissive Term bewusst
-weggelassen.  Dieser wird meist eher für Spezialeffekte statt für die
-Beleuchtung ``normaler'' Objekte benutzt~\parencite{hughes_computer_2013}.

@@ -1,19 +1,20 @@
 % -*- coding: UTF-8 -*-
 % vim: autoindent expandtab tabstop=4 sw=4 sts=4 filetype=tex
+% vim: spelllang=de spell
 % chktex-file 27 - disable warning about missing include files
 
 \chapter{Prototyp}
 \label{chap:prototype}
 
-Um das Sphere Tracing Verfahren nicht nur theoretisch zu behandeln
-wurde im Rahmen dieser Projektarbeit ein Prototyp erstellt.  Dieser
+Um das Sphere Tracing Verfahren nicht nur theoretisch zu betrachten,
+wurde im Rahmen dieser Projektarbeit ein Prototyp erstellt. Dieser
 wurde in C++ Version 11 und OpenGL umgesetzt und basiert auf der
 GLFW-Bibliothek. Um allfällige OpenGL-Erweiterungen (Extensions) nicht
 selbst verwalten zu müssen, wird GLEW eingesetzt. Als Buildsystem kommt
 CMake, als Compiler GCC zum Einsatz. Um automatisch Shader erkennen und
-laden können (Dateien mit Dateiendung~.vs bzw.~.fs) werden die
+laden zu können (Dateien mit Dateiendung~.vs bzw.~.fs), werden die
 Bibliotheken ``system'',  ``filesystem'' sowie ``regex'' der
-Boost-Bibliothek eingesetzt.
+Boost-Bibliothek benützt.
 
 \input{inc/70/components.tex}
 \input{inc/70/architecture.tex}
