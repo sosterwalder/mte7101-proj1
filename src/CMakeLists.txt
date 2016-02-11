@@ -36,10 +36,17 @@ if(GLEW_FOUND)
 endif(GLEW_FOUND)
 
 # Use package GLFW3
-pkg_search_module(GLFW REQUIRED glfw3)
-if(GLFW_FOUND)
-    message(STATUS "Found GLFW: ${GLFW_LIBRARIES}")
-endif(GLFW_FOUND)
+if(APPLE)
+    find_package(GLFW3 REQUIRED)
+    if(GLFW3_FOUND)
+        message(STATUS "Found GLFW: ${GLFW3_LIBRARY}")
+    endif(GLFW3_FOUND)
+else
+    pkg_search_module(GLFW REQUIRED glfw3)
+    if(GLFW_FOUND)
+        message(STATUS "Found GLFW: ${GLFW3_LIBRARY}")
+    endif(GLFW_FOUND)
+endif()
 
 # Specify additional include directories
 include_directories(${GLFW_INCLUDE_DIRS})
@@ -64,16 +71,15 @@ add_executable(mte7101 ${SOURCES})
 
 # Link needed libraries
 target_link_libraries(mte7101
-    ${GLFW_STATIC_LIBRARIES}
+    ${OPENGL_LIBRARY}
+    ${GLFW3_LIBRARY}
     ${GLU_LIBRARY}
     ${EXTRA_LIBS}
     ${GLEW_LIBRARY}
+    ${EXTRA_LIBS}
     boost_system
     boost_filesystem
     boost_regex
-    # libboost_system.a
-    # libboost_filesystem.a
-    # libboost_regex.a
 )
 
 # Set output directory of executable
