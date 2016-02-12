@@ -41,6 +41,8 @@ uniform vec2 globalMousePosition;
 // Switch to turn the visualisation of the distance field on or off.
 #define SHOW_DISTANCE false
 
+#define INFINITY 1.0 / 0.0
+
 
 // Returns a hash value based on the given number.
 float hash(float n) {
@@ -150,6 +152,16 @@ float intersect(float a, float b)
     return (a > b) ? a : b;
 }
 
+// Repeat space along one axis. Use like this to repeat along the x axis:
+// <float cell = pMod1(p.x,5);> - using the return value is optional.
+float pMod1(inout float p, float size) {
+    float halfsize = size*0.5;
+    float c = floor((p + halfsize)/size);
+    p = mod(p + halfsize, size) - halfsize;
+
+    return c;
+}
+
 // Defines the scene which will be drawn at given position.
 float scene1(in vec3 position)
 {
@@ -166,6 +178,14 @@ float scene1(in vec3 position)
     vec3 box2Offset    = vec3(-2.0, 0.78, -2.0);
 
     float plane = plane(position - vec3(0.0));
+
+    /*
+    float cell = pMod1(position.z, 3.0);
+    float sphere = sphere(position - boxOffset, 1.1);
+    float box = box(position - box2Offset, vec3(0.8));
+
+    result = merge(plane, sphere);
+    */
 
     float intersection = intersect(
         box(position - boxOffset, vec3(0.8)),
@@ -190,6 +210,7 @@ float scene1(in vec3 position)
             plane,
             sphere(position - sphereOffset, sphereRadius)
         );
+        result = pMod1(position.x, 5.0);
         result = merge(
             result,
             intersection
@@ -240,7 +261,7 @@ float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
     float shadow            = 1.0;
     float minimalDistance   = 0.02;
     float maximalDistance   = 2.5;
-    float convergePrecision = 0.000001;
+    float convergePrecision = 0.0001;
     float kShadow           = 8.0;
     float currentDistance   = minimalDistance;
 
@@ -445,7 +466,7 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
 
     for(int i = 0; i < steps; i++) {
         if (abs(latest) < precision || currentDistance > maxDistance) {
-            continue;
+            break;
         }
 
         ray = rayOrigin + rayDirection * currentDistance;
@@ -471,6 +492,63 @@ vec3 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
     return vec3(result, showRuler, renderedScene);
 }
 
+vec3 castRayEnhanced(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in float precision, in int steps)
+{
+    bool forceHit = false;
+    float omega = 1.2;
+    float t = precision;
+    float candidateT = precision;
+    float candidateError = INFINITY;
+    float previousRadius = 0.0;
+    float stepSize = 0.0;
+    vec3 distanceToScene = vec3(-1.0);
+
+    vec3 distanceAtOrigin = combineScenes(rayOrigin);
+    float functionSign = distanceAtOrigin.x < 0.0 ? -1.0 : +1.0;
+
+    for (int i = 0; i < steps; ++i) {
+        vec3 ray = rayOrigin + rayDirection * t;
+        distanceToScene = combineScenes(ray);
+        float signedRadius = functionSign * distanceToScene.x;
+        float radius = abs(signedRadius);
+
+        bool sorFail = omega > 1.0 && (radius + previousRadius) < stepSize;
+
+        if (sorFail) {
+            stepSize -= omega * stepSize;
+            omega = 1.0;
+        }
+        else {
+            stepSize = signedRadius * omega;
+        }
+
+        previousRadius = radius;
+        float error = radius / t;
+
+        if (!sorFail && error < candidateError) {
+            candidateT = t;
+            candidateError = error;
+        }
+
+        if (!sorFail && error < precision || t > maxDistance) {
+            break;
+        }
+
+        t += stepSize;
+    }
+
+    float showRuler     = distanceToScene.y;
+    float renderedScene = distanceToScene.z;
+
+    if ((t > maxDistance || candidateError > precision) && !forceHit) {
+        return vec3(INFINITY, showRuler, renderedScene);
+    }
+
+    return vec3(candidateT, showRuler, renderedScene);
+
+
+}
+
 // Performs rendering of a scene beginning at given origin in given ray
 // direction. This invokes calculating the normal vector, the material
 // as well as the lighting.
@@ -479,7 +557,8 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
     // Set background color depending on ray's Y-direction
     vec3  color           = vec3(0.7, 0.9, 1.0) + rayDirection.y * 0.8;
 
-    vec3  res             = castRay(rayOrigin, rayDirection, 100.0, 0.00001, 100);
+    vec3  res             = castRay(rayOrigin, rayDirection, 5000.0, 0.0, 500);
+    // vec3  res             = castRayEnhanced(rayOrigin, rayDirection, 50.0, 0.01, 500);
     float currentDistance = res.x;
     bool  showRuler       = res.y == 1.0;
     float renderedScene   = res.z;
@@ -489,7 +568,7 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
     // the minimal distance (epsilon-factor).
     if (currentDistance > minimalDistance) {
         vec3 position = rayOrigin + currentDistance * rayDirection;
-        vec3 normal   = calcNormal(position, 0.000001);
+        vec3 normal   = calcNormal(position, 0.01);
 
         vec3 material = vec3(0.0);
 
