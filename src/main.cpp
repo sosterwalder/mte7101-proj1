@@ -51,9 +51,9 @@ int main(int argc, char *argv[])
     bool  done          = false;
     int   returnCode    = 0;
     float resolution[2] = {1024, 768};
-    long  currentTime   = 0.0;
     double xPosition    = 0.0;
     double yPosition    = 0.0;
+    int    numFrames    = 0;
 
     if (!glfwInit()) {
         auto message = "Error initializing GLFW";
@@ -85,9 +85,31 @@ int main(int argc, char *argv[])
         cout << "Supported OpenGL version: " << version << endl;
 
         ShaderFactory::instance().loadShaders();
-        currentTime = timeGetTime();
+        double startTime = glfwGetTime();
+        double lastTime  = glfwGetTime();
  
         while (!glfwWindowShouldClose(window) && !done) {
+            double currentTime = glfwGetTime();
+            numFrames++;
+            // printf("%f currentTime\n", currentTime);
+            // printf("%f lastTime\n", lastTime);
+            // printf("%f delta\n", (currentTime - lastTime));
+            // printf("%d frames rendererd\n", numFrames);
+
+            // If last output was more than 1 second ago
+            // output miliseconds per frame and reset
+            if (currentTime - lastTime >= 1.0) {
+                double msPerFrame = 1000.0 / (double)numFrames;
+
+                stringstream strOut;
+                strOut << "MTE7101 - project 1 (" << numFrames << " frames, " << msPerFrame << " ms/frame)";
+
+                glfwSetWindowTitle(window, strOut.str().c_str());
+
+                numFrames = 0;
+                lastTime += 1.0;
+             }
+
             Shader& shader = ShaderFactory::instance().getShader("sphere_tracer");
             shader.bind();
 
@@ -101,7 +123,7 @@ int main(int argc, char *argv[])
             int vec2Resolution = glGetUniformLocation(programId, "globalResolution");
             glUniform2fv(vec2Resolution, 1, resolution);
             int floatGlobalTime = glGetUniformLocation(programId, "globalTime");
-            glUniform1f(floatGlobalTime, 0.001f * (timeGetTime() - currentTime));
+            glUniform1f(floatGlobalTime, 0.001f * (currentTime - startTime));
             int vec2MousePosition = glGetUniformLocation(programId, "globalMousePosition");
             float mousePosition[2] = {(float)xPosition, (float)yPosition};
             glUniform2fv(vec2MousePosition, 1, mousePosition);
@@ -131,8 +153,6 @@ int main(int argc, char *argv[])
                 xPosition = 0.0;
                 yPosition = 0.0;
             }
-
-            cout << "Mouse movement: " << xPosition << ":" << yPosition << endl;
         }
 
     }
