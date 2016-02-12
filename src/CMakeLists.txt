@@ -41,10 +41,11 @@ if(APPLE)
     if(GLFW3_FOUND)
         message(STATUS "Found GLFW: ${GLFW3_LIBRARY}")
     endif(GLFW3_FOUND)
-else
+else()
     pkg_search_module(GLFW REQUIRED glfw3)
     if(GLFW_FOUND)
-        message(STATUS "Found GLFW: ${GLFW3_LIBRARY}")
+        set(GLFW3_LIBRARY ${GLFW_LIBRARIES})
+        message(STATUS "Found GLFW (unix): ${GLFW3_LIBRARY}")
     endif(GLFW_FOUND)
 endif()
 
