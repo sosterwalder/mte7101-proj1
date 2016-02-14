@@ -19,7 +19,7 @@ Presentation and discussion of the current state of the work (SO)
   * Style is OK (CF)
   * When referring to authors, use their name and not only the abbreviation
     provided by the citation (CF)
-    (TODO)
+    (DONE)
 
 * Introduction
   * May resp.\ will most likely need to be rewritten at end of the

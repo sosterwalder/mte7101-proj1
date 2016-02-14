@@ -6,13 +6,13 @@
 \section{Architektur}
 \label{sec:architecture}
 
-Die Architektur des Prototypen wurde bewusst einfach gehalten und ist
+Die Architektur des~\hyperref[chap:prototype]{Prototypen} wurde bewusst einfach gehalten und ist
 in~\autoref{fig:prototype_architecture} ersichtlich.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{img/prototype_class_diagram.pdf}
-    \caption{Architektur des Prototypen\protect\footnotemark}\label{fig:prototype_architecture}
+    \caption{Architektur des~\hyperref[chap:prototype]{Prototypen}\protect\footnotemark}\label{fig:prototype_architecture}
 \end{figure}
 \footnotetext{Eigene Darstellung mittels yEd.}
 
@@ -24,7 +24,7 @@ Applikation hauptsächlich aus der Hauptfunktion \textit{``Main''}. Diese
 benützt GLEW um OpenGL zu initialisieren. Mittels GLFW erstellt sie ein
 Fenster sowie einen OpenGL-Kontext. Danach wird eine Instanz der Klasse
 \textit{ShaderFactory} erstellt, welche ihrerseits alle verfügbaren
-GLSL-Shader aus einem gegebenen Verzeichnis lädt. Bei diesem Prototypen
+GLSL-Shader aus einem gegebenen Verzeichnis lädt. Bei diesem~\hyperref[chap:prototype]{Prototypen}
 kommt jedoch nur ein einziger Shader zum Einsatz. Er bestehent aus einem
 \textit{Vertex}- und einem \textit{Fragment}-Teil.
 

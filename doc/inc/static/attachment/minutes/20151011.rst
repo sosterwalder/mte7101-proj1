@@ -86,7 +86,7 @@ Citations
 ~~~~~~~~~~~
 
 * Change the style of citations, which one can be decided later on (CF)
-  (TODO)
+  (DONE, ieee-style is used, SO)
 
 Typography
 ~~~~~~~~~~

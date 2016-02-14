@@ -19,16 +19,16 @@ Punkt einer Oberfläche. Die Folge wird so lange fortgesetzt, bis eine
 Intersektion stattfindet oder bis eine definierte maximale Distanz
 erreicht wurde.
 
-Schatten-Fühler werden parametrisch als
+Schatten-Fühler werden parametrisch wie folgt beschrieben:
 
 \begin{gather}
     r_{s}(t) = \bm{x} + t \cdot r_{l}
 \end{gather}
 
-beschrieben. Wobei $r_{s}(t)$ der Ursprung des Schatten-Fühlers am Punkt $\bm{x}$
+Dabei ist $r_{s}(t)$ der Ursprung des Schatten-Fühlers am Punkt $\bm{x}$
 einer impliziten Oberfläche, $r_{l}$ die Richtung des Schatten-Fühlers
 in Form eines Einheitsvektors und $t$ die zurückgelegte Distanz des
-Strahles ist.
+Strahles.
 
 Der Algorithmus in~\autoref{alg:sphere_tracing_shadows} ist dem des
 Sphere Tracings (siehe~\autoref{alg:sphere_tracing}) sehr ähnlich, der
@@ -39,6 +39,7 @@ fand.  Der Wert 0 wird zurückgegeben, wenn der Schatten-Fühler auf eine
 Oberfläche getroffen ist und der Punkt $\bm{x}$ einer impliziten
 Oberfläche sich daher im Schatten befindet.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python,caption={Algorithmus zur Berechnung
         von Schatten.},label={alg:sphere_tracing_shadows},captionpos=b,emph={calc_shadows}]
 def calc_shadows():
@@ -59,13 +60,17 @@ def calc_shadows():
             # precision of the convergence, so return zero (0) as we
             # have an intersection and therefore shadows
             return 0
+        # end if
 
         shadow_ray_distance = shadow_ray_distance + estimated_distance
+    # done while
 
     # When we reach this point, there was no intersection between the ray and a
     # implicit surface, so no shadows, so simply return 1
     return 1
+# end def calc_shadows
 \end{lstlisting}
+\end{minipage}
 
 Um zu verhindern, dass ein Punkt $\bm{x}$ einer impliziten Oberfläche
 sich selbst verdeckt (sich also quasi selbst Schatten spendet), wird die
@@ -78,7 +83,8 @@ erfüllt und sich der Punkt $\bm{x}$ daher immer im Schatten befinden
 würde.
 
 \citeauthor{reiner_smi_2011} geben zudem an, wie weiche Schatten mittels
-Sphere Tracing relativ einfach dargestellt werden können. Während der
+Sphere Tracing relativ einfach dargestellt werden
+können~\parencite[S. 7]{reiner_smi_2011}. Während der
 Expansion anhand des Schatten-Fühlers wird die minimale, evaluierte
 Distanz $d_{\text{min}}$ zu einem beliebigen Objekt gespeichert. Es wird
 dabei angenommen, dass sich ein Punkt $\bm{x}$ einer impliziten
@@ -115,6 +121,7 @@ oder weicher gezeichnet werden.
 \footnotetext{Eigene Darstellung mittels Inkscape, angelehnt
     an~\cite[S. 772]{glassner_introduction_1989}.}
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python,caption={Algorithmus zur Berechnung
         von weichen Schatten.},label={alg:sphere_tracing_soft_shadows},captionpos=b,emph={calc_soft_shadows}]
 def calc_soft_shadows():
@@ -137,13 +144,17 @@ def calc_soft_shadows():
             # precision of the convergence, so return zero (0) as we
             # have an intersection and therefore 'full' shadow
             return 0
+        # end if
 
         penumbra_factor = estimated_distance / shadow_ray_distance
         shadow = min(shadow, scale * penumbra_factor)
         shadow_ray_distance = shadow_ray_distance + estimated_distance
+    # done while
 
     # When we reach this point, there was no full intersection between
     # the ray and a implicit surface, so not entirely shadowed, so
     # return current shadow value
     return shadow
+# end calc_soft_shadows
 \end{lstlisting}
+\end{minipage}

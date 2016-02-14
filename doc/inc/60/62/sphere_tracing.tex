@@ -115,14 +115,15 @@ Richtung $r_{d}$ eines Strahles als Einheitsvektor~\parencite[S.
     r_{d} = \frac{p_{x, y} - r_{0}}{|p_{x, y} - r_{0}|}
 \end{gather}
 
-wobei $r_{0}$ der Ursprung eines Strahles und $p_{x, y}$ ein Punkt der Bildebene ist.
+Dabei ist $r_{0}$ der Ursprung eines Strahles und $p_{x, y}$ ein Punkt
+der Bildebene.
 
 Um nun den Schnittpunkt eines Strahles $r_{d}$ mit der Oberfläche eines
 Objektes zu finden, muss~\autoref{eq:ray_param_cond}, $F(t) = f \circ
 r = 0$, gelöst werden. Dabei ist --- wie oben definiert --- die Funktion
 $f(x)$ nun eine Distanzfunktion, wie zum Beispiel die geometrische
 Distanzfunktion zur Beschreibung einer Kugel
-(Gleichung~\ref{eq:surface_immplicit_geometric}).
+(\autoref{eq:surface_immplicit_geometric}).
 
 Evaluiert man nun die Gleichung $F(t)$ unter Anwendung der eben beschriebenen
 Verfolgung der Strahlen, findet man so die erste positive Nullstelle der Gleichung
@@ -138,6 +139,7 @@ konvergiert genau dann --- und nur dann --- wenn der Strahl auf die implizite
 Oberfläche eines Objektes trifft. Diese Folge bildet den Kern des Algorithmus
 zur Darstellung von geometrisch definierten, impliziten Oberflächen.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des Sphere
         Tracings\protect\footnotemark.},label={alg:sphere_tracing},captionpos=b,emph={sphere_trace}]
 def sphere_trace():
@@ -157,12 +159,16 @@ def sphere_trace():
             # precision of the convergence, so return the distance the ray has
             # travelled as we have an intersection
             return ray_distance
+        # end if
 
         ray_distance = ray_distance + estimated_distance
+    # done while
 
     # When we reach this point, there was no intersection between the ray and a
     # implicit surface, so simply return 0
     return 0
+# end def sphere_trace
 \end{lstlisting}
 \footnotetext{Algorithmus in Pseudocode gemäss~\cite{hart_sphere_1994}[S. 531,
     Fig. 1]}
+\end{minipage}

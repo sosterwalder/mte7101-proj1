@@ -73,19 +73,19 @@ des Lichtstrahles und der Oberflächennormale ab.  Licht kann je nach
 Medium auch gestreut werden.
 
 Für den Transport des Lichtes kennt man vier Mechanismen: Perfekt
-diffuse, perfekt spiegelnde, perfekt brechende und total interne
-Reflexion~\parencite[S. 130 bis 137]{glassner_introduction_1989}. In der
-Realität bzw.~der Natur treten mehrere Mechanismen gleichzeitig auf.  So
-wird z.B.\ ein Teil des Lichtes reflektiert, wohingegen ein anderer Teil
-das Objekt durchdringt.
+diffuse, perfekt spiegelnde und totale interne Reflexion sowie perfekt
+brechende Refraktion~\parencite[S. 130 bis
+137]{glassner_introduction_1989}. In der Realität bzw.~der Natur treten
+mehrere Mechanismen gleichzeitig auf.  So wird z.B.\ ein Teil des
+Lichtes reflektiert, wohingegen ein anderer Teil das Objekt durchdringt.
 
 Die von diesen Mechanismen emittierten Strahlen können
 gemäss~\citeauthor{glassner_introduction_1989}
 in~\textit{Reflexion-Strahlen}, welche die perfekte diffuse und die
 perfekt spiegelnde Reflexion beschreiben,
-und~\textit{Transparenz-Strahlen}, welche die perfekt brechende und die
-totale interne Reflexion beschreiben, unterteilt werden~\parencite[S.
-10]{glassner_introduction_1989}.
+und~\textit{Transparenz-Strahlen}, welche die perfekt brechende
+Refraktion und die totale interne Reflexion beschreiben, unterteilt
+werden~\parencite[S.  10]{glassner_introduction_1989}.
 
 \begin{figure}[H]\label{fig:ray_tracing_scene_rays}
     \centering
@@ -118,9 +118,9 @@ Die Gleichung solcher Strahlen lautet:
     r(t) = x_{0} + t \cdot (S - x_{0})
 \end{gather}
 
-Wobei $x_{0}$ der Ausgangspunkt (also der Betrachter), $t$ ein
+Dabei ist $x_{0}$ der Ausgangspunkt (also der Betrachter), $t$ ein
 Skalierungsfaktor zwischen $[1, \infty]$ und $S$ der Schnittpunkt mit der
-Bildfläche ist.
+Bildfläche.
 
 \subsubsection{Licht- oder Schatten-Strahlen}
 \label{ssubsec:ray_tracing:shadow_rays}
@@ -142,9 +142,9 @@ Die Gleichung von Licht- bzw.\ Schatten-Strahlen lautet:
     r(t) = p_{0} + t \cdot (L_{i} - p_{0})
 \end{gather}
 
-Wobei $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer Oberfläche
+Dabei ist $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer Oberfläche
 eines Objektes), $t$ ein Skalierungsfaktor zwischen $[\varepsilon, 1]$ und
-$L_{i}$ der Ort der $i$-ten Lichtquelle ist. Bei $\varepsilon$ handelt es
+$L_{i}$ der Ort der $i$-ten Lichtquelle. Bei $\varepsilon$ handelt es
 sich um einen Faktor zur Steuerung der Präzision, welcher verhindert,
 dass ein Objekt lokal auf sich selbst Schatten wirft.
 
@@ -215,10 +215,10 @@ Einfallswinkels und der Oberflächennormale.
 Schliesslich werden die Eigenschaften von Licht, welches durch ein
 Objekt hindurch geht und vielleicht von diesem gebrochen wird, durch
 die~\textit{Transparenz-Strahlen} beschrieben. Auch hier werden zwei
-Arten der Reflexion unterschieden: Perfekt brechende und total interne
-Reflexion.
+Arten der Reflexion unterschieden: Perfekt brechende Refraktion und
+total interne Reflexion.
 
-\textbf{Perfekt brechende Reflexion}
+\textbf{Perfekt brechende Refraktion}
 
 Tritt Licht von einem Medium (z.B.~Luft) in ein anderes Medium (z.B.\
 Glas) ein, so wird das Licht abgelenkt. Die Ablenkung des Lichtes bei
@@ -238,12 +238,12 @@ verglichen. Die Beziehung zwischen dem Einfalls- und Ausfallswinkel sowie dem
     \frac{\sin(\theta_{1})}{\sin(\theta_{2})} = \eta_{21} = \frac{\eta_{2}}{\eta_{1}}
 \end{gather}
 
-Wobei $\theta_{1}$ der Einfallswinkel, $\theta_{2}$
-der Ausfallswinkel, $\eta_{1}$ der Refraktion-Index des ersten Mediums
-in Abhängigkeit zu Vakuum, $\eta_{2}$ der Refraktion-Index des zweiten
+Dabei ist $\theta_{1}$ der Einfallswinkel, $\theta_{2}$ der
+Ausfallswinkel, $\eta_{1}$ der Refraktion-Index des ersten Mediums in
+Abhängigkeit zu Vakuum, $\eta_{2}$ der Refraktion-Index des zweiten
 Mediums in Abhängigkeit zu Vakuum und $\eta_{21}$ der Refraktion-Index
-des zweiten Mediums in Abhängigkeit des ersten Mediums
-ist~\parencite[S. 134 bis 135]{glassner_introduction_1989}.
+des zweiten Mediums in Abhängigkeit des ersten Mediums~\parencite[S. 134
+bis 135]{glassner_introduction_1989}.
 
 Umgekehrt kann das Verhältnis des ausgehenden Strahles zum eingehenden
 Strahl berechnet werden~\parencite[S. 137 bis
@@ -265,7 +265,7 @@ werden wie folgt~\parencite[S. 137 bis 140]{glassner_introduction_1989}:
 \end{align}
 
 Dabei sind $p_{0}$ der Ausgangspunkt (also ein Punkt auf einer Oberfläche
-eines Objektes), $t$ ein Skalierungsfaktor zwischen $[\epsilon, 1]$, $I$
+eines Objektes), $t$ ein Skalierungsfaktor zwischen $[\varepsilon, 1]$, $I$
 der eingehende Vektor, also $S - x_{0}$, $N$ die Oberflächennormale und
 $\eta_{12}$ das oben beschriebene Verhältnis.
 Bei Epsilon handelt es sich wie beschrieben um einen Faktor zur Steuerung
@@ -276,7 +276,7 @@ gespiegelt wird.
     \centering
     \includegraphics{img/perfect_specular_tranmission.pdf}
     \caption{Illustration einer perfekt brechenden
-        Reflexion.~\protect\footnotemark{}
+        Refraktion.~\protect\footnotemark{}
         $I$ ist der eingehende Strahl, welcher am Ort des
         Normalenvektors $N$ im Winkel von $\theta_{1}$ von Medium 1 in
         Medium 2 übergeht und entsprechend mit Winkel $\theta_{2}$
@@ -295,7 +295,7 @@ einzutreten~\parencite[S. 136 bis 137]{glassner_introduction_1989}.
 
 Dies geschieht nur dann, wenn der Term $C_{2}$
 (siehe~\autoref{eq:ray_tracing:transm_c2}) negativ ist und somit das
-Ergebnis der Wurzel aus $C_{2}$ in~\ref{eq:ray_tracing:transm} eine
+Ergebnis der Wurzel aus $C_{2}$ in~\autoref{eq:ray_tracing:transm} eine
 imaginäre Zahl wird~\parencite[S. 137 bis 138]{glassner_introduction_1989}.
 
 \begin{figure}[H]\label{fig:ray_tracing_total_internal_reflection}
@@ -349,12 +349,13 @@ folgenden Fällen vor:
 
 Aus den genannten Abbruch-Kriterien ergibt sich
 nach~\citeauthor{heckbert_adaptive_1990} folgende, auf einem regulären
-Ausdruck basierende Lichtweg-Notation: \textbf{LD?S*E}.\\
-Diese beschreibt den Weg, welchen ein Photon ausgehend von einer
-Lichtquelle \textbf{L} zum Auge eines Betrachters \textbf{E} nehmen
-kann. Es kann auf null oder genau eine diffuse Oberfläche (\textbf{D?})
-so wie auf 0 oder theoretisch unendlich viele reflektierende Oberflächen
-(\textbf{S*}) treffen~\parencite[S. 148]{heckbert_adaptive_1990}.
+Ausdruck basierende Lichtweg-Notation:
+\textbf{LD?S*E}~\parencite{heckbert_adaptive_1990}.\\ Diese beschreibt
+den Weg, welchen ein Photon ausgehend von einer Lichtquelle \textbf{L}
+zum Auge eines Betrachters \textbf{E} nehmen kann. Es kann auf null oder
+genau eine diffuse Oberfläche (\textbf{D?}) so wie auf 0 oder
+theoretisch unendlich viele reflektierende Oberflächen (\textbf{S*})
+treffen~\parencite[S. 148]{heckbert_adaptive_1990}.
 
 Ausgehend von der sichtbaren Bildfläche, also dem Auge des Betrachters
 der Szene, kann so ein Strahlen-Baum (\textit{ray tree}) aufgebaut
@@ -378,15 +379,19 @@ der Farbe der Kindes-Knoten (\textit{child node}) berechnet.
 
 \begin{table}[H]
     \centering
-    \caption{Darstellung des Strahlen-Baumes anhand einer
-        Beispielszene}\label{table:ray_tracing:ray_tree}
-    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+    \caption{Darstellung des Strahlen-Baumes anhand einer Beispielszene.
+        Die Lichtweg-Notation des Ray Tracings (\textit{LD?S*E}) wird hier
+        ersichtlich: Das Objekt~\textit{$O_{3}$} muss einen spiegelnden Anteil
+        in seiner Oberflächenbeschaffenheit haben, ansonsten würde die Strahlenverfolgung nach
+        dem Auftreffen des Strahles $R_{1}$ bereits
+        beendet.}\label{table:ray_tracing:ray_tree}
+    \begin{tabular}{p{0.5\textwidth}p{0.5\textwidth}}
         \toprule
-            \includegraphics[width=0.3\textwidth]{img/ray_tracing_scene_ray_tree.pdf} &
-            \includegraphics[width=0.3\textwidth]{img/ray_tracing_tree.pdf} &
-            \includegraphics[width=0.3\textwidth]{img/ray_tracing_tree_schematic.pdf} \\
+            \includegraphics[width=0.5\textwidth]{img/ray_tracing_scene_ray_tree.pdf} &
+            \includegraphics[width=0.5\textwidth]{img/ray_tracing_tree.pdf} \\
             Beispielszene &
-            Gerichteter Strahlen-Baum &
+            Gerichteter Strahlen-Baum \\
+            \includegraphics[width=0.5\textwidth]{img/ray_tracing_tree_schematic.pdf} \\
             Schematischer Strahlen-Baum
             nach~\citeauthor{glassner_introduction_1989}\protect\footnotemark{} \\
         \bottomrule
@@ -394,9 +399,11 @@ der Farbe der Kindes-Knoten (\textit{child node}) berechnet.
 \end{table}
 \footnotetext{\cite[S.  17]{glassner_introduction_1989}}
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des
         Ray Tracings \protect\footnotemark.},
     label={fig:ray_tracing:high_level},captionpos=b,emph={ray_trace}]
+
 def ray_trace(current_point, direction):
 """Traces light rays from current point in space in given direction.
 
@@ -428,21 +435,25 @@ def ray_trace(current_point, direction):
                 reflection_vector = reflect(direction, object)
                 reflected_color   = ray_trace(p, reflection_vector)
                 color = color + object.coeff * reflected_color
+            # end if
 
             if object.is_refractive:
                 refracted_vector = refract(direction, object)
                 refracted_color  = ray_trace(p, refracted_vector)
                 color = color + object.coeff * refracted_color
+            # end if
 
             for light in incoming_lights_at(p):
                 if not is_shadow_ray(p, light.position):
                     color = color + calc_lighting(p, direction, light, object)
-            end
-        end
-    end
+                # end if
+            # end for lights
+        # end for objects
+    # end for pixels
 
     return color
-end
+# end def ray_trace
 \end{lstlisting}
 \footnotetext{Algorithmus in Pseudocode
     gemäss~\cite[Seite 283]{glassner_introduction_1989}}
+\end{minipage}

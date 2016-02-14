@@ -33,9 +33,9 @@ folgt:
     \text{I}_{\text{ambient}} = k_{\text{ambient}}(\bm{x}) \cdot L_{\text{ambient}}
 \end{gather}
 
-wobei $k_{\text{ambient}}(\bm{x})$ den ambienten Faktor des
+Dabei ist $k_{\text{ambient}}(\bm{x})$ der ambienten Faktor des
 Punktes $\bm{x}$ und $L_{\text{ambient}}$ die Farbe des eingehenden ambienten
-Lichtes ist~\parencites[S. 723]{glassner_introduction_1989}[Kapitel 5, Abschnitt 5.2.1]{fernando_cg_2003}.
+Lichtes~\parencites[S. 723]{glassner_introduction_1989}[Kapitel 5, Abschnitt 5.2.1]{fernando_cg_2003}.
 
 Der \textit{diffuse Anteil} $I_{\text{diffuse}}$ ergibt sich wie folgt:
 
@@ -43,8 +43,8 @@ Der \textit{diffuse Anteil} $I_{\text{diffuse}}$ ergibt sich wie folgt:
     I_{\text{diffuse}} = k_{\text{diffuse}}(\bm{x}) \cdot L_{\text{diffuse}} \cdot \max(\bm{n} \cdot \bm{l}, 0)
 \end{gather}
 
-wobei $k_{\text{diffuse}}(\bm{x})$ den diffusen Faktor am Punkt $\bm{x}$
-und $L_{\text{diffuse}}$ die Farbe des eingehenden diffusen Lichtes ist.
+Dabei ist $k_{\text{diffuse}}(\bm{x})$ der diffusen Faktor am Punkt $\bm{x}$
+und $L_{\text{diffuse}}$ die Farbe des eingehenden diffusen Lichtes.
 Die Richtung der Lichtquelle, ausgehend von Punkt $\bm{x}$, ergibt sich
 durch das Punktprodukt zwischen der Einheitsnormalen $\bm{n}$ der
 Oberfläche an dem Punkt und der Richtung der Lichtquelle
@@ -57,9 +57,9 @@ wie folgt:
     I_{\text{specular}} = n_{\text{facing}} \cdot k_{\text{specular}}(\bm{x}) \cdot L_{\text{specular}} \cdot \max{(\bm{n} \cdot \bm{h}, 0)}^{k_{e}}
 \end{gather}
 
-wobei $k_{\text{specular}}(\bm{x})$ den reflektierenden Faktor des
+Dabei ist $k_{\text{specular}}(\bm{x})$ der reflektierenden Faktor des
 Punktes $\bm{x}$ und $L_{\text{specular}}$ die Farbe des eingehenden
-Lichtes ist. Bei $\bm{h}$ handelt es sich um einen Einheitsvektor,
+Lichtes. Bei $\bm{h}$ handelt es sich um einen Einheitsvektor,
 welcher in der Hälfte zwischen der Blickrichtung des Betrachters bzw.\
 der Kamera ($\vv{V}$) und $\bm{l}$ der Richtung der Lichtquelle
 ausgehend von dem Punkt $\bm{x}$ ist~\parencite[S.
@@ -79,7 +79,8 @@ reflektierenden Anteil hat~\parencite[Kapitel 5, Abschnitt 5.2.1]{fernando_cg_20
 Für die Berechnung der Intensität des Lichtes bzw.\ der Farbe einer Oberfläche
 wird die Normale der Oberfläche benötigt. Gemäss~\citeauthor{hart_ray_1989}
 kann diese mittels des Gradienten des Distanzfeldes
-eines Punktes einer impliziten Oberfläche berechnet werden:
+eines Punktes einer impliziten Oberfläche berechnet
+werden~\parencite[S. 292 bis 293]{hart_ray_1989}:
 
 \begin{gather}
     \bm{n}_{x} = f(x + \varepsilon, y, z) - f(x - \varepsilon, y, z) \\
@@ -87,9 +88,9 @@ eines Punktes einer impliziten Oberfläche berechnet werden:
     \bm{n}_{z} = f(x, y, z + \varepsilon) - f(x, y, z - \varepsilon) \\
 \end{gather}
 
-wobei $\bm{n} = \begin{bmatrix} x_{n} \\ y_{n} \\ z_{n} \end{bmatrix}$
-die Normale der Oberfläche in Form eines Vektors, und $f$ eine
-Distanzfunktion ist~\parencites[S. 292 bis 293]{hart_ray_1989}[S.
+Dabei ist $\bm{n} = \begin{bmatrix} x_{n} \\ y_{n} \\ z_{n} \end{bmatrix}$
+die Normale der Oberfläche in Form eines Vektors und $f$ eine
+Distanzfunktion~\parencites[S. 292 bis 293]{hart_ray_1989}[S.
 13]{hart_ray_1993}.
 
 Der Gradient einer Funktion $f: \mathbb{R}^{n} \to \mathbb{R}$ wird wie
@@ -105,8 +106,8 @@ folgt berechnet:
     \text{grad}(f) = f_{x}\bm{i} + f_{y}\bm{j} + f_{z}\bm{k}\\
 \end{gather}
 
-wobei $\bm{i}$, $\bm{j}$ und $\bm{k}$ Vektoren der Form $\begin{bmatrix}
-    x \\ y \\ z \end{bmatrix}$ sind.
+Dabei sind $\bm{i}$, $\bm{j}$ und $\bm{k}$ Vektoren der Form $\begin{bmatrix}
+    x \\ y \\ z \end{bmatrix}$.
 
 \citeauthor{hart_ray_1989} geben $\varepsilon$ als die minimale
 Inkrementation eines (Licht-) Strahles an und definieren diese als
@@ -124,12 +125,12 @@ der Kamera zur aktuellen Position des (Licht-) Strahles:
     d = |r_{\bm{n}} - r_{0}|
 \end{gather}
 
-wobei $\delta$ ein so genannter ``depth-cueing''-Exponent
+Dabei ist $\delta$ ein so genannter ``depth-cueing''-Exponent
 (``depth-cueing'' oder auch ``foldback'': ``a process for returning a
 signal to a performer
 instantly''~\parencite{liam_collins_sons_&_co._ltd._collins_2015}) und
 $\alpha$ ein empirischer Anteil, welcher die Tiefenauflösung des
-Objektes definiert, ist.  Details dazu finden sich
+Objektes definiert.  Details dazu finden sich
 unter~\cite[S. 293, Abschnitt 4.2 --- ``Clarity'']{hart_ray_1989}.
 
 Es folgt also:

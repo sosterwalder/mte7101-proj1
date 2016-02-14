@@ -101,7 +101,7 @@ Abgerufen am 27. September 2015}
 	title = {Sphere {Tracing}: {A} {Geometric} {Method} for the {Antialiased} {Ray} {Tracing} of {Implicit} {Surfaces}},
 	volume = {12},
 	journal = {The Visual Computer},
-	author = {Hart, John},
+	author = {Hart, John C.},
 	year = {1994},
 	pages = {527--545}
 }
@@ -118,7 +118,7 @@ Abgerufen am 27. September 2015}
 @article{hart_ray_1993,
 	title = {Ray tracing implicit surfaces},
 	journal = {Siggraph 93 Course Notes: Design, Visualization and Animation of Implicit Surfaces},
-	author = {Hart, John},
+	author = {Hart, John C},
 	year = {1993},
 	pages = {1--16}
 }
@@ -530,4 +530,30 @@ generated scenes in real-time and can also be combined with path-tracing-based g
 	publisher = {Fulcrum},
 	author = {{Seven}},
 	year = {2012}
+}
+
+@article{caprani_robust_2000,
+	title = {Robust and {Efficient} {Ray} {Intersection} of {Implicit} {Surfaces}},
+	volume = {6},
+	issn = {1573-1340},
+	url = {http://dx.doi.org/10.1023/A:1009921806032},
+	doi = {10.1023/A:1009921806032},
+	abstract = {The generation of ray traced images of a variety of surfaces plays a central role in computer graphics. One of the main operations in ray tracing is the calculation of intersections between rays and surfaces. In case of implicitly given surfaces the intersection problem can be formulated as that of finding the smallest non-negative root of an equation in one variable. If the root finding is carried out by means of conventional numerical methods based on point sampling (such as bisection, regula-falsi or Newton) the resulting image can be wrong, e.g. when the surface is thin the ray may "miss" the surface, which may result in an image with background color spots on the surface. To obtain robust intersection detection, methods based either on Lipschitz constants for the function and its derivative or an interval inclusions for the function and its derivative have been suggested. In this paper robust methods are obtained with interval inclusions in a variant of Alefeld-Hansens globally convergent method for computing and bounding all the roots of a single equation. Alefeld-Hansens method has been modified so instead of searching for all roots, a recursive depth-first search is carried out to obtain the smallest non-negative root. When compared to other methods suggested, it is found that this variant of Alefeld-Hansens method is not only robust but also an efficient method for finding the ray intersections.},
+	number = {1},
+	journal = {Reliable Computing},
+	author = {Caprani, Ole and Hvidegaard, Lars and Mortensen, Mikkel and Schneider, Thomas},
+	month = feb,
+	year = {2000},
+	pages = {9--21}
+}
+
+@inproceedings{mitchell_robust_1990,
+	address = {Toronto, Ont., Canada, Canada},
+	title = {Robust {Ray} {Intersection} with {Interval} {Arithmetic}},
+	url = {http://dl.acm.org/citation.cfm?id=93267.93276},
+	booktitle = {Proceedings on {Graphics} {Interface} '90},
+	publisher = {Canadian Information Processing Society},
+	author = {Mitchell, D. P.},
+	year = {1990},
+	pages = {68--74}
 }

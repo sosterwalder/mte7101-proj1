@@ -18,7 +18,8 @@ auch~\citeyear{arlington_mathematical_applications_group_inc_afips_1968}
 von
 der~\citeauthor{arlington_mathematical_applications_group_inc_afips_1968}
 in~\citetitle{arlington_mathematical_applications_group_inc_afips_1968}
-erfolgreich umgesetzt.
+erfolgreich
+umgesetzt~\parencites{appel_techniques_1968}{arlington_mathematical_applications_group_inc_afips_1968}.
 
 Ein möglicher Algorithmus, wie Ray Casting umgesetzt werden kann, findet
 sich in~\autoref{fig:ray_casting:high_level}.
@@ -72,7 +73,8 @@ der Oberflächennormale des Objektes.
 
 ~\citeauthor{glassner_introduction_1989} beschreibt mehrere Methoden zur
 Prüfung von Schnittpunkten: Beispielsweise seien hier die Intersektionen
-eines Strahles mit einer Kugel oder mit einem Dreieck gezeigt.
+eines Strahles mit einer Kugel oder mit einem Dreieck
+gezeigt~\parencite[S. 35 bis 64]{glassner_introduction_1989}.
 
 \textit{Schnittpunkt mit einer Kugel}
 
@@ -109,21 +111,42 @@ Das Auflösen dieser Gleichung ergibt folgende Fälle:
 \textit{Schnittpunkt mit einem Dreieck}
 
 Um den Schnittpunkt eines Lichtstrahles mit einem Dreieck zu erhalten,
-wird die~\autoref{eq:ray_equation} des Lichtstrahles als Lösung
-der Gleichung eines Dreiecks mit baryzentrischen Koordinaten
+wird die~\autoref{eq:ray_equation} des Lichtstrahles als Lösung der
+Gleichung eines Dreiecks mit baryzentrischen Koordinaten verwendet.
+
+Gegeben sei ein Dreieck $P$ mit den Ecken $A$, $B$ und $C$:
 
 \begin{gather}
-    x(\beta, \gamma) = v_{1} + \beta(v_{2} - v_{1}) + \gamma(v_{3} - v_{1})
+    P = \alpha{A} + \beta{B} + \gamma{C}
 \end{gather}
 
-verwendet. Dies führt zu folgendem Gleichungssystem:
+Dabei sind $\alpha{}$, $\beta{}$ und $\gamma{}$ baryzentrische
+Koordinaten in Form von reellen Zahlen. Es gilt $\alpha{} + \beta{} +
+\gamma{} = 1$, da baryzentrische Koordinaten normalisiert sind. Möchte
+man einen Punkt ($\beta{}$, $\gamma{}$) innerhalb des Dreieckes so
+führt dies zu folgender Gleichung:
+
+\begin{gather}\label{eq:baryc_triangle}
+    x(\beta, \gamma) = A + \beta{} \cdot{} AB + \gamma{} \cdot{} AC
+\end{gather}
+
+Dabei gilt $\beta{} > 0$, $\gamma{} >0$ und $\beta{} + \gamma{} \leq 1$.
+Ansonsten befindet sich der Punkt nicht innerhalb des Dreieckes.
+Daraus ergibt sich folgende Gleichung:
+
+\begin{gather}
+    x(\beta, \gamma) = (1 - \beta{} - \gamma{}) \cdot{} A + \beta{} \cdot{} B + \gamma{} \cdot{} C
+\end{gather}
+
+Setzt man nun die Gleichung des Lichtstrahles (\ref{eq:ray_equation})
+als Lösung obenstehender Gleichung ein, führt dies zu folgender Gleichung:
 
 \begin{align}
-    r_{0} + t \cdot r_{d} &= v_{1} + \beta(v_{2} - v_{1}) + \gamma(v_{3} - v_{1})
+    r_{0} + t \cdot r_{d} &= (1 - \beta{} - \gamma{}) \cdot{} A + \beta{} \cdot{} B + \gamma{} \cdot{} C
 \end{align}
 
-Der Lichtstrahl schneidet das Dreieck, wenn die Summe der Koeffizienten
-($\beta$, $\gamma$) $\le 1$ ist.
+Damit der Lichtstrahl das Dreieck schneidet, gelten dieselben
+Bedingungen wie bei~\autoref{eq:baryc_triangle}.
 
 Es leuchtet ein, dass es sehr aufwändig ist jegliches Objekt einer Szene
 auf Schnittpunkte zu testen (wie dies in
@@ -161,11 +184,15 @@ def ray_cast():
 
             for light in incoming_lights_at_p:
                 sum = sum + l.value
-            end
+            # end for lights
 
             if is_smallest_intersection(p, intersections):
                 pixel = sum
+            # end if
             intersections.append(p)
+        # end for trinagles
+    # end for pixels
+# end def ray_cast
 \end{lstlisting}
 \end{minipage}
 \footnotetext{Algorithmus in Pseudocode gemäss~\cite[Kapitel 15, Seite 391, Auflistung 15.2]{hughes_computer_2013}}

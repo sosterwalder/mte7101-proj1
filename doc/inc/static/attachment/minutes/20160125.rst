@@ -1,0 +1,95 @@
+No.:              09
+Date:             25.01.2016 10:00 - 11:00
+Place:            Main building, Berne University of applied sciences
+Involved persons: Claude Fuhrer    (CF)
+                  Sven Osterwalder (SO)
+
+Meeting minutes 2016-01-25
+==========================
+
+Presentation and discussion of the current state of the work (SO)
+-----------------------------------------------------------------
+
+* Nearly all TODOs were resolved. (SO)
+* The document was revised by means of spelling and formulation. (SO)
+
+Further steps/proceedings (CF, SO)
+----------------------------------
+
+* References within the text and the bibliography do not seem to have
+  the same abbreviations. (CF)
+  (DONE, using ieee-style, SO)
+* The paragraph right before subsection 5.1.2 should be moved a bit more
+  in direction of equation I (5.1). (CF)
+  (DONE)
+* Instead of the word 'Epsilon' the (mathematical) variable varepsilon
+  should be used throughout the whole document. (CF)
+  (DONE
+* The equation(s) 5.6 are not a system of linear equations, it is
+  instead only one equation. (CF)
+  (DONE)
+* Try not to use a vector as starting for the equation of a ray hitting a triangle
+  with barycentric coordinates. Try to use the provided coordinates,
+  E.g. use 1 - Beta - Gamma. (CF)
+  (DONE)
+* Try to avoid page breaks within pseudo-code listings. Use comments
+  marking the end of blocks (if, loops etc.) or use parentheses if
+  possible. (CF)
+  (DONE)
+* Citation right in front of subsection 5.2.2 has too much quotes. (CF)
+  (DONE)
+* Nu at equation 5.16 should be phi instead. (CF)
+  (DONE)
+* The principle shown in image 5.7 is rather a refraction instead of a
+  reflexion. (CF)
+  (DONE)
+* Use two rows and two columns instead of three columns and one row
+  only for table 5.1. This will improve readability. Try to use the light transport
+  notation as well. (CF)
+  (DONE)
+* Use two rows and two columns instead of three columns and one row
+  only for table 5.2. This will improve readability. (CF)
+  (DONE)
+* When referencing an authors name reference the paper as well. (CF)
+  (DONE)
+* When referencing something, e.g. an illustration or an equation, add
+  the type as well, not only the referenced number as this will improve
+  readability. (CF)
+  (DONE)
+* In the description of the fixed step size when describing ray marching
+  the type of the delta (x-axis) is missing, only the parameter is
+  being referenced. (CF)
+  (DONE)
+* Increase the size of illustration 6.2 as it has a lot of small
+  details and is hard to recognize like this. (CF)
+  (DONE)
+* Try to explain ray *g* a bit better when explaining the problems of
+  fixed step size ray marcing. (CF)
+  (DONE)
+* Try to mention solutions to the problem of using a fixed step size in
+  ray marcing. (CF)
+  (DONE)
+* When referring to the prototype add a reference to the chapter as
+  well. (CF)
+  (DONE)
+* Check the used values for epsilon within the prototype, the seem a bit
+  small from time to time. This may lead to floating point precision
+  problems otherwise. (CF) (DONE. The OpenGL Shading Language GLSL uses
+  the highest precision available on a sytem. This is normally the highp
+  float type and provides therefore - according to IEE-754 resp. the
+  OpenGL ES standard - -2^62 to 2^62.)
+* Try mentioning floating point precision and rounding problems which
+  may occur and the measures used against those problems. (CF)
+  (DONE)
+
+TODO for the next meeting
+=========================
+
+* Preparation for presenting and defending the whole project (SO)
+
+Scheduling of the next meeting
+==============================
+
+Date:  18.02.2016, 1315
+Place: Meeting room of RISI building at the Berne University of applied
+       sciences in Biel

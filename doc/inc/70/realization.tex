@@ -23,6 +23,19 @@ Präzision sowie die Anzahl Durchgänge --- findet sich in den
 Tabellen~\ref{table:sphere_tracing_distance},~\ref{table:sphere_tracing_precision}
 und~\ref{table:sphere_tracing_steps}.
 
+Maschinell bedingt kommen bei den Berechnungen Fliesskommazahlen zum
+Einsatz, da die Resultate möglichst genau sein sollen. Aufgrund der
+endlichen Mantisse bei der Darstellung von Fliesskommazahlen lassen sich
+diese auf einem Computer jedoch nicht beliebig genau darstellen und
+damit berechnen. Rundung und damit verbundene Rundungsfehler sind
+unvermeidlich.  Um dennoch eine gute Annäherung an Null-Werte zu
+erhalten, wird ein Parameter ($\varepsilon$) zur Steuerung der minimalen
+Distanz zu einer Oberfläche verwendet. Dieser kommt bei den
+Funktionen~\textit{render}, \textit{castRay} sowie \textit{calcShadows}
+in Form der Variablen \textit{minimalDistance} bzw.  \textit{precision}
+zum Einsatz.
+
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Umsetzung des Sphere Tracings in
         GLSL.},label={alg:glsl_sphere_tracing},captionpos=b,emph={castRay}]
 // Casts a ray from given origin i given direction. Stops at given
@@ -54,6 +67,7 @@ vec2 castRay(in vec3 rayOrigin, in vec3 rayDirection, in float maxDistance, in f
     return res;
 }
 \end{lstlisting}
+\end{minipage}
 
 \begin{table}[H]
     \centering
@@ -121,6 +135,7 @@ Von den unter~\autoref{subsec:implicit_surfaces_ops} beschriebenen
 Operationen wurden die Operationen \textit{Vereinigung}, \textit{Subtraktion} sowie
 \textit{Intersektion} umgesetzt.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Umsetzung der Operationen
         \textit{Vereinigung}, \textit{Subtraktion} sowie
         \textit{Intersektion} für implizite Oberflächen in
@@ -146,10 +161,12 @@ float intersect(float a, float b)
     return (a > b) ? a : b;
 }
 \end{lstlisting}
+\end{minipage}
 
 Von den unter~\autoref{subsec:implicit_surfaces_primitives} beschriebenen
 Primitiven wurden die Primitiven \textit{Ebene} sowie \textit{Kugel} umgesetzt.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Umsetzung der Primitiven
         \textit{Ebene} und \textit{Kugel} in Form von impliziten
         Oberflächen in
@@ -175,6 +192,7 @@ float box(vec3 position, vec3 dimension)
     return max(max(position.x, position.y), position.z);
 }
 \end{lstlisting}
+\end{minipage}
 
 Verwendete Parameter sind jeweils die (gewünschte) Position des Objektes
 (\textit{vec3 position}) sowie der Radius bzw.\ die Dimension
@@ -184,6 +202,7 @@ Als Beleuchtungsmodell wurde das
 unter~\autoref{sec:rendering_implicit_surfaces} beschriebene
 Phong-Beleuchtungsmodell umgesetzt.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Umsetzung des
         Phong-Beleuchtungsmodelles in
         GLSL.},label={alg:glsl_lighting},captionpos=b,emph={calcLighting}]
@@ -222,6 +241,7 @@ vec3 calcLighting(vec3 normal, vec3 rayDirection) {
      return color;
 }
 \end{lstlisting}
+\end{minipage}
 
 Als Parameter werden hier ein Normalvektor einer Oberfläche ($\bm{n}$)
 sowie die Richtung eines eingehenden Strahles (also die Blickrichtung
@@ -234,6 +254,7 @@ Die Normale einer Oberfläche wird wie
 unter~\autoref{sec:rendering_implicit_surfaces_lighting} beschrieben
 berechnet.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Berechnung der Normalen einer
         impliziten Oberfläche in
         GLSL.},label={alg:glsl_normal},captionpos=b,emph={calcNormal}]
@@ -252,6 +273,7 @@ vec3 calcNormal(in vec3 position, in float epsilon) {
 }
 }
 \end{lstlisting}
+\end{minipage}
 
 Verwendete Parameter sind ein Punkt der Oberfläche eines Objektes
 (\textit{vec3 position}) sowie die minimale Inkrementation eines
@@ -263,6 +285,7 @@ Bei der Funktion \textit{scene} handelt es sich um eine Distanzfunktion
 $f$ gemäss~\autoref{ssubsec:distance_functions}. Diese definiert
 schliesslich, was an einem gegebenen Punkt dargestellt wird.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Distanzfunktion $f$ in
         GLSL.},label={alg:glsl_distance_func},captionpos=b,emph={scene}]
 // Defines the scene which will be drawn at given position.
@@ -276,6 +299,7 @@ float scene(in vec3 position) {
     return res;
 }
 \end{lstlisting}
+\end{minipage}
 
 In diesem Beispiel wird eine Kugel mit Radius \textit{1.0} dargestellt.
 Diese wird auf der \textit{X}-Achse um -2 Einheiten, auf der
@@ -285,6 +309,7 @@ Einheiten verschoben (Translation).
 Wie in~\autoref{sec:rendering_implicit_surfaces_shadows} beschrieben,
 wurden weiche Schatten implementiert.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Funktion zur Berechnung von
         weichen Schatten  in
         GLSL.},label={alg:glsl_soft_shadows},captionpos=b,emph={calcShadows}]
@@ -317,6 +342,7 @@ float calcShadows(in vec3 rayOrigin, in vec3 rayDirection)
 
 }
 \end{lstlisting}
+\end{minipage}
 
 Verwendete Parameter sind der Ursprung (\textit{vec3 rayOrigin}) sowie
 die Richtung (\textit{vec3 rayDirection}) eines Strahles.
@@ -353,6 +379,7 @@ die Richtung (\textit{vec3 rayDirection}) eines Strahles.
 Das eigentliche Rendering, also die Darstellung der Szene, geschieht in
 der Funktion \textit{render}.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Funktion zur Darstellung der
         Szene in
         GLSL. Die Szene bzw.\ der Farbwert wird nur dann zurückgegeben
@@ -386,12 +413,15 @@ vec3 render(in vec3 rayOrigin, in vec3 rayDirection)
     return color;
 }
 \end{lstlisting}
+\end{minipage}
 
 Die Hauptfunktion \textit{main} des Fragment-Shaders ruft die Funktion
 zur Darstellung der Szene auf. Alle Methoden (wie z.B.~\textit{getRay}
-oder~\textit{squareFrame}) finden sich im Programmcode des Prototypen,
-welcher dieser Projektarbeit beiliegt.
+oder~\textit{squareFrame}) finden sich im Programmcode
+des~\hyperref[chap:prototype]{Prototypen}, welcher dieser Projektarbeit
+beiliegt.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=GLSL,caption={Einstiegspunkt des
         Fragment-Shaders.},
     label={alg:glsl_main},captionpos=b,emph={main}]
@@ -416,3 +446,4 @@ void main()
     gl_FragColor.a      = 1.0;
 }
 \end{lstlisting}
+\end{minipage}

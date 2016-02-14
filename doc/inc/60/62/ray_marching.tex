@@ -7,7 +7,7 @@
 \label{subsec:ray_marching}
 
 ~\citeauthor{perlin_hypertexture_1989} schlagen eine Abtastung des
-Strahles mit fixen Abständen $\Delta \mu$ vor~\parencite[S.
+Strahles mit fixen Abständen $\Delta{x_{\mu}}$ vor~\parencite[S.
 259]{perlin_hypertexture_1989}:
 
 \begin{gather}
@@ -31,6 +31,7 @@ volumetrischen Renderings~\parencite[S. 291]{hart_ray_1989}.
 Ein möglicher Algorithmus, wie solch ein Verfahren umgesetzt werden kann,
 findet sich in~\autoref{fig:ray_marching}.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python,caption={Eine abstrakte Umsetzung des Ray
         Marchings\protect\footnotemark.},label={fig:ray_marching},captionpos=b,emph={ray_march}]
 def ray_march():
@@ -46,15 +47,19 @@ def ray_march():
             #   intersection <  0: ray is inside surface
             #   intersection == 0: ray is excatly on surface
             return ray_travel_distance(step)
+        # end if
 
         step = step + 1
+    # done while
 
     # When we reach this step, after max_steps, no intersection
     # has happened, so distance is 0
     return 0
+# end ray_march
 \end{lstlisting}
 \footnotetext{Algorithmus in Pseudocode
     gemäss~\cite{perlin_hypertexture_1989}[S. 259, Abschnitt 3.1]}
+\end{minipage}
 
 Dabei ist zu beachten, dass der Abstand der Abtastung eines Strahles
 $\Delta{t}$ so gering als möglich sein sollte um eine Menge von Punkten bzw.\ ein
@@ -86,6 +91,9 @@ Schritten.
 Die Strahlen \textit{g} und \textit{h} sind Spezialfälle: Der Strahl
 \textit{g} geht durch das Objekt \textit{poly1}, erfasst dieses wegen
 des gewählten fixen Abstandes der Abtastungspunkte ($\Delta{t}$) nicht.
+So liegt ein Abtastungspunkt vor dem Objekt und der nächste
+Abtastungspunkt bereits in dem Objekt, was zu dem Verfehlen von diesem
+führt.
 
 Der Strahl \textit{h} liefert das Objekt \textit{poly2}, obwohl er
 eigentlich das Objekt \textit{poly1} liefern müsste. Das getroffene
@@ -100,3 +108,9 @@ langsam und paralleles Abtasten praktisch unumgänglich ist~\parencite[S.
 Technik des Sphere Tracings ist der Abstand zwischen den Abtastungen
 nicht konstant sondern variiert in Abhängigkeit der
 Geometrie~\parencite[S. 538 bis 540]{hart_sphere_1994}.
+
+Es wurden verschiedene Methoden entwickelt und untersucht um den
+entscheidenden Nachteil des fixen Abstandes der Abtastungspunkte zu
+verbessern. So haben zum Beispiel verschiedene Autoren eine Anpassung
+des Abstandes mittels Intervall-Arithmetik als Lösung der Problematik
+vorgeschlagen~\parencites{caprani_robust_2000}{mitchell_robust_1990}.
