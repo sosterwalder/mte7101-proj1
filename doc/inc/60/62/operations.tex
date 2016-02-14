@@ -128,17 +128,23 @@ definiert~\parencite[S. 531 bis 532]{hart_sphere_1994}:
 
 Dabei $\bm{x}$ den abzutastenden Punkt im Raum darstellt.
 
-\todo[inline]{Redigieren}
 Wie~\citeauthor{hart_sphere_1994} schreibt, ist die Distanz zu einer
 Menge von Objekten die kürzeste der Distanzen zu jedem der
-zusammengesetzten Objekte.
-\todo[inline]{/Redigieren}
+zusammengesetzten Objekte~\parencite[S. 531 bis 532]{hart_sphere_1994}.
 
 Somit erlaubt die Vereinigung die Kombination von mehreren impliziten
 Oberflächen, ohne dass diese miteinander in Kontakt stehen. So kann
 beispielsweise eine komplexe Szene modelliert werden.
 
-\todo[inline]{Bild von Vereinigung}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/sphere_tracing_union.pdf}
+    \caption{Vereinigung von zwei Kugeln und einem Würfel. Bei dem
+        Untergrund der Szene handelt es sich um eine Ebene, welche mit dem
+        Rest der Szene vereinigt wird.\protect\footnotemark}\label{
+        fig:implicit_surfaces_ops_union}
+\end{figure}
+\footnotetext{Eigene Darstellung}
 
 \subsubsection{Subtraktion}
 \label{ssubsec:implicit_surfaces_ops_subtraction}
@@ -164,7 +170,17 @@ daher folgt~\parencite[S. 532]{hart_sphere_1994}:
 
 Dabei stellt $\bm{x}$ den abzutastenden Punkt im Raum dar.
 
-\todo[inline]{Bild von Subtraktion}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/sphere_tracing_subtraction.pdf}
+    \caption{Mehrfache Subtraktion: In einem ersten Schritt wird in der
+        Hälfte der Kugel ein Würfel von der Kugel subtrahiert. Der Würfel
+        hat dieselbe Höhe wie die Kugel. In einem zweiten Schritt wird ein
+        wesentlich kleinerer Würfel von der Halbkugel
+        subtrahiert.\protect\footnotemark}\label{
+        fig:implicit_surfaces_ops_subtraction}
+\end{figure}
+\footnotetext{Eigene Darstellung}
 
 \subsubsection{Intersektion}
 \label{ssubsec:implicit_surfaces_ops_intersection}
